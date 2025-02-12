@@ -38,7 +38,8 @@
                         <a class="gh-button" href="/signup/">Zarejestruj się</a>
                     {{else}}
                         <a class="gh-button" href="/account/">Moje konto</a>
-                        <a class="gh-button gh-button-secondary" href="/logout/">Wyloguj</a>
+                        <a class="gh-button gh-button-secondary" href="{{@site.url}}" data-members-signout>Wyloguj</a>
+
                     {{/unless}}
                 </div>
             {{/unless}}
