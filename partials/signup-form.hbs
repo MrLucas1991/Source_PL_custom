@@ -1,0 +1,16 @@
+<form class="gh-form" data-members-form>
+    <label for="signup-name" class="gh-form-label">Imię</label>
+    <input class="gh-form-input" id="signup-name" name="name" type="text" placeholder="Jan" required>
+
+    <label for="signup-email" class="gh-form-label">E-mail</label>
+    <input class="gh-form-input" id="signup-email" name="email" type="email" placeholder="jan@example.pl" required data-members-email>
+
+    <button class="gh-button" type="submit" aria-label="Subskrybuj">
+        <span>Subskrybuj</span>
+        {{> "icons/loader"}}
+        {{> "icons/checkmark"}}
+    </button>
+
+    <p class="gh-form-message" data-members-error></p>
+    <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+</form>

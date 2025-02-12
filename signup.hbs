@@ -1,0 +1,33 @@
+{{!< default}}
+
+<main class="gh-main">
+    <article class="gh-article gh-canvas">
+        <header class="gh-article-header">
+            <h1 class="gh-article-title is-title">Zarejestruj się</h1>
+            <p class="gh-article-excerpt is-body">Wprowadź swoje dane, aby utworzyć konto.</p>
+        </header>
+
+        <section class="gh-content gh-canvas is-body">
+            <form class="gh-form" data-members-form>
+                <label for="signup-name" class="gh-form-label">Imię</label>
+                <input class="gh-form-input" id="signup-name" name="name" type="text" placeholder="Jan" required>
+
+                <label for="signup-email" class="gh-form-label">E-mail</label>
+                <input class="gh-form-input" id="signup-email" name="email" type="email" placeholder="jan@example.pl" required data-members-email>
+
+                <button class="gh-button" type="submit" aria-label="Subskrybuj">
+                    <span>Subskrybuj</span>
+                    {{> "icons/loader"}}
+                    {{> "icons/checkmark"}}
+                </button>
+
+                <p class="gh-form-message" data-members-error></p>
+                <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+            </form>
+
+            <p class="gh-helper-text">
+                Masz już konto? <a href="{{@site.url}}/login/">Zaloguj się</a>.
+            </p>
+        </section>
+    </article>
+</main>
