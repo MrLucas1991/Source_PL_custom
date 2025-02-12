@@ -13,7 +13,17 @@
                     <label for="account-email" class="gh-form-label">E-mail</label>
                     <input class="gh-form-input" id="account-email" name="email" type="email" value="{{@member.email}}" readonly>
 
-                    <button class="gh-button" type="submit" data-members-signout aria-label="Wyloguj się">
+                    <p><strong>Status subskrypcji:</strong> 
+                        {{#if @member.paid}}
+                            Aktywna
+                        {{else}}
+                            Brak subskrypcji
+                        {{/if}}
+                    </p>
+
+                    <a class="gh-button" href="/account-billing/">Zarządzaj subskrypcją</a>
+
+                    <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się">
                         <span>Wyloguj się</span>
                         {{> "icons/loader"}}
                     </button>
@@ -24,7 +34,7 @@
                 </p>
             {{else}}
                 <p class="gh-helper-text">
-                    Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">zarejestruj się</a>.
+                    Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">Zarejestruj się</a>.
                 </p>
             {{/if}}
         </section>
