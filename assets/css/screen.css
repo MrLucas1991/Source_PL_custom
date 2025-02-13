@@ -214,13 +214,17 @@ a:hover {
 }
 
 .gh-form-group {
-    position: relative; /* Kluczowe, aby inputy były dobrze osadzone */
-    width: 100%;
-    height: auto; /* Wysokość zgodna z .gh-form */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centrowanie inputu */
-    gap: 60px; /* Odstęp między label a input */
+    align-items: stretch;
+    max-width: 560px;
+    width: 100%;
+    font-size: 1.7rem;
+    font-weight: 450;
+    border-radius: 40px;
+    background-color: var(--color-lighter-gray);
+    padding: 16px;
+    gap: 12px; /* Zapewnia odstępy między polami */
 }
 
 .gh-form-label {
@@ -228,6 +232,12 @@ a:hover {
     font-weight: 600;
     color: var(--color-primary-text);
     margin-bottom: 6px; /* Zapewnia odstęp od pola input */
+}
+
+.gh-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .gh-form.success {
