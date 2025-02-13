@@ -1,22 +1,22 @@
-<form class="gh-signup-form" data-members-form>
+<form class="gh-form" data-members-form>
     <input type="hidden" data-members-label value="Turntable buying guide">
 
-    <div class="gh-signup-group">
-        <label for="signup-name" class="gh-signup-label">Imię</label>
-        <input class="gh-signup-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
+    <div class="gh-form-group">
+        <label for="signup-name" class="gh-form-label">Imię</label>
+        <input class="gh-form-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
     </div>
 
-    <div class="gh-signup-group">
-        <label for="signup-email" class="gh-signup-label">E-mail</label>
-        <input class="gh-signup-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
+    <div class="gh-form-group">
+        <label for="signup-email" class="gh-form-label">E-mail</label>
+        <input class="gh-form-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
     </div>
 
-    <button class="gh-signup-button" type="submit" aria-label="Subskrybuj">
+    <button class="gh-button" type="submit" aria-label="Subskrybuj">
         <span>Subskrybuj</span>
         {{> "icons/loader"}}
         {{> "icons/checkmark"}}
     </button>
 
-    <p class="gh-signup-message" data-members-error></p>
-    <p class="gh-signup-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+    <p class="gh-form-message" data-members-error></p>
+    <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
