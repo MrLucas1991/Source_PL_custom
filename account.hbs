@@ -9,26 +9,33 @@
 
         <section class="gh-content gh-canvas is-body">
             {{#if @member}}
-                <form class="gh-form gh-account-form" data-members-form>
-                    <label for="account-email" class="gh-account-label">E-mail</label>
-                    <input class="gh-account-input" id="account-email" name="email" type="email" value="{{@member.email}}" readonly>
-
-                    <p class="gh-account-status {{#if @member.paid}}active{{else}}inactive{{/if}}">
-                        <strong>Status subskrypcji:</strong> 
-                        {{#if @member.paid}}
-                            Aktywna
-                        {{else}}
-                            Brak subskrypcji
-                        {{/if}}
+                <div class="gh-account-details">
+                    <p class="gh-account-item">
+                        <strong>E-mail:</strong> {{@member.email}}
                     </p>
 
-                    <a class="gh-account-button primary" href="/account-billing/">Zarządzaj subskrypcją</a>
+                    <p class="gh-account-item">
+                        <strong>Status subskrypcji:</strong> 
+                        <span class="gh-account-status {{#if @member.paid}}active{{else}}inactive{{/if}}">
+                            {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
+                        </span>
+                    </p>
 
-                    <button class="gh-account-button secondary" type="submit" data-members-signout aria-label="Wyloguj się">
-                        <span>Wyloguj się</span>
-                        {{> "icons/loader"}}
-                    </button>
-                </form>
+                    {{#if @member.paid}}
+                        <p class="gh-account-cancel">
+                            <button class="gh-account-button secondary" data-members-cancel-subscription>
+                                Anuluj subskrypcję
+                            </button>
+                        </p>
+                    {{/if}}
+                    
+                    <a class="gh-account-button primary" data-portal="account">Zarządzaj subskrypcją</a>
+                </div>
+
+                <button class="gh-account-button secondary" type="submit" data-members-signout aria-label="Wyloguj się">
+                    <span>Wyloguj się</span>
+                    {{> "icons/loader"}}
+                </button>
 
                 <p class="gh-account-helper">
                     Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
