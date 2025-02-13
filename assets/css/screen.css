@@ -241,82 +241,44 @@ a:hover {
 }
 
 /* Kontener formularza – dodatkowa klasa */
-/* Kontener formularza */
-.custom-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: Arial, sans-serif;
-}
 
-/* Pojedyncze pole formularza */
-.custom-field {
-  margin-bottom: 16px;
-}
-
-/* Etykiety */
-.custom-label {
-  display: block;
-  font-size: 16px;
-  color: #333;
-  margin-bottom: 8px;
-}
-
-/* Pola formularza */
-.custom-input {
+.subscription-form {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  max-width: 30rem;
+}
+
+.subscription-form input,
+.subscription-form button {
   padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
+  border-radius: 5px;
+  box-shadow: none;
+  border: 1px solid #cecece;
+  margin-bottom: 1em;
 }
 
-/* Przycisk */
-/* Przycisk – nowa stylizacja */
-.custom-button {
-  display: block;
-  width: auto;
-  margin: 20px auto 0;
-  padding: 0.8em 1.4em;
-  font-size: 16px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 100px;  /* Zaokrąglony kształt */
-  cursor: pointer;
-  position: relative;
-  text-align: center;
-  overflow: hidden;
-}
-
-/* Ukrywanie aktywnych ikon loader i check wewnątrz przycisku */
-.custom-button svg {
+.subscription-form .success-message,
+.subscription-form .error-message {
   display: none;
 }
 
-.custom-button:hover {
-  background-color: #0056b3;
+.subscription-form.error .error-message,
+.subscription-form.success .success-message {
+  display: block;
 }
 
-
-/* Komunikaty */
-.custom-message {
-  text-align: center;
-  font-size: 14px;
-  margin-top: 16px;
+.subscription-box {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2em;
+  background-color: palegreen;
+  border-radius: 5px;
 }
 
-.custom-error {
-  color: red;
-}
-
-.custom-success {
-  color: green;
-}
 
 
 
