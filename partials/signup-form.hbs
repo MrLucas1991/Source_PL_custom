@@ -1,28 +1,44 @@
-<form class="gh-form" data-members-form>
-    <input type="hidden" data-members-label value="Turntable buying guide">
+<form class="gh-form custom-form" data-members-form>
+  <input type="hidden" data-members-label value="Turntable buying guide">
 
-    <div class="gh-form-group">
-        <div class="gh-form-field">
-              <p> <label for="signup-name" class="gh-form-label">Imię</label></p>
-        <input class="gh-form-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
+  <div class="gh-form-group">
+    <div class="gh-form-field">
+      <p>
+        <label for="signup-name" class="gh-form-label">Imię</label>
+      </p>
+      <input
+        class="gh-form-input"
+        id="signup-name"
+        name="name"
+        type="text"
+        placeholder="Wpisz swoje imię"
+        required
+        data-members-name>
     </div>
-        </div>
+  </div>
 
-   
-    <div class="gh-form-group">
-        <div class="gh-form-field">
-      <p>  <label for="signup-email" class="gh-form-label">E-mail</label></p>
-        <input class="gh-form-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-   
+  <div class="gh-form-group">
+    <div class="gh-form-field">
+      <p>
+        <label for="signup-email" class="gh-form-label">E-mail</label>
+      </p>
+      <input
+        class="gh-form-input"
+        id="signup-email"
+        name="email"
+        type="email"
+        placeholder="Wpisz swój e-mail"
+        required
+        data-members-email>
     </div>
-    </div>
+  </div>
 
-    <button class="gh-button" type="submit" aria-label="Subskrybuj">
-        <span>Subskrybuj</span>
-        {{> "icons/loader"}}
-        {{> "icons/checkmark"}}
-    </button>
+  <button class="gh-button" type="submit" aria-label="Subskrybuj">
+    <span>Subskrybuj</span>
+    {{> "icons/loader"}}
+    {{> "icons/checkmark"}}
+  </button>
 
-    <p class="gh-form-message" data-members-error></p>
-    <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+  <p class="gh-form-message" data-members-error></p>
+  <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
