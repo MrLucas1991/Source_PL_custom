@@ -214,21 +214,13 @@ a:hover {
 }
 
 .gh-form-group {
-    position: relative;
+    position: relative; /* Kluczowe, aby inputy były dobrze osadzone */
     width: 100%;
     height: 56px; /* Wysokość zgodna z .gh-form */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centrowanie inputu */
     gap: 4px; /* Odstęp między label a input */
-}
-
-.gh-form-group:first-of-type .gh-form-input {
-    top: 20px; /* Górny input przesunięty nieco w dół */
-}
-
-.gh-form-group:last-of-type .gh-form-input {
-    top: 76px; /* Drugi input ustawiony poniżej */
 }
 
 .gh-form-label {
@@ -256,11 +248,9 @@ a:hover {
 }
 
 .gh-form-input {
-    position: absolute;
-    inset: auto 0 0 0; 
-    padding-inline: 26px;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Zachowujemy wysokość zgodną z kontenerem */
+    padding-inline: 26px;
     font-size: inherit;
     letter-spacing: inherit;
     line-height: 1.1;
