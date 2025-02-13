@@ -241,6 +241,7 @@ a:hover {
 }
 
 /* Kontener formularza – dodatkowa klasa */
+/* Kontener formularza */
 .custom-form {
   max-width: 500px;
   margin: 0 auto;
@@ -251,7 +252,20 @@ a:hover {
   font-family: Arial, sans-serif;
 }
 
-/* Nowa klasa dla pól formularza – uzupełnij ją obok klasy gh-form-input */
+/* Pojedyncze pole formularza */
+.custom-field {
+  margin-bottom: 16px;
+}
+
+/* Etykiety */
+.custom-label {
+  display: block;
+  font-size: 16px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+/* Pola formularza */
 .custom-input {
   width: 100%;
   padding: 10px;
@@ -259,11 +273,13 @@ a:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  margin-bottom: 16px;
 }
 
-/* Nowa klasa dla przycisku */
+/* Przycisk */
 .custom-button {
+  display: block;
+  width: auto;
+  margin: 20px auto 0;
   padding: 10px 20px;
   font-size: 16px;
   background-color: #007BFF;
@@ -271,13 +287,27 @@ a:hover {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  display: block;
-  margin: 20px auto 0;
 }
 
 .custom-button:hover {
   background-color: #0056b3;
 }
+
+/* Komunikaty */
+.custom-message {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.custom-error {
+  color: red;
+}
+
+.custom-success {
+  color: green;
+}
+
 
 
 .gh-form.success {
