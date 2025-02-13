@@ -1,25 +1,26 @@
-<form class="gh-form" data-members-form>
-    <input type="hidden" data-members-label value="Turntable buying guide">
+<form class="gh-form custom-form" data-members-form>
+  <input type="hidden" data-members-label value="Turntable buying guide">
 
-    <div class="gh-form-group">
-        <label>
-       Imię
-        <input class="gh-form-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
+  <div class="gh-form-group">
+    <label>
+      Imię
+      <input class="gh-form-input custom-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
     </label>
-    </div>
+  </div>
 
-    <div class="gh-form-group">
-        <label for="signup-email" class="gh-form-label">E-mail
-        <input class="gh-form-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-   </label>
-    </div>
+  <div class="gh-form-group">
+    <label for="signup-email" class="gh-form-label">
+      E-mail
+      <input class="gh-form-input custom-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
+    </label>
+  </div>
 
-    <button class="gh-button" type="submit" aria-label="Subskrybuj">
-        <span>Subskrybuj</span>
-        {{> "icons/loader"}}
-        {{> "icons/checkmark"}}
-    </button>
+  <button class="gh-button custom-button" type="submit" aria-label="Subskrybuj">
+    <span>Subskrybuj</span>
+    {{> "icons/loader"}}
+    {{> "icons/checkmark"}}
+  </button>
 
-    <p class="gh-form-message" data-members-error></p>
-    <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+  <p class="gh-form-message" data-members-error></p>
+  <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
