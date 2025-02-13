@@ -1,22 +1,9 @@
-<form class="custom-form" data-members-form>
-  <input type="hidden" data-members-label value="Turntable buying guide">
-
-  <div class="custom-field">
-    <label for="signup-name" class="custom-label">Imię</label>
-    <input class="custom-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
+<form class="custom-form" data-members-form="signup">
+  <input data-members-name type="text" placeholder="name" required />
+  <input data-members-email type="email" placeholder="email" required />
+  <button class="btn" type="submit">Subskrybuj</button>
+  <div class="success-message">Great! Check your inbox and click the link.</div>
+  <div class="error-message">
+    Sorry, something went wrong. Please try again.
   </div>
-
-  <div class="custom-field">
-    <label for="signup-email" class="custom-label">E-mail</label>
-    <input class="custom-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-  </div>
-
-  <button class="custom-button" type="submit" aria-label="Subskrybuj">
-    <span>Subskrybuj</span>
-    {{> "icons/loader"}}
-    {{> "icons/checkmark"}}
-  </button>
-
-  <p class="custom-message custom-error" data-members-error></p>
-  <p class="custom-message custom-success" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
