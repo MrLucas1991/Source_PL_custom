@@ -1,14 +1,16 @@
-<div class="subscription-box">
+<div class="gh-form-group">
   <h3>Susbscribe now</h3>
   <form class="subscription-form" data-members-form="signup">
-    <input data-members-name type="text" placeholder="name" required />
-    <input data-members-email type="email" placeholder="email" required />
-    <button class="btn" type="submit">Singup</button>
-    <div class="success-message">
-      Great! Check your inbox and click the link.
-    </div>
-    <div class="error-message">
-      Sorry, something went wrong. Please try again.
-    </div>
+    <input class="gh-form-input custom-input" data-members-name type="text" placeholder="name" required />
+    <input class="gh-form-input custom-input" data-members-email type="email" placeholder="email" required />
+      <button class="gh-button custom-button" type="submit" aria-label="Subskrybuj">
+    <span>Subskrybuj</span>
+    {{> "icons/loader"}}
+    {{> "icons/checkmark"}}
+  </button>
+     <p class="gh-form-message" data-members-error></p>
+  <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
   </form>
+  
 </div>
+
