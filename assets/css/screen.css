@@ -244,6 +244,7 @@ a:hover {
 
 /* Formularz – kontener */
 /* Kontener formularza – dopasowany do SOURCE */
+/* Formularz subskrypcji inspirowany stylem SOURCE */
 .subscription-form {
   display: flex;
   flex-direction: column;
@@ -258,13 +259,13 @@ a:hover {
   font-family: var(--gh-font-body, var(--font-sans));
 }
 
-/* Pojedyncze pole (label + input) */
+/* Pojedyncze pole (etykieta + input) */
 .subscription-field {
   display: flex;
   flex-direction: column;
 }
 
-/* Etykiety – na bazie .gh-form-label */
+/* Etykieta – wzorowana na .gh-form-label */
 .subscription-label {
   display: block;
   font-size: 1.4rem;
@@ -273,7 +274,7 @@ a:hover {
   margin-bottom: 6px;
 }
 
-/* Pola formularza – styl inspirowany .gh-form-input, ale z obrysem */
+/* Pole formularza – wzorowane na .gh-form-input, z dodanym obrysem */
 .subscription-input {
   width: 100%;
   padding: 10px 26px;
@@ -287,7 +288,7 @@ a:hover {
   transition: border-color 0.3s ease-in-out;
 }
 
-/* Przycisk – usuwamy pozycjonowanie absolute, nadajemy efekt "pill" */
+/* Przycisk – modyfikacja stylu .gh-button, usunięcie absolute */
 .subscription-btn {
   display: block;
   width: auto;
@@ -301,22 +302,22 @@ a:hover {
   border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: static; /* Nadpisujemy pozycjonowanie */
+  position: static; /* zapobiega absolute */
   text-align: center;
   overflow: hidden;
 }
 
-/* Ukrycie ikon wewnątrz przycisku */
+/* Ukrycie ikon loadera i checka wewnątrz przycisku */
 .subscription-btn svg,
 .subscription-btn [data-icon] {
   display: none !important;
 }
 
 .subscription-btn:hover {
-  background-color: #0056b3; /* Możesz dostosować lub użyć zmiennej */
+  background-color: #0056b3; /* lub użyj zmiennej, jeśli masz */
 }
 
-/* Komunikaty – zachowujemy spójność ze stylem SOURCE */
+/* Komunikaty – spójne z typografią SOURCE */
 .subscription-message {
   text-align: center;
   font-size: 1.4rem;
