@@ -240,6 +240,46 @@ a:hover {
     gap: 4px;
 }
 
+/* Kontener formularza – dodatkowa klasa */
+.custom-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+}
+
+/* Nowa klasa dla pól formularza – uzupełnij ją obok klasy gh-form-input */
+.custom-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+/* Nowa klasa dla przycisku */
+.custom-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: block;
+  margin: 20px auto 0;
+}
+
+.custom-button:hover {
+  background-color: #0056b3;
+}
+
+
 .gh-form.success {
     pointer-events: none;
 }
