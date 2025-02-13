@@ -243,15 +243,15 @@ a:hover {
 /* Kontener formularza – dodatkowa klasa */
 
 /* Formularz – kontener */
+/* Kontener formularza – dopasowany do SOURCE */
 .subscription-form {
-  /* Podobnie jak .gh-form w SOURCE */
   display: flex;
   flex-direction: column;
   align-items: stretch;
   max-width: 560px;
   width: 100%;
   padding: 16px;
-  background-color: var(--color-lighter-gray); /* korzystamy z zmiennej SOURCE */
+  background-color: var(--color-lighter-gray);
   border-radius: 40px;
   gap: 10px;
   margin: 2em auto;
@@ -264,7 +264,7 @@ a:hover {
   flex-direction: column;
 }
 
-/* Etykiety – podobnie jak .gh-form-label */
+/* Etykiety – na bazie .gh-form-label */
 .subscription-label {
   display: block;
   font-size: 1.4rem;
@@ -273,21 +273,21 @@ a:hover {
   margin-bottom: 6px;
 }
 
-/* Pola formularza – na bazie .gh-form-input, ale z własnym stylem */
+/* Pola formularza – styl inspirowany .gh-form-input, ale z obrysem */
 .subscription-input {
   width: 100%;
-  padding: 10px 26px; /* padding inline dopasowany do SOURCE */
+  padding: 10px 26px;
   font-size: inherit;
   letter-spacing: inherit;
   line-height: 1.1;
-  border: 1px solid var(--color-border); /* dodajemy delikatny obrys */
+  border: 1px solid var(--color-border);
   border-radius: 40px;
   background-color: transparent;
   outline: none;
   transition: border-color 0.3s ease-in-out;
 }
 
-/* Przycisk – dopasowany do stylu SOURCE, ale usunięto pozycjonowanie absolutne */
+/* Przycisk – usuwamy pozycjonowanie absolute, nadajemy efekt "pill" */
 .subscription-btn {
   display: block;
   width: auto;
@@ -301,19 +301,22 @@ a:hover {
   border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: static; /* usuwamy absolute */
+  position: static; /* Nadpisujemy pozycjonowanie */
+  text-align: center;
+  overflow: hidden;
 }
 
-/* Ukrywanie ikon loadera i check, chyba że chcesz je pokazywać w specyficznych stanach */
-.subscription-btn svg {
-  display: none;
+/* Ukrycie ikon wewnątrz przycisku */
+.subscription-btn svg,
+.subscription-btn [data-icon] {
+  display: none !important;
 }
 
 .subscription-btn:hover {
-  background-color: #0056b3; /* lub możesz użyć zmiennej, jeśli jest zdefiniowana */
+  background-color: #0056b3; /* Możesz dostosować lub użyć zmiennej */
 }
 
-/* Komunikaty – stylizacja zgodna ze skalą SOURCE */
+/* Komunikaty – zachowujemy spójność ze stylem SOURCE */
 .subscription-message {
   text-align: center;
   font-size: 1.4rem;
@@ -327,7 +330,6 @@ a:hover {
   display: block;
 }
 
-/* Jeśli chcesz, możesz dodatkowo nadpisać kolory komunikatów */
 .subscription-message.success-message {
   color: green;
 }
