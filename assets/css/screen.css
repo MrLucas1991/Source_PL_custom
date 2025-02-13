@@ -213,6 +213,15 @@ a:hover {
     transition: background-color 0.2s ease;
 }
 
+.gh-form-group {
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Upewnia się, że input nie jest absolutnie względem całej formy */
+    width: 100%;
+    gap: 6px; /* Dodanie odstępu między etykietą a inputem */
+    padding: 8px 0; /* Zapewnia dodatkowy odstęp między polami */
+}
+
 .gh-form.success {
     pointer-events: none;
 }
@@ -3341,12 +3350,6 @@ body[class*=" gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-hea
 
 
 /* Grupowanie pól formularza */
-.gh-form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-}
 
 /* Stylizacja sekcji konta */
 .gh-account-details {
