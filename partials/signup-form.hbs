@@ -1,12 +1,14 @@
 <form class="subscription-form" data-members-form="signup">
   <div class="subscription-field">
     <label for="signup-name" class="subscription-label">Imię</label>
-    <input id="signup-name" class="subscription-input" data-members-name type="text" placeholder="Wpisz swoje imię" required>
+    <input id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required 
+           data-members-name class="subscription-input">
   </div>
 
   <div class="subscription-field">
     <label for="signup-email" class="subscription-label">E-mail</label>
-    <input id="signup-email" class="subscription-input" data-members-email type="email" placeholder="Wpisz swój e-mail" required>
+    <input id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required 
+           data-members-email class="subscription-input">
   </div>
 
   <button class="subscription-btn" type="submit" aria-label="Subskrybuj">
