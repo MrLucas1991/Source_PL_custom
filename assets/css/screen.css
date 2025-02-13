@@ -276,22 +276,32 @@ a:hover {
 }
 
 /* Przycisk */
+/* Przycisk – nowa stylizacja */
 .custom-button {
   display: block;
   width: auto;
   margin: 20px auto 0;
-  padding: 10px 20px;
+  padding: 0.8em 1.4em;
   font-size: 16px;
   background-color: #007BFF;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 100px;  /* Zaokrąglony kształt */
   cursor: pointer;
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Ukrywanie aktywnych ikon loader i check wewnątrz przycisku */
+.custom-button svg {
+  display: none;
 }
 
 .custom-button:hover {
   background-color: #0056b3;
 }
+
 
 /* Komunikaty */
 .custom-message {
