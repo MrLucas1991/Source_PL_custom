@@ -242,43 +242,99 @@ a:hover {
 
 /* Kontener formularza – dodatkowa klasa */
 
+/* Formularz – kontener */
 .subscription-form {
+  /* Podobnie jak .gh-form w SOURCE */
   display: flex;
   flex-direction: column;
+  align-items: stretch;
+  max-width: 560px;
   width: 100%;
-  max-width: 30rem;
+  padding: 16px;
+  background-color: var(--color-lighter-gray); /* korzystamy z zmiennej SOURCE */
+  border-radius: 40px;
+  gap: 10px;
+  margin: 2em auto;
+  font-family: var(--gh-font-body, var(--font-sans));
 }
 
-.subscription-form input,
-.subscription-form button {
-  padding: 10px;
-  border-radius: 5px;
-  box-shadow: none;
-  border: 1px solid #cecece;
-  margin-bottom: 1em;
+/* Pojedyncze pole (label + input) */
+.subscription-field {
+  display: flex;
+  flex-direction: column;
 }
 
-.subscription-form .success-message,
-.subscription-form .error-message {
+/* Etykiety – podobnie jak .gh-form-label */
+.subscription-label {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--color-primary-text);
+  margin-bottom: 6px;
+}
+
+/* Pola formularza – na bazie .gh-form-input, ale z własnym stylem */
+.subscription-input {
+  width: 100%;
+  padding: 10px 26px; /* padding inline dopasowany do SOURCE */
+  font-size: inherit;
+  letter-spacing: inherit;
+  line-height: 1.1;
+  border: 1px solid var(--color-border); /* dodajemy delikatny obrys */
+  border-radius: 40px;
+  background-color: transparent;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+}
+
+/* Przycisk – dopasowany do stylu SOURCE, ale usunięto pozycjonowanie absolutne */
+.subscription-btn {
+  display: block;
+  width: auto;
+  margin: 20px auto 0;
+  padding: 0.8em 1.4em;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-white);
+  background-color: var(--ghost-accent-color);
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  position: static; /* usuwamy absolute */
+}
+
+/* Ukrywanie ikon loadera i check, chyba że chcesz je pokazywać w specyficznych stanach */
+.subscription-btn svg {
   display: none;
 }
 
-.subscription-form.error .error-message,
-.subscription-form.success .success-message {
+.subscription-btn:hover {
+  background-color: #0056b3; /* lub możesz użyć zmiennej, jeśli jest zdefiniowana */
+}
+
+/* Komunikaty – stylizacja zgodna ze skalą SOURCE */
+.subscription-message {
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 1.4;
+  display: none;
+  margin-top: 10px;
+}
+
+.subscription-form.success .subscription-message.success-message,
+.subscription-form.error .subscription-message.error-message {
   display: block;
 }
 
-.subscription-box {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 2em;
-  background-color: palegreen;
-  border-radius: 5px;
+/* Jeśli chcesz, możesz dodatkowo nadpisać kolory komunikatów */
+.subscription-message.success-message {
+  color: green;
 }
 
+.subscription-message.error-message {
+  color: red;
+}
 
 
 
