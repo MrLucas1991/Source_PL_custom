@@ -1,26 +1,9 @@
-<form class="gh-form custom-form" data-members-form="signup">
-  <input type="hidden" data-members-label value="Turntable buying guide">
-
-  <div class="gh-form-group">
-    <label>
-      Imię
-      <input class="gh-form-input custom-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
-    </label>
+<form class="subscription-form" data-members-form="signup">
+  <input data-members-name type="text" placeholder="name" required />
+  <input data-members-email type="email" placeholder="email" required />
+  <button class="btn" type="submit">Singup</button>
+  <div class="success-message">Great! Check your inbox and click the link.</div>
+  <div class="error-message">
+    Sorry, something went wrong. Please try again.
   </div>
-
-  <div class="gh-form-group">
-    <label for="signup-email" class="gh-form-label">
-      E-mail
-      <input class="gh-form-input custom-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-    </label>
-  </div>
-
-  <button class="gh-button custom-button" type="submit" aria-label="Subskrybuj">
-    <span>Subskrybuj</span>
-    {{> "icons/loader"}}
-    {{> "icons/checkmark"}}
-  </button>
-
-  <p class="gh-form-message" data-members-error></p>
-  <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
