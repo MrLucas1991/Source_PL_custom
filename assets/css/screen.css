@@ -231,13 +231,13 @@ a:hover {
     font-size: 1.4rem;
     font-weight: 600;
     color: var(--color-primary-text);
-    margin-bottom: 6px; /* Zapewnia odstęp od pola input */
+    margin-bottom: 16px; /* Zapewnia odstęp od pola input */
 }
 
 .gh-form-field {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 14px;
 }
 
 .gh-signup-input,
