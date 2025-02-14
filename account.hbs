@@ -23,7 +23,7 @@
 
                     {{#if @member.paid}}
                         <p class="gh-account-cancel">
-                            <button class="gh-account-button secondary" data-members-cancel-subscription>
+                            <button class="gh-button gh-button-secondary" data-members-cancel-subscription>
                                 Anuluj subskrypcję
                             </button>
                         </p>
@@ -32,7 +32,7 @@
                     <a class="gh-account-button primary" data-portal="account">Zarządzaj subskrypcją</a>
                 </div>
 
-                <button class="gh-account-button secondary" type="submit" data-members-signout aria-label="Wyloguj się">
+                <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się">
                     <span>Wyloguj się</span>
                     {{> "icons/loader"}}
                 </button>
