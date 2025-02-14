@@ -1,22 +1,17 @@
 {{!< default}}
 
 
-    <section class="membership-container">
-      <form class="gh-form" data-members-form>
-        <!-- Pole na imię (opcjonalne, dodane z atrybutem data-members-name) -->
-        <input class="gh-form-input" id="name_field" name="name" type="text" placeholder="Imię" required data-members-name>
-        <!-- Pole email --> <p>
-        <input class="gh-form-input" id="{{email_field_id}}" name="email" type="email" placeholder="jan@example.pl" required data-members-email>
-        </p>
-        <button class="gh-button" type="submit" aria-label="Zarejestruj się">
-          <span><span>Zarejestruj się</span> {{> "icons/arrow"}}</span>
-          {{> "icons/loader"}}
-          {{> "icons/checkmark"}}
-        </button>
-        <p data-members-error></p>
-      </form>
-      <p class="membership-link">
-        Masz już konto? <a href="/signin">Zaloguj się</a>
-      </p>
-    </section>
+    <form data-members-form=>
+  <input type="email" required data-members-email>
+  {{#get "newsletters"}}
+      {{#foreach newsletters}}
+        <label>
+          <input type="checkbox" value="{{name}}" data-members-newsletter />
+					{{name}}
+        </label>
+      {{/foreach}}
+  {{/get}}
+  <button type="submit">Subscribe</button>
+</form>
+
 
