@@ -308,53 +308,6 @@ button.gh-form-input {
     color: rgb(0 0 0 / 0.3);
 }
 
-/* Kontener formularza */
-.custom-form {
-  max-width: 500px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-family: Arial, sans-serif;
-}
-
-/* Etykiety */
-.custom-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-size: 16px;
-  color: #333;
-}
-
-/* Pola formularza */
-.custom-form input[type="text"],
-.custom-form input[type="email"],
-.custom-form input[type="password"],
-.custom-form input[type="number"] {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-  margin-bottom: 16px;
-}
-
-/* Przycisk */
-.custom-form button {
-  padding: 10px 20px;
-  font-size: 16px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.custom-form button:hover {
-  background-color: #0056b3;
-}
 
 
 :is(.has-serif-title, .has-mono-title):not([class*=" gh-font-heading"]):not([class^="gh-font-heading"]) .gh-form-input,
