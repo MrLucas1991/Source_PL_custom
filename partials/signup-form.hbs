@@ -1,14 +1,6 @@
 <form class="gh-signup-form" data-members-form>
 
     <div class="gh-signup-group">
-        <label for="signup-name" class="gh-signup-label">Imię</label>
-        <p></p>
-        <input class="gh-signup-input" id="signup-name" name="name" type="text" placeholder="Wpisz swoje imię" required data-members-name>
-    </div>
-    <p></p>
-
-    <div class="gh-signup-group">
-        <label for="signup-email" class="gh-signup-label">E-mail</label>
         <input class="gh-signup-input" id="{{email_field_id}}" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
     </div>
 
@@ -17,7 +9,6 @@
         {{> "icons/loader"}}
         {{> "icons/checkmark"}}
     </button>
-    <p data-members-error></p>
 
     <p data-members-error></p>
     <p data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
