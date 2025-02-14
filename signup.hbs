@@ -1,16 +1,16 @@
-{{!< default}}
+{{! signup.hbs - Strona rejestracji }}
+{{> header}}
 
-<main class="gh-main">
- 
-            <h1 class="gh-article-title is-title">Zarejestruj się</h1>
-            <p class="gh-article-excerpt is-body">Wprowadź swoje dane, aby utworzyć konto.</p>
-    
+<section class="membership-container">
+  <h1>Rejestracja</h1>
+  <form id="signup-form" action="#" method="post" data-ghost-membership class="membership-form">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Hasło" required>
+    <button type="submit">Zarejestruj się</button>
+  </form>
+  <p class="membership-link">
+    Masz już konto? <a href="/signin">Zaloguj się</a>
+  </p>
+</section>
 
-   
-            {{> "signup-form"}}
-            <p class="gh-helper-text">
-                Masz już konto? <a href="{{@site.url}}/login/">Zaloguj się</a>.
-            </p>
-   
-
-</main>
+{{> footer}}
