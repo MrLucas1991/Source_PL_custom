@@ -240,6 +240,37 @@ a:hover {
     gap: 4px;
 }
 
+.gh-signup-input,
+.gh-account-input {
+    width: 100%;
+    padding: 12px 20px;
+    font-size: 1.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 40px; /* Zaokrąglenie */
+    background-color: var(--color-lighter-gray);
+    transition: border-color 0.2s ease-in-out, background-color 0.2s ease-in-out;
+}
+
+.gh-signup-input:focus,
+.gh-account-input:focus {
+    border-color: var(--color-dark-gray);
+    background-color: var(--color-white);
+    outline: none;
+}
+
+.gh-signup-group {
+    margin-bottom: 16px; /* Zachowanie spójności z odstępami */
+}
+
+/* Dodatkowe style dla etykiet */
+.gh-signup-label {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-primary-text);
+    margin-bottom: 8px;
+    display: block;
+}
+
 
 .gh-form.success {
     pointer-events: none;
