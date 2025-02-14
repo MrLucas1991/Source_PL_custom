@@ -243,101 +243,104 @@ a:hover {
 /* Kontener formularza – dodatkowa klasa */
 
 /* Formularz – kontener */
-/* Kontener formularza – dopasowany do SOURCE */
-/* Formularz subskrypcji inspirowany stylem SOURCE */
-.subscription-form {
+/* Style dla stron membership – wzorowane na szablonie Source */
+
+.membership-container {
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-light-gray);
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.membership-container h1 {
+  font-size: calc(2.4rem * var(--factor, 1));
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--color-darker-gray);
+}
+
+.membership-form {
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  max-width: 560px;
-  width: 100%;
-  padding: 16px;
-  background-color: var(--color-lighter-gray);
-  border-radius: 40px;
-  gap: 10px;
-  margin: 2em auto;
-  font-family: var(--gh-font-body, var(--font-sans));
+  gap: 1.5rem;
 }
 
-/* Pojedyncze pole (etykieta + input) */
-.subscription-field {
-  display: flex;
-  flex-direction: column;
-}
-
-/* Etykieta – wzorowana na .gh-form-label */
-.subscription-label {
-  display: block;
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: var(--color-primary-text);
-  margin-bottom: 6px;
-}
-
-/* Pole formularza – wzorowane na .gh-form-input, z dodanym obrysem */
-.subscription-input {
-  width: 100%;
-  padding: 10px 26px;
-  font-size: inherit;
-  letter-spacing: inherit;
-  line-height: 1.1;
+.membership-form input[type="text"],
+.membership-form input[type="email"],
+.membership-form input[type="password"] {
+  padding: 1rem;
+  font-size: 1.6rem;
   border: 1px solid var(--color-border);
-  border-radius: 40px;
-  background-color: transparent;
-  outline: none;
-  transition: border-color 0.3s ease-in-out;
+  border-radius: 4px;
+  background-color: var(--color-white);
+  color: var(--color-primary-text);
+  transition: border-color 0.3s ease;
 }
 
-/* Przycisk – modyfikacja stylu .gh-button, usunięcie absolute */
-.subscription-btn {
-  display: block;
-  width: auto;
-  margin: 20px auto 0;
-  padding: 0.8em 1.4em;
-  font-size: 1.5rem;
+.membership-form input:focus {
+  outline: none;
+  border-color: var(--ghost-accent-color);
+}
+
+.membership-form button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
   font-weight: 600;
+  letter-spacing: -0.004em;
   color: var(--color-white);
   background-color: var(--ghost-accent-color);
   border: none;
   border-radius: 100px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  position: static; /* zapobiega absolute */
+}
+
+.membership-form button:hover {
+  background-color: var(--ghost-accent-color-hover, #005fa3);
+}
+
+.membership-link {
   text-align: center;
-  overflow: hidden;
-}
-
-/* Ukrycie ikon loadera i checka wewnątrz przycisku */
-.subscription-btn svg,
-.subscription-btn [data-icon] {
-  display: none !important;
-}
-
-.subscription-btn:hover {
-  background-color: #0056b3; /* lub użyj zmiennej, jeśli masz */
-}
-
-/* Komunikaty – spójne z typografią SOURCE */
-.subscription-message {
-  text-align: center;
+  margin-top: 1rem;
   font-size: 1.4rem;
-  line-height: 1.4;
-  display: none;
-  margin-top: 10px;
 }
 
-.subscription-form.success .subscription-message.success-message,
-.subscription-form.error .subscription-message.error-message {
-  display: block;
+.membership-link a {
+  color: var(--ghost-accent-color);
+  text-decoration: none;
 }
 
-.subscription-message.success-message {
-  color: green;
+.membership-link a:hover {
+  text-decoration: underline;
 }
 
-.subscription-message.error-message {
-  color: red;
+/* Dodatkowe style dla strony konta (edycja danych, cofnięcie subskrypcji) */
+.account-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
 }
+
+.account-actions button {
+  flex: 1;
+  margin: 0 0.5rem;
+}
+
+/* Responsywność */
+@media (max-width: 480px) {
+  .membership-container {
+    padding: 1.5rem;
+    margin: 2rem auto;
+  }
+}
+
 
 
 
