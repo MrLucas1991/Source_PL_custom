@@ -1,15 +1,26 @@
 {{!< default}}
 
-<section class="membership-container">
-  <h1>Rejestracja</h1>
-  <form id="signup-form" action="#" method="post" data-ghost-membership class="membership-form">
-    <input type="email" name="email" placeholder="Email" required>
-    <input type="password" name="password" placeholder="Hasło" required>
-    <button type="submit">Zarejestruj się</button>
-  </form>
-  <p class="membership-link">
-    Masz już konto? <a href="/signin">Zaloguj się</a>
-  </p>
-</section>
-
-
+<main class="gh-main">
+  <article class="gh-article membership-article">
+    <header class="gh-article-header">
+      <h1 class="gh-article-title is-title">Rejestracja</h1>
+    </header>
+    <section class="membership-container">
+      <form class="gh-form" data-members-form>
+        <!-- Pole na imię (opcjonalne, dodane z atrybutem data-members-name) -->
+        <input class="gh-form-input" id="name_field" name="name" type="text" placeholder="Imię" required data-members-name>
+        <!-- Pole email -->
+        <input class="gh-form-input" id="{{email_field_id}}" name="email" type="email" placeholder="jan@example.pl" required data-members-email>
+        <button class="gh-button" type="submit" aria-label="Zarejestruj się">
+          <span><span>Zarejestruj się</span> {{> "icons/arrow"}}</span>
+          {{> "icons/loader"}}
+          {{> "icons/checkmark"}}
+        </button>
+        <p data-members-error></p>
+      </form>
+      <p class="membership-link">
+        Masz już konto? <a href="/signin">Zaloguj się</a>
+      </p>
+    </section>
+  </article>
+</main>
