@@ -9,8 +9,8 @@
 
         <section class="gh-content gh-canvas is-body">
             <form class="gh-form gh-login-form" data-members-form>
+                <label for="login-email" class="gh-form-label">E-mail</label>
                 <div class="gh-form-group">
-                    <label for="login-email" class="gh-form-label">E-mail</label>
                     <input class="gh-form-input" id="login-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
                 </div>
 
@@ -19,9 +19,6 @@
                     {{> "icons/loader"}}
                     {{> "icons/checkmark"}}
                 </button>
-
-                <p class="gh-form-message" data-members-error></p>
-                <p class="gh-form-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
             </form>
 
             <p class="gh-helper-text">
