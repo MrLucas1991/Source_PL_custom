@@ -9,15 +9,16 @@
 
     <div class="gh-signup-group">
         <label for="signup-email" class="gh-signup-label">E-mail</label>
-        <input class="gh-signup-input" id="signup-email" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
+        <input class="gh-signup-input" id="{{email_field_id}}" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
     </div>
 
-    <button class="gh-button gh-button-secondary" type="submit" aria-label="Subskrybuj">
-        <span>Subskrybuj</span>
+<button class="gh-button" type="submit" aria-label="Subskrybuj">
+        <span><span>Subskrybuj</span> {{> "icons/arrow"}}</span>
         {{> "icons/loader"}}
         {{> "icons/checkmark"}}
     </button>
+    <p data-members-error></p>
 
-    <p class="gh-signup-message" data-members-error></p>
-    <p class="gh-signup-message" data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
+    <p data-members-error></p>
+    <p data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
