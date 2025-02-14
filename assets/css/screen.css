@@ -209,7 +209,7 @@ a:hover {
     border-radius: 40px;
     background-color: var(--color-lighter-gray);
     padding: 16px;
-    gap: 10px; /* Odstępy między polami */
+    gap: 440px; /* Odstępy między polami */
     transition: background-color 0.2s ease;
 }
 
