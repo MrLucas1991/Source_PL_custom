@@ -1,49 +1,110 @@
 {{!< default}}
 
-<main class="gh-main">
-    <article class="gh-article gh-canvas gh-account-container">
-        <header class="gh-article-header gh-account-header">
-            <h1 class="gh-article-title is-title">Moje konto</h1>
-            <p class="gh-article-excerpt is-body">Zarządzaj swoimi danymi i subskrypcjami.</p>
-        </header>
+<main class="gh-main gh-outer">
+  <header class="gh-article-header gh-account-header">
+    <h1 class="gh-article-title is-title">Moje konto</h1>
+    <p class="gh-article-excerpt is-body">Zarządzaj swoimi danymi i subskrypcjami.</p>
+  </header>
 
-        <section class="gh-content gh-canvas is-body">
-            {{#if @member}}
-                <div class="gh-account-details">
-                    <p class="gh-account-item">
-                        <strong>E-mail:</strong> {{@member.email}}
-                    </p>
+  <section class="gh-content gh-canvas is-body">
+    {{#if @member}}
+      <!-- Dane główne członka w formie tabelarycznej -->
+      <div class="gh-account-details">
+        <table class="account-table">
+          <tr>
+            <th>Imię</th>
+            <td>{{@member.name}}</td>
+          </tr>
+          <tr>
+            <th>E-mail</th>
+            <td>{{@member.email}}</td>
+          </tr>
+          <tr>
+            <th>Status subskrypcji</th>
+            <td>
+              <span class="gh-account-status {{#if @member.paid}}active{{else}}inactive{{/if}}">
+                {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
+              </span>
+            </td>
+          </tr>
+        </table>
 
-                    <p class="gh-account-item">
-                        <strong>Status subskrypcji:</strong> 
-                        <span class="gh-account-status {{#if @member.paid}}active{{else}}inactive{{/if}}">
-                            {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
-                        </span>
-                    </p>
+        {{!-- Przyciski i link do zarządzania subskrypcją --}}
+        {{#if @member.paid}}
+          <div class="gh-account-cancel">
+            <button class="gh-button gh-button-secondary" data-members-cancel-subscription>
+              Anuluj subskrypcję
+            </button>
+          </div>
+        {{/if}}
 
-                    {{#if @member.paid}}
-                        <p class="gh-account-cancel">
-                            <button class="gh-button gh-button-secondary" data-members-cancel-subscription>
-                                Anuluj subskrypcję
-                            </button>
-                        </p>
-                    {{/if}}
-                    
-                    <a class="gh-account-button primary" data-portal="account">Zarządzaj subskrypcją</a>
-                </div>
+        <a class="gh-account-button primary" data-portal="account">
+          Zarządzaj subskrypcją
+        </a>
+      </div>
 
-                <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się">
-                    <span>Wyloguj się</span>
-                </button>
-
-                <p class="gh-account-helper">
-                    Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
-                </p>
+      {{!-- Szczegóły subskrypcji --}}
+      {{#if @member.subscriptions}}
+        {{#foreach @member.subscriptions}}
+          <div class="subscription">
+            {{#if cancel_at_period_end}}
+              <p>
+                <strong class="subscription-expiration-warning">
+                  Twoja subskrypcja wygaśnie {{date current_period_end format="DD MMM YYYY"}}.
+                </strong>
+              </p>
             {{else}}
-                <p class="gh-account-helper">
-                    Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">Zarejestruj się</a>.
-                </p>
+              <p>Masz aktywną subskrypcję.</p>
             {{/if}}
-        </section>
-    </article>
+            <div class="subscriber-details">
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">Plan</label>
+                <span class="subscriber-detail-content">{{price plan}}/{{plan.interval}}</span>
+              </div>
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">Kwota planu</label>
+                <span class="subscriber-detail-content">{{plan.amount}}</span>
+              </div>
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">Status</label>
+                <span class="subscriber-detail-content">{{status}}</span>
+              </div>
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">Data rozpoczęcia</label>
+                <span class="subscriber-detail-content">{{date start_date format="DD MMM YYYY"}}</span>
+              </div>
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">Karta</label>
+                <span class="subscriber-detail-content">**** **** **** {{default_payment_card_last4}}</span>
+              </div>
+              <div class="subscriber-detail">
+                <label class="subscriber-detail-label">
+                  {{#if cancel_at_period_end}}
+                    Wygasa
+                  {{else}}
+                    Następna płatność
+                  {{/if}}
+                </label>
+                <span class="subscriber-detail-content">{{date current_period_end format="DD MMM YYYY"}}</span>
+              </div>
+            </div>
+            {{cancel_link}}
+          </div>
+        {{/foreach}}
+      {{/if}}
+
+      <!-- Przycisk wylogowania -->
+      <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się">
+        <span>Wyloguj się</span>
+        {{> "icons/loader"}}
+      </button>
+      <p class="gh-account-helper">
+        Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
+      </p>
+    {{else}}
+      <p class="gh-account-helper">
+        Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">Zarejestruj się</a>.
+      </p>
+    {{/if}}
+  </section>
 </main>
