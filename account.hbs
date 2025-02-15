@@ -8,7 +8,7 @@
 
   <section class="gh-content gh-canvas is-body">
     {{#if @member}}
-      <!-- Dane główne członka w formie tabelarycznej -->
+      <!-- Dane główne członka -->
       <div class="gh-account-details">
         <table class="account-table">
           <tr>
@@ -28,79 +28,68 @@
             </td>
           </tr>
         </table>
-
-        {{!-- Przyciski i link do zarządzania subskrypcją --}}
-        {{#if @member.paid}}
-          <div class="gh-account-cancel">
-            <button class="gh-button gh-button-secondary" data-members-cancel-subscription>
-              Anuluj subskrypcję
-            </button>
-          </div>
-        {{/if}}
-
-        <a class="gh-account-button primary" data-portal="account">
-          Zarządzaj subskrypcją
-        </a>
       </div>
 
-      {{!-- Szczegóły subskrypcji --}}
+      <!-- Szczegółowe dane subskrypcji -->
       {{#if @member.subscriptions}}
         {{#foreach @member.subscriptions}}
           <div class="subscription">
-            {{#if cancel_at_period_end}}
-              <p>
-                <strong class="subscription-expiration-warning">
-                  Twoja subskrypcja wygaśnie {{date current_period_end format="DD MMM YYYY"}}.
-                </strong>
-              </p>
-            {{else}}
-              <p>Masz aktywną subskrypcję.</p>
-            {{/if}}
-            <div class="subscriber-details">
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">Plan</label>
-                <span class="subscriber-detail-content">{{price plan}}/{{plan.interval}}</span>
-              </div>
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">Kwota planu</label>
-                <span class="subscriber-detail-content">{{plan.amount}}</span>
-              </div>
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">Status</label>
-                <span class="subscriber-detail-content">{{status}}</span>
-              </div>
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">Data rozpoczęcia</label>
-                <span class="subscriber-detail-content">{{date start_date format="DD MMM YYYY"}}</span>
-              </div>
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">Karta</label>
-                <span class="subscriber-detail-content">**** **** **** {{default_payment_card_last4}}</span>
-              </div>
-              <div class="subscriber-detail">
-                <label class="subscriber-detail-label">
+            <table class="account-table">
+              <tr>
+                <th>Plan</th>
+                <td>{{price plan}}/{{plan.interval}}</td>
+              </tr>
+              <tr>
+                <th>Kwota planu</th>
+                <td>{{plan.amount}}</td>
+              </tr>
+              <tr>
+                <th>Status</th>
+                <td>{{status}}</td>
+              </tr>
+              <tr>
+                <th>Data rozpoczęcia</th>
+                <td>{{date start_date format="DD MMM YYYY"}}</td>
+              </tr>
+              <tr>
+                <th>Karta</th>
+                <td>**** **** **** {{default_payment_card_last4}}</td>
+              </tr>
+              <tr>
+                <th>
                   {{#if cancel_at_period_end}}
                     Wygasa
                   {{else}}
                     Następna płatność
                   {{/if}}
-                </label>
-                <span class="subscriber-detail-content">{{date current_period_end format="DD MMM YYYY"}}</span>
-              </div>
+                </th>
+                <td>{{date current_period_end format="DD MMM YYYY"}}</td>
+              </tr>
+            </table>
+            <!-- Link anulowania subskrypcji -->
+            <div class="gh-account-cancel">
+              {{cancel_link}}
             </div>
-            {{cancel_link}}
           </div>
         {{/foreach}}
+      {{else}}
+        <p class="gh-account-helper">Brak aktywnej subskrypcji.</p>
       {{/if}}
 
       <!-- Przycisk wylogowania -->
-      <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się">
+      <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się" style="margin-top:24px;">
         <span>Wyloguj się</span>
         {{> "icons/loader"}}
       </button>
-      <p class="gh-account-helper">
+      <p class="gh-account-helper" style="margin-top:16px;">
         Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
       </p>
+
+      <!-- Dodatkowa pętla cancel_link, opcjonalnie -->
+      {{#foreach @member.subscriptions}}
+        {{cancel_link}}
+      {{/foreach}}
+
     {{else}}
       <p class="gh-account-helper">
         Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">Zarejestruj się</a>.
