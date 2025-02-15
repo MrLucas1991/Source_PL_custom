@@ -1,8 +1,7 @@
-<form class="gh-signup-form" data-members-form>
-
-    <div class="gh-signup-group">
+<form class="gh-form" data-members-form="signup">
+        <input data-members-name />
         <input class="gh-signup-input" id="{{email_field_id}}" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-    </div>
+    
 
 <button class="gh-button" type="submit" aria-label="Subskrybuj">
         <span><span>Subskrybuj</span> {{> "icons/arrow"}}</span>
@@ -11,5 +10,4 @@
     </button>
 
     <p data-members-error></p>
-    <p data-members-success>Sprawdź swoją skrzynkę e-mail.</p>
 </form>
