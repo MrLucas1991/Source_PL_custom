@@ -9,6 +9,8 @@
 
         <section class="gh-content gh-canvas is-body">
             <form class="gh-form gh-login-form" data-members-form="signin">
+                <input type="hidden" data-members-label value="Logowanie przez formularz główny" />
+
                 <input class="gh-form-input" id="login-email" name="email" type="email" placeholder="Twój email" required data-members-email>
 
                 <button class="gh-button gh-login-button" type="submit" aria-label="Zaloguj się">
@@ -16,7 +18,10 @@
                     {{> "icons/loader"}}
                     {{> "icons/checkmark"}}
                 </button>
-                <p data-members-error></p>
+
+                <p class="gh-members-feedback loading" data-members-loading>⏳ Przetwarzanie...</p>
+                <p class="gh-members-feedback error" data-members-error>❗ Coś poszło nie tak. Spróbuj ponownie.</p>
+                <p class="gh-members-feedback success" data-members-success>✅ Sukces! Sprawdź skrzynkę e-mail.</p>
             </form>
 
             <p class="gh-helper-text">
