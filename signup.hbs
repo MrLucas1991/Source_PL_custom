@@ -11,8 +11,13 @@
             <form class="gh-form gh-signup-form" data-members-form="signup">
                 <input type="hidden" data-members-label value="Rejestracja przez formularz główny" />
 
-                <input class="gh-form-input" name="name" type="text" placeholder="Twoje imię" data-members-name>
-                <input class="gh-form-input" name="email" type="email" placeholder="Twój email" required data-members-email>
+                <div class="gh-form-group">
+                    <input class="gh-form-input" name="name" type="text" placeholder="Twoje imię" data-members-name>
+                </div>
+
+                <div class="gh-form-group">
+                    <input class="gh-form-input" name="email" type="email" placeholder="Twój email" required data-members-email>
+                </div>
 
                 <button class="gh-button gh-signup-button" type="submit" aria-label="Dołącz">
                     <span><span>Dołącz</span> {{> "icons/arrow"}}</span>
