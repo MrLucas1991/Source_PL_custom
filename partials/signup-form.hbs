@@ -1,13 +1,10 @@
-<form class="gh-form" data-members-form="signup">
-        <input name="name" type="name" placeholder="Wpisz swoje imię" required data-members-name />
-        <input class="gh-signup-input" id="{{email_field_id}}" name="email" type="email" placeholder="Wpisz swój e-mail" required data-members-email>
-    
-
-<button class="gh-button" type="submit" aria-label="Subskrybuj">
-        <span><span>Subskrybuj</span> {{> "icons/arrow"}}</span>
-        {{> "icons/loader"}}
-        {{> "icons/checkmark"}}
-    </button>
-
-    <p data-members-error></p>
-</form>
+<section class="gh-outer">
+    <div class="gh-inner">
+        <h1 class="gh-header-title is-title">Zarejestruj się</h1>
+        <form class="gh-form" data-members-form="signup">
+            <input class="gh-form-input" name="email" type="email" placeholder="Twój email" required data-members-email>
+            <button class="gh-button" type="submit">Dołącz</button>
+            <p data-members-error></p>
+        </form>
+    </div>
+</section>
