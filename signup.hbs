@@ -12,10 +12,6 @@
                 <input type="hidden" data-members-label value="Rejestracja przez formularz główny" />
 
                 <div class="gh-form-group">
-                    <input class="gh-form-input" name="name" type="text" placeholder="Twoje imię" data-members-name>
-                </div>
-
-                <div class="gh-form-group">
                     <input class="gh-form-input" name="email" type="email" placeholder="Twój email" required data-members-email>
                 </div>
 
@@ -32,6 +28,9 @@
 
             <p class="gh-helper-text">
                 Masz już konto? <a href="{{@site.url}}/login/">Zaloguj się</a>.
+            </p>
+            <p class="gh-helper-text" style="margin-top: 12px;">
+                Po rejestracji możesz uzupełnić swoje imię na stronie <a href="{{@site.url}}/account/">Moje konto</a>.
             </p>
         </section>
     </article>
