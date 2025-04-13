@@ -1,6 +1,4 @@
 {{!< default}}
-{{!-- The tag above means: insert everything in this file into the body of the default.hbs template --}}
-
 {{#post}}
 
 <main class="gh-main">
@@ -46,9 +44,26 @@
 
         </header>
 
-        <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-            {{content}}
-        </section>
+        {{!-- 👇 Niestandardowy paywall --}}
+        {{#if access}}
+            {{#unless @member}}
+                <section class="gh-post-upgrade-cta gh-outer">
+                    <div class="gh-post-upgrade-cta-content" style="background-color: #956363; color: #fff; padding: 3em 2em; border-radius: 10px; text-align: center;">
+                        <h2 style="margin-bottom: 1em;">Ten artykuł jest dostępny tylko dla subskrybentów</h2>
+                        <a class="gh-btn" href="/subskrypcja" style="color:#fff; background-color:#000; border-radius:5px; padding:10px 20px; text-decoration:none; font-weight:bold;">Zobacz plany subskrypcji</a>
+                        <p style="margin-top: 1em;"><small>Masz już konto? <a href="/logowanie" style="color:#fff; text-decoration:underline;">Zaloguj się</a></small></p>
+                    </div>
+                </section>
+            {{else}}
+                <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+                    {{content}}
+                </section>
+            {{/unless}}
+        {{else}}
+            <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+                {{content}}
+            </section>
+        {{/if}}
 
     </article>
 
