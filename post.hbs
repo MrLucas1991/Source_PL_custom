@@ -44,26 +44,22 @@
 
         </header>
 
-        {{!-- 👇 Niestandardowy paywall --}}
-        {{#if access}}
-            {{#unless @member}}
-                <section class="gh-post-upgrade-cta gh-outer">
-                    <div class="gh-post-upgrade-cta-content" style="background-color: #956363; color: #fff; padding: 3em 2em; border-radius: 10px; text-align: center;">
-                        <h2 style="margin-bottom: 1em;">Ten artykuł jest dostępny tylko dla subskrybentów</h2>
-                        <a class="gh-btn" href="/subskrypcja" style="color:#fff; background-color:#000; border-radius:5px; padding:10px 20px; text-decoration:none; font-weight:bold;">Zobacz plany subskrypcji</a>
-                        <p style="margin-top: 1em;"><small>Masz już konto? <a href="/logowanie" style="color:#fff; text-decoration:underline;">Zaloguj się</a></small></p>
-                    </div>
-                </section>
-            {{else}}
-                <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-                    {{content}}
-                </section>
-            {{/unless}}
-        {{else}}
-            <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+        {{!-- Zmodyfikowana sekcja: treść lub komunikat --}}
+        <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+            {{#if @member}}
                 {{content}}
-            </section>
-        {{/if}}
+            {{else}}
+                {{#if access}}
+                    <div class="gh-post-upgrade-cta-content" style="background-color: #f3f3f3; padding: 2em; border-radius: 10px; text-align: center;">
+                        <h2 style="font-size: 1.8rem; margin-bottom: 0.8em;">Ten artykuł jest dostępny tylko dla subskrybentów</h2>
+                        <a href="/signup" class="gh-btn" style="background: #000; color: #fff; padding: 0.7em 1.4em; border-radius: 5px; font-weight: bold; text-decoration: none;">Zarejestruj się</a>
+                        <p style="margin-top: 1em;"><small>Masz już konto? <a href="/login" style="text-decoration: underline;">Zaloguj się</a></small></p>
+                    </div>
+                {{else}}
+                    {{content}}
+                {{/if}}
+            {{/if}}
+        </section>
 
     </article>
 
@@ -82,7 +78,7 @@
         {{#if next}}
             <section class="gh-container is-grid gh-outer">
                 <div class="gh-container-inner gh-inner">
-                    <h2 class="gh-container-title">Czytaj więcej</h2>
+                    <h2 class="gh-container-title">Read more</h2>
                     <div class="gh-feed">
                         {{#foreach next}}
                             {{> "post-card" lazyLoad=true}}
