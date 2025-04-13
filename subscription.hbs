@@ -11,7 +11,7 @@
       text-align: center;
       font-size: 2.4rem;
       font-weight: 600;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
     }
 
     .gh-subscription-plans {
@@ -30,11 +30,6 @@
       background: transparent;
       text-align: center;
       transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .gh-plan-card.selected {
-      border: 2px solid var(--ghost-accent-color, #000);
     }
 
     .gh-plan-card:hover {
@@ -55,12 +50,18 @@
     .gh-plan-benefits {
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
-      list-style: none;
-      padding: 0;
     }
 
-    .gh-plan-benefits li {
-      margin-bottom: 0.5rem;
+    .gh-plan-button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: var(--ghost-accent-color, #000);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
     }
 
     .gh-subscription-form {
@@ -77,7 +78,8 @@
       margin: 1rem 0 0.25rem;
     }
 
-    .gh-subscription-form input {
+    .gh-subscription-form input,
+    .gh-subscription-form select {
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
@@ -100,7 +102,6 @@
     .gh-subscription-form .form-message {
       margin-top: 1rem;
       font-size: 0.95rem;
-      color: #c00;
     }
 
     @media (max-width: 768px) {
@@ -119,17 +120,18 @@
     <h1 class="gh-subscription-title">Wybierz swój plan</h1>
 
     <div class="gh-subscription-plans">
-      <div class="gh-plan-card" data-plan="monthly" id="card-monthly">
+      <div class="gh-plan-card" data-plan="monthly">
         <h3>Plan miesięczny</h3>
         <div class="gh-plan-price" id="plan-monthly-price">…</div>
         <ul class="gh-plan-benefits">
-          <li>Dostęp do wszystkich treści premium</li>
+          <li>Dostęp do wszystkich artykułów</li>
           <li>Wsparcie niezależnego dziennikarstwa</li>
           <li>Miesięczna subskrypcja</li>
         </ul>
+        <button class="gh-plan-button" data-plan="monthly">Zasubskrybuj</button>
       </div>
 
-      <div class="gh-plan-card" data-plan="yearly" id="card-yearly">
+      <div class="gh-plan-card" data-plan="yearly">
         <h3>Plan roczny</h3>
         <div class="gh-plan-price" id="plan-yearly-price">…</div>
         <ul class="gh-plan-benefits">
@@ -137,6 +139,7 @@
           <li>2 miesiące gratis (płatność roczna)</li>
           <li>Dedykowany kontakt i konsultacje</li>
         </ul>
+        <button class="gh-plan-button" data-plan="yearly">Zasubskrybuj</button>
       </div>
     </div>
 
@@ -147,7 +150,7 @@
       <label for="signup-email">E-mail</label>
       <input type="email" id="signup-email" name="email" placeholder="adres@email.com" required>
 
-      <input type="hidden" id="selected-plan" name="plan">
+      <input type="hidden" id="signup-plan" name="plan" value="">
 
       <button type="submit">Zasubskrybuj</button>
       <div id="form-message" class="form-message"></div>
@@ -160,60 +163,14 @@
     document.addEventListener("DOMContentLoaded", async function () {
       const form = document.getElementById("custom-subscription-form");
       const messageBox = document.getElementById("form-message");
-      const planInput = document.getElementById("selected-plan");
+      const planInput = document.getElementById("signup-plan");
+      const planButtons = document.querySelectorAll(".gh-plan-button");
 
-      const cards = document.querySelectorAll(".gh-plan-card");
-
-      cards.forEach(card => {
-        card.addEventListener("click", () => {
-          cards.forEach(c => c.classList.remove("selected"));
-          card.classList.add("selected");
-          planInput.value = card.dataset.plan;
-        });
-      });
-
-      form.addEventListener("submit", async function (e) {
-        e.preventDefault();
-
-        const name = document.getElementById("signup-name").value;
-        const email = document.getElementById("signup-email").value;
-        const plan = planInput.value;
-
-        if (!plan) {
-          messageBox.textContent = "⚠️ Wybierz plan przed zapisaniem.";
-          return;
-        }
-
-        try {
-          await ghost.members.api.signup({ name, email, plan });
-          messageBox.style.color = "green";
-          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby potwierdzić subskrypcję.";
-          form.reset();
-          cards.forEach(c => c.classList.remove("selected"));
-        } catch (err) {
-          messageBox.textContent = "❌ Wystąpił błąd. Spróbuj ponownie.";
-        }
-      });
-
-      // Ceny
-      try {
-        const response = await fetch("/members/api/site/");
-        const data = await response.json();
-        const monthly = data.products.find(p => p.type === "paid" && p.monthly_price);
-        const yearly = data.products.find(p => p.type === "paid" && p.yearly_price);
-
-        if (monthly) {
-          document.getElementById("plan-monthly-price").textContent =
-            `${(monthly.monthly_price / 100).toFixed(2)} ${monthly.currency.toUpperCase()} / miesiąc`;
-        }
-
-        if (yearly) {
-          document.getElementById("plan-yearly-price").textContent =
-            `${(yearly.yearly_price / 100).toFixed(2)} ${yearly.currency.toUpperCase()} / rok`;
-        }
-      } catch (err) {
-        console.error("❌ Nie udało się pobrać danych planów:", err);
-      }
-    });
-  </script>
-</main>
+      // Ustawienie planu po kliknięciu przycisku
+      planButtons.forEach(button => {
+        button.addEventListener("click", function () {
+          const selectedPlan = this.getAttribute("data-plan");
+          planInput.value = selectedPlan;
+          window.scrollTo({ top: form.offsetTop, behavior: '
+::contentReference[oaicite:8]{index=8}
+ 
