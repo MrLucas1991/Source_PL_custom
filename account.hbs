@@ -7,107 +7,103 @@
   </header>
 
   <section class="gh-content gh-canvas is-body">
+
     {{#if @member}}
-      <!-- Dane główne członka -->
-      <div class="gh-account-details">
-        <table class="account-table">
+      <div class="gh-box" style="padding: 2rem; border: 1px solid #eaeaea; border-radius: 8px; background: #fff; margin-bottom: 2rem;">
+
+        <h2 class="is-title" style="margin-top: 0;">Dane konta</h2>
+        <table class="gh-table" style="width: 100%; margin-top: 1rem;">
           <tr>
-            <th>Imię</th>
+            <th style="text-align: left;">Imię</th>
             <td>{{@member.name}}</td>
           </tr>
           <tr>
-            <th>E-mail</th>
+            <th style="text-align: left;">E-mail</th>
             <td>{{@member.email}}</td>
           </tr>
           <tr>
-            <th>Status subskrypcji</th>
+            <th style="text-align: left;">Status subskrypcji</th>
             <td>
-              <span class="gh-account-status {{#if @member.paid}}active{{else}}inactive{{/if}}">
+              <span class="{{#if @member.paid}}has-text-success{{else}}has-text-danger{{/if}}">
                 {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
               </span>
             </td>
           </tr>
         </table>
-      </div>
 
-      <!-- Formularz edycji profilu -->
-      <div class="gh-account-edit-form" style="margin-top:32px;">
-        <h2>Zmień dane profilu</h2>
-        <form id="profile-update-form">
+        <hr style="margin: 2rem 0;">
+
+        <h3 class="is-title">Edytuj dane</h3>
+        <form id="profile-update-form" style="margin-top: 1rem;">
           <label for="name">Imię:</label>
-          <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}">
+          <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
 
           <label for="avatar">URL zdjęcia profilowego:</label>
-          <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}">
+          <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
 
           <button type="submit" class="gh-button">Zapisz zmiany</button>
-          <p id="update-feedback" style="margin-top:10px;"></p>
+          <p id="update-feedback" style="margin-top: 1rem; color: #4a4a4a;"></p>
         </form>
-      </div>
 
-      <!-- Szczegółowe dane subskrypcji -->
-      {{#if @member.subscriptions}}
-        {{#foreach @member.subscriptions}}
-          <div class="subscription" style="margin-top:32px;">
-            <table class="account-table">
+        {{#if @member.subscriptions}}
+          {{#foreach @member.subscriptions}}
+            <hr style="margin: 2rem 0;">
+            <h3 class="is-title">Twoja subskrypcja</h3>
+            <table class="gh-table" style="width: 100%; margin-top: 1rem;">
               <tr>
-                <th>Plan</th>
-                <td>{{price plan}}/{{plan.interval}}</td>
+                <th style="text-align: left;">Plan</th>
+                <td>{{price plan}} / {{plan.interval}}</td>
               </tr>
               <tr>
-                <th>Kwota planu</th>
-                <td>{{plan.amount}}</td>
-              </tr>
-              <tr>
-                <th>Status</th>
+                <th style="text-align: left;">Status</th>
                 <td>{{status}}</td>
               </tr>
               <tr>
-                <th>Data rozpoczęcia</th>
+                <th style="text-align: left;">Rozpoczęcie</th>
                 <td>{{date start_date format="DD MMM YYYY"}}</td>
               </tr>
               <tr>
-                <th>Karta</th>
+                <th style="text-align: left;">Karta</th>
                 <td>**** **** **** {{default_payment_card_last4}}</td>
               </tr>
               <tr>
-                <th>
-                  {{#if cancel_at_period_end}}
-                    Wygasa
-                  {{else}}
-                    Następna płatność
-                  {{/if}}
+                <th style="text-align: left;">
+                  {{#if cancel_at_period_end}}Wygasa{{else}}Następna płatność{{/if}}
                 </th>
                 <td>{{date current_period_end format="DD MMM YYYY"}}</td>
               </tr>
             </table>
-            <div class="gh-account-cancel">
+            <div class="gh-account-cancel" style="margin-top: 1rem;">
               {{cancel_link}}
             </div>
-          </div>
-        {{/foreach}}
-      {{else}}
-        <p class="gh-account-helper">Brak aktywnej subskrypcji.</p>
-      {{/if}}
+          {{/foreach}}
+        {{else}}
+          <p style="margin-top: 2rem;">Brak aktywnej subskrypcji.</p>
+        {{/if}}
 
-      <!-- Przycisk wylogowania -->
-      <button class="gh-button gh-button-secondary" type="submit" data-members-signout aria-label="Wyloguj się" style="margin-top:24px;">
-        <span>Wyloguj się</span>
-        {{> "icons/loader"}}
-      </button>
+        <hr style="margin: 2rem 0;">
+        <button class="gh-button gh-button-secondary" data-members-signout>
+          <span>Wyloguj się</span>
+          {{> "icons/loader"}}
+        </button>
 
-      <p class="gh-account-helper" style="margin-top:16px;">
-        Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
-      </p>
+        <p style="margin-top: 1rem;">Masz problem? <a href="/kontakt/">Skontaktuj się z nami</a>.</p>
+      </div>
+
+      <div style="text-align: center;">
+        <a href="/napiwek" class="gh-button" style="border: 1px solid #000; background: transparent; color: #000;">
+          PRZEKAŻ NAPIWEK
+        </a>
+      </div>
 
     {{else}}
       <p class="gh-account-helper">
-        Nie jesteś zalogowany. <a href="{{@site.url}}/login/">Zaloguj się</a> lub <a href="{{@site.url}}/signup/">Zarejestruj się</a>.
+        Nie jesteś zalogowany. <a href="/login/">Zaloguj się</a> lub <a href="/signup/">Zarejestruj się</a>.
       </p>
     {{/if}}
+
   </section>
 
-  <!-- Skrypt aktualizacji profilu -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('profile-update-form');
