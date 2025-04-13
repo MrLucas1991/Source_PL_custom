@@ -30,10 +30,25 @@
         </table>
       </div>
 
+      <!-- Formularz edycji profilu -->
+      <div class="gh-account-edit-form" style="margin-top:32px;">
+        <h2>Zmień dane profilu</h2>
+        <form id="profile-update-form">
+          <label for="name">Imię:</label>
+          <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}">
+
+          <label for="avatar">URL zdjęcia profilowego:</label>
+          <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}">
+
+          <button type="submit" class="gh-button">Zapisz zmiany</button>
+          <p id="update-feedback" style="margin-top:10px;"></p>
+        </form>
+      </div>
+
       <!-- Szczegółowe dane subskrypcji -->
       {{#if @member.subscriptions}}
         {{#foreach @member.subscriptions}}
-          <div class="subscription">
+          <div class="subscription" style="margin-top:32px;">
             <table class="account-table">
               <tr>
                 <th>Plan</th>
@@ -66,7 +81,6 @@
                 <td>{{date current_period_end format="DD MMM YYYY"}}</td>
               </tr>
             </table>
-            <!-- Link anulowania subskrypcji -->
             <div class="gh-account-cancel">
               {{cancel_link}}
             </div>
@@ -81,14 +95,10 @@
         <span>Wyloguj się</span>
         {{> "icons/loader"}}
       </button>
+
       <p class="gh-account-helper" style="margin-top:16px;">
         Masz problem? <a href="{{@site.url}}/kontakt/">Skontaktuj się z nami</a>.
       </p>
-
-      <!-- Dodatkowa pętla cancel_link, opcjonalnie -->
-      {{#foreach @member.subscriptions}}
-        {{cancel_link}}
-      {{/foreach}}
 
     {{else}}
       <p class="gh-account-helper">
@@ -96,4 +106,28 @@
       </p>
     {{/if}}
   </section>
+
+  <!-- Skrypt aktualizacji profilu -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('profile-update-form');
+      const feedback = document.getElementById('update-feedback');
+
+      if (form) {
+        form.addEventListener('submit', async function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById('name').value;
+          const avatar = document.getElementById('avatar').value;
+
+          try {
+            await ghost.members.api.member.update({ name, avatar });
+            feedback.innerText = "✅ Zaktualizowano dane!";
+          } catch (err) {
+            feedback.innerText = "❌ Wystąpił błąd przy zapisie.";
+          }
+        });
+      }
+    });
+  </script>
 </main>
