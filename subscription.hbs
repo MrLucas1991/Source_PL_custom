@@ -176,11 +176,7 @@
 
           // zaznacz aktywną kartę
           planCards.forEach(card => {
-            if (card.getAttribute("data-plan") === plan) {
-              card.classList.add("active");
-            } else {
-              card.classList.remove("active");
-            }
+            card.classList.toggle("active", card.getAttribute("data-plan") === plan);
           });
 
           form.scrollIntoView({ behavior: "smooth" });
@@ -201,8 +197,11 @@
         }
 
         try {
-          await ghost.members.api.signup({ name, email, plan });
-          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby potwierdzić subskrypcję.";
+          await ghost.members.api.signup({ name, email });
+
+          ghost.portal.open({ page: "signup", plan: plan });
+
+          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby dokończyć proces.";
           form.reset();
           planInput.value = "";
           planCards.forEach(c => c.classList.remove("active"));
