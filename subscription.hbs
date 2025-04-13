@@ -2,22 +2,90 @@
 
 <main class="gh-main gh-outer">
   <style>
-    .subscription-form {
-      max-width: 600px;
-      margin: 0 auto;
+    .gh-subscription-wrapper {
+      max-width: 900px;
+      margin: 4rem auto 2rem;
+    }
+
+    .gh-subscription-title {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 600;
+      margin-bottom: 3rem;
+    }
+
+    .gh-subscription-plans {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 3rem;
+    }
+
+    .gh-plan-card {
+      flex: 1 1 300px;
+      border: 1px solid #eaeaea;
+      border-radius: 10px;
+      padding: 2rem;
+      background: transparent;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .gh-plan-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    }
+
+    .gh-plan-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .gh-plan-price {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: var(--ghost-accent-color, #000);
+    }
+
+    .gh-plan-benefits {
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    .gh-plan-benefits li {
+      margin-bottom: 0.5rem;
+    }
+
+    .gh-plan-button {
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      background: var(--ghost-accent-color, #000);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .gh-subscription-form {
+      max-width: 700px;
+      margin: 0 auto 4rem;
       background: transparent;
       border: 1px solid #eaeaea;
       padding: 2rem;
       border-radius: 8px;
     }
 
-    .subscription-form label {
+    .gh-subscription-form label {
       display: block;
       margin: 1rem 0 0.25rem;
     }
 
-    .subscription-form input,
-    .subscription-form select {
+    .gh-subscription-form input,
+    .gh-subscription-form select {
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
@@ -25,7 +93,7 @@
       border-radius: 4px;
     }
 
-    .subscription-form button {
+    .gh-subscription-form button {
       margin-top: 1.5rem;
       width: 100%;
       background: var(--ghost-accent-color, #000);
@@ -37,27 +105,52 @@
       border-radius: 4px;
     }
 
-    .subscription-form .form-message {
+    .gh-subscription-form .form-message {
       margin-top: 1rem;
       font-size: 0.95rem;
+      color: #c00;
     }
 
     @media (max-width: 768px) {
-      .subscription-form {
+      .gh-subscription-form,
+      .gh-subscription-wrapper {
         padding: 1rem;
       }
-    }
 
-    .gh-subscription-title {
-      text-align: center;
-      margin-bottom: 2rem;
+      .gh-subscription-title {
+        font-size: 2rem;
+      }
     }
   </style>
 
-  <section class="gh-content gh-canvas is-body">
+  <section class="gh-subscription-wrapper">
     <h1 class="gh-subscription-title">Wybierz swój plan</h1>
 
-    <form id="custom-subscription-form" class="subscription-form">
+    <div class="gh-subscription-plans">
+      <div class="gh-plan-card" data-plan="monthly">
+        <h3>Plan miesięczny</h3>
+        <div class="gh-plan-price" id="plan-monthly-price">…</div>
+        <ul class="gh-plan-benefits">
+          <li>Dostęp do wszystkich treści premium</li>
+          <li>Wsparcie niezależnego dziennikarstwa</li>
+          <li>Miesięczna subskrypcja</li>
+        </ul>
+        <a href="/#/portal/signup?plan=monthly" class="gh-plan-button">Zasubskrybuj</a>
+      </div>
+
+      <div class="gh-plan-card" data-plan="yearly">
+        <h3>Plan roczny</h3>
+        <div class="gh-plan-price" id="plan-yearly-price">…</div>
+        <ul class="gh-plan-benefits">
+          <li>Wszystko z planu miesięcznego</li>
+          <li>2 miesiące gratis (płatność roczna)</li>
+          <li>Dedykowany kontakt i konsultacje</li>
+        </ul>
+        <a href="/#/portal/signup?plan=yearly" class="gh-plan-button">Zasubskrybuj</a>
+      </div>
+    </div>
+
+    <form id="custom-subscription-form" class="gh-subscription-form">
       <label for="signup-name">Imię</label>
       <input type="text" id="signup-name" name="name" placeholder="Twoje imię" required>
 
@@ -79,11 +172,12 @@
   </section>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", async function () {
       const form = document.getElementById("custom-subscription-form");
       const messageBox = document.getElementById("form-message");
 
-      form.addEventListener("submit", async function (e) {
+      // Obsługa formularza
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const name = document.getElementById("signup-name").value;
@@ -95,18 +189,32 @@
           return;
         }
 
-        try {
-          await ghost.members.api.signup({
-            name: name,
-            email: email,
-            plan: plan
-          });
-          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby potwierdzić subskrypcję.";
-          form.reset();
-        } catch (err) {
-          messageBox.textContent = "❌ Wystąpił błąd. Spróbuj ponownie.";
-        }
+        // Przekierowanie do Ghost Portal
+        const redirectURL = `/#/portal/signup?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&plan=${encodeURIComponent(plan)}`;
+        window.location.href = redirectURL;
       });
+
+      // Pobierz dane planów z Ghost
+      try {
+        const response = await fetch("/members/api/site/");
+        const data = await response.json();
+        const [monthlyProduct] = data.products.filter(p => p.type === "paid" && p.monthly_price);
+        const [yearlyProduct] = data.products.filter(p => p.type === "paid" && p.yearly_price);
+
+        if (monthlyProduct && monthlyProduct.monthly_price) {
+          const currency = monthlyProduct.currency.toUpperCase();
+          document.getElementById("plan-monthly-price").textContent =
+            `${(monthlyProduct.monthly_price / 100).toFixed(2)} ${currency} / miesiąc`;
+        }
+
+        if (yearlyProduct && yearlyProduct.yearly_price) {
+          const currency = yearlyProduct.currency.toUpperCase();
+          document.getElementById("plan-yearly-price").textContent =
+            `${(yearlyProduct.yearly_price / 100).toFixed(2)} ${currency} / rok`;
+        }
+      } catch (err) {
+        console.error("Nie udało się pobrać danych planów z Ghost:", err);
+      }
     });
   </script>
 </main>
