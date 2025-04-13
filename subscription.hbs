@@ -52,7 +52,7 @@
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
       text-align: left;
-      padding-left: 1.2rem;
+      padding-left: 1rem;
     }
 
     .gh-plan-button {
@@ -177,15 +177,19 @@
           planInput.value = plan;
 
           planCards.forEach(card => {
-            card.classList.toggle("active", card.getAttribute("data-plan") === plan);
+            if (card.getAttribute("data-plan") === plan) {
+              card.classList.add("active");
+            } else {
+              card.classList.remove("active");
+            }
           });
 
           form.scrollIntoView({ behavior: "smooth" });
         });
       });
 
-      // Formularz rejestracji
-      form.addEventListener("submit", async function (e) {
+      // Otwarcie formularza Ghost Portal z danymi
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         const name = document.getElementById("signup-name").value;
@@ -197,39 +201,27 @@
           return;
         }
 
-        try {
-          await ghost.members.api.signup({ name, email });
-          ghost.portal.open({ page: "signup", plan: plan });
-
-          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby potwierdzić subskrypcję.";
-          form.reset();
-          planInput.value = "";
-          planCards.forEach(c => c.classList.remove("active"));
-        } catch (err) {
-          messageBox.textContent = "❌ Wystąpił błąd. Spróbuj ponownie.";
-        }
+        ghost.portal.open({
+          page: "signup",
+          name: name,
+          email: email,
+          plan: plan
+        });
       });
 
-      // Pobieranie danych planów
+      // Pobierz dane planów z Ghost
       try {
         const response = await fetch("/members/api/site/");
         const data = await response.json();
         const product = data.products.find(p => p.type === "paid");
 
         if (product) {
-          const currency = product.currency.toUpperCase();
           const monthly = product.monthly_price;
           const yearly = product.yearly_price;
+          const currency = product.currency.toUpperCase();
 
-          if (monthly) {
-            document.getElementById("plan-monthly-price").textContent =
-              `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
-          }
-
-          if (yearly) {
-            document.getElementById("plan-yearly-price").textContent =
-              `${(yearly / 100).toFixed(2)} ${currency} / rok`;
-          }
+          document.getElementById("plan-monthly-price").textContent = `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
+          document.getElementById("plan-yearly-price").textContent = `${(yearly / 100).toFixed(2)} ${currency} / rok`;
         }
       } catch (err) {
         console.error("Nie udało się pobrać danych planów z Ghost.");
