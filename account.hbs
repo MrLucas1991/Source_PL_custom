@@ -9,7 +9,7 @@
   <section class="gh-content gh-canvas is-body">
 
     {{#if @member}}
-      <div class="gh-box" style="padding: 2rem; border: 1px solid #eaeaea; border-radius: 8px; background: #fff; margin-bottom: 2rem;">
+      <div class="gh-box" style="padding: 2rem; border: 1px solid #eaeaea; border-radius: 8px; background: transparent; margin-bottom: 2rem;">
 
         <h2 class="is-title" style="margin-top: 0;">Dane konta</h2>
         <table class="gh-table" style="width: 100%; margin-top: 1rem;">
@@ -22,6 +22,12 @@
             <td>{{@member.email}}</td>
           </tr>
           <tr>
+            <th style="text-align: left;">Avatar</th>
+            <td>
+              <img src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar" style="height: 80px; border-radius: 8px;">
+            </td>
+          </tr>
+          <tr>
             <th style="text-align: left;">Status subskrypcji</th>
             <td>
               <span class="{{#if @member.paid}}has-text-success{{else}}has-text-danger{{/if}}">
@@ -31,19 +37,22 @@
           </tr>
         </table>
 
-        <hr style="margin: 2rem 0;">
+        <div style="text-align: center; margin: 2rem 0;">
+          <button id="toggle-edit" class="gh-button" style="background: transparent; border: 2px solid #000; color: #000;">Edytuj dane</button>
+        </div>
 
-        <h3 class="is-title">Edytuj dane</h3>
-        <form id="profile-update-form" style="margin-top: 1rem;">
-          <label for="name">Imię:</label>
-          <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
+        <div id="edit-form-wrapper" style="display: none; background: transparent;">
+          <form id="profile-update-form" style="margin-top: 1rem;">
+            <label for="name">Imię:</label>
+            <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
 
-          <label for="avatar">URL zdjęcia profilowego:</label>
-          <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
+            <label for="avatar">URL zdjęcia profilowego:</label>
+            <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
 
-          <button type="submit" class="gh-button">Zapisz zmiany</button>
-          <p id="update-feedback" style="margin-top: 1rem; color: #4a4a4a;"></p>
-        </form>
+            <button type="submit" class="gh-button">Zapisz zmiany</button>
+            <p id="update-feedback" style="margin-top: 1rem; color: #4a4a4a;"></p>
+          </form>
+        </div>
 
         {{#if @member.subscriptions}}
           {{#foreach @member.subscriptions}}
@@ -56,7 +65,7 @@
               </tr>
               <tr>
                 <th style="text-align: left;">Status</th>
-                <td>{{status}}</td>
+                <td class="subscription-status">{{status}}</td>
               </tr>
               <tr>
                 <th style="text-align: left;">Rozpoczęcie</th>
@@ -108,11 +117,24 @@
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('profile-update-form');
       const feedback = document.getElementById('update-feedback');
+      const toggleButton = document.getElementById('toggle-edit');
+      const editForm = document.getElementById('edit-form-wrapper');
 
+      // Akordeon
+      if (toggleButton && editForm) {
+        toggleButton.addEventListener('click', () => {
+          if (editForm.style.display === 'none') {
+            editForm.style.display = 'block';
+          } else {
+            editForm.style.display = 'none';
+          }
+        });
+      }
+
+      // Aktualizacja danych
       if (form) {
         form.addEventListener('submit', async function (e) {
           e.preventDefault();
-
           const name = document.getElementById('name').value;
           const avatar = document.getElementById('avatar').value;
 
@@ -124,6 +146,19 @@
           }
         });
       }
+
+      // Tłumaczenia z Ghost
+      document.querySelectorAll('.gh-account-cancel a').forEach(link => {
+        if (link.textContent.trim() === 'Cancel subscription') {
+          link.textContent = 'Anuluj subskrypcję';
+        }
+      });
+
+      document.querySelectorAll('.subscription-status').forEach(status => {
+        if (status.textContent.trim() === 'active') {
+          status.textContent = 'aktywna';
+        }
+      });
     });
   </script>
 </main>
