@@ -1,137 +1,160 @@
 {{!< default}}
 
 <main class="gh-main gh-outer">
+  <style>
+    @media (min-width: 768px) {
+      .gh-account-header {
+        margin-left: 25%;
+      }
+    }
+
+    #edit-form-wrapper,
+    #delete-confirm-wrapper {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease;
+    }
+
+    #edit-form-wrapper.active,
+    #delete-confirm-wrapper.active {
+      max-height: 500px;
+    }
+
+    .gh-delete-button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: 2px solid red;
+      background: red;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .gh-delete-button.alt {
+      background: transparent;
+      color: var(--ghost-accent-color, #000);
+      border-color: var(--ghost-accent-color, #000);
+    }
+  </style>
+
   <header class="gh-article-header gh-account-header">
     <h1 class="gh-article-title is-title">Moje konto</h1>
     <p class="gh-article-excerpt is-body">Zarządzaj swoimi danymi i subskrypcjami.</p>
   </header>
 
   <section class="gh-content gh-canvas is-body">
-
     {{#if @member}}
-      <div class="gh-box" style="padding: 2rem; border: 1px solid #eaeaea; border-radius: 8px; background: transparent; margin-bottom: 2rem;">
+    <div class="gh-box" style="padding: 2rem; border: 1px solid #eaeaea; border-radius: 8px; background: transparent; margin-bottom: 2rem;">
+      <h2 class="is-title" style="margin-top: 0;">Dane konta</h2>
+      <table class="gh-table" style="width: 100%; margin-top: 1rem;">
+        <tr><th>Imię</th><td>{{@member.name}}</td></tr>
+        <tr><th>E-mail</th><td>{{@member.email}}</td></tr>
+        <tr><th>Avatar</th>
+          <td><img src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar" style="height: 80px; border-radius: 8px;"></td>
+        </tr>
+        <tr><th>Status subskrypcji</th>
+          <td><span class="{{#if @member.paid}}has-text-success{{else}}has-text-danger{{/if}}">
+            {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
+          </span></td>
+        </tr>
+      </table>
 
-        <h2 class="is-title" style="margin-top: 0;">Dane konta</h2>
-        <table class="gh-table" style="width: 100%; margin-top: 1rem;">
-          <tr>
-            <th style="text-align: left;">Imię</th>
-            <td>{{@member.name}}</td>
-          </tr>
-          <tr>
-            <th style="text-align: left;">E-mail</th>
-            <td>{{@member.email}}</td>
-          </tr>
-          <tr>
-            <th style="text-align: left;">Avatar</th>
-            <td>
-              <img src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar" style="height: 80px; border-radius: 8px;">
-            </td>
-          </tr>
-          <tr>
-            <th style="text-align: left;">Status subskrypcji</th>
-            <td>
-              <span class="{{#if @member.paid}}has-text-success{{else}}has-text-danger{{/if}}">
-                {{#if @member.paid}}Aktywna{{else}}Brak aktywnej subskrypcji{{/if}}
-              </span>
-            </td>
-          </tr>
-        </table>
-
-        <div style="text-align: center; margin: 2rem 0;">
-          <button id="toggle-edit" class="gh-button" style="background: transparent; border: 2px solid #000; color: #000;">Edytuj dane</button>
-        </div>
-
-        <div id="edit-form-wrapper" style="display: none; background: transparent;">
-          <form id="profile-update-form" style="margin-top: 1rem;">
-            <label for="name">Imię:</label>
-            <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
-
-            <label for="avatar">URL zdjęcia profilowego:</label>
-            <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
-
-            <button type="submit" class="gh-button">Zapisz zmiany</button>
-            <p id="update-feedback" style="margin-top: 1rem; color: #4a4a4a;"></p>
-          </form>
-        </div>
-
-        {{#if @member.subscriptions}}
-          {{#foreach @member.subscriptions}}
-            <hr style="margin: 2rem 0;">
-            <h3 class="is-title">Twoja subskrypcja</h3>
-            <table class="gh-table" style="width: 100%; margin-top: 1rem;">
-              <tr>
-                <th style="text-align: left;">Plan</th>
-                <td>{{price plan}} / {{plan.interval}}</td>
-              </tr>
-              <tr>
-                <th style="text-align: left;">Status</th>
-                <td class="subscription-status">{{status}}</td>
-              </tr>
-              <tr>
-                <th style="text-align: left;">Rozpoczęcie</th>
-                <td>{{date start_date format="DD MMM YYYY"}}</td>
-              </tr>
-              <tr>
-                <th style="text-align: left;">Karta</th>
-                <td>**** **** **** {{default_payment_card_last4}}</td>
-              </tr>
-              <tr>
-                <th style="text-align: left;">
-                  {{#if cancel_at_period_end}}Wygasa{{else}}Następna płatność{{/if}}
-                </th>
-                <td>{{date current_period_end format="DD MMM YYYY"}}</td>
-              </tr>
-            </table>
-            <div class="gh-account-cancel" style="margin-top: 1rem;">
-              {{cancel_link}}
-            </div>
-          {{/foreach}}
-        {{else}}
-          <p style="margin-top: 2rem;">Brak aktywnej subskrypcji.</p>
-        {{/if}}
-
-        <hr style="margin: 2rem 0;">
-        <button class="gh-button gh-button-secondary" data-members-signout>
-          <span>Wyloguj się</span>
-          {{> "icons/loader"}}
-        </button>
-
-        <p style="margin-top: 1rem;">Masz problem? <a href="/kontakt/">Skontaktuj się z nami</a>.</p>
+      <div style="text-align: center; margin: 2rem 0;">
+        <button id="toggle-edit" class="gh-button" style="background: transparent; border: 2px solid #000; color: #000;">Edytuj dane</button>
       </div>
 
+      <div id="edit-form-wrapper">
+        <form id="profile-update-form" style="margin-top: 1rem;">
+          <label for="name">Imię:</label>
+          <input type="text" id="name" name="name" placeholder="Twoje imię" value="{{@member.name}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
+          <label for="avatar">URL zdjęcia profilowego:</label>
+          <input type="url" id="avatar" name="avatar" placeholder="https://..." value="{{@member.avatar}}" class="gh-input" style="width: 100%; margin-bottom: 1rem;">
+          <button type="submit" class="gh-button">Zapisz zmiany</button>
+          <p id="update-feedback" style="margin-top: 1rem;"></p>
+        </form>
+      </div>
+
+      {{#if @member.subscriptions}}
+        {{#foreach @member.subscriptions}}
+          <hr style="margin: 2rem 0;">
+          <h3 class="is-title">Twoja subskrypcja</h3>
+          <table class="gh-table" style="width: 100%; margin-top: 1rem;">
+            <tr><th>Plan</th><td>{{price plan}} / {{plan.interval}}</td></tr>
+            <tr><th>Status</th><td class="subscription-status">{{status}}</td></tr>
+            <tr><th>Rozpoczęcie</th><td>{{date start_date format="DD MMM YYYY"}}</td></tr>
+            <tr><th>Karta</th><td>**** **** **** {{default_payment_card_last4}}</td></tr>
+            <tr><th>{{#if cancel_at_period_end}}Wygasa{{else}}Następna płatność{{/if}}</th><td>{{date current_period_end format="DD MMM YYYY"}}</td></tr>
+          </table>
+          <div class="gh-account-cancel" style="margin-top: 1rem;">
+            {{cancel_link}}
+          </div>
+        {{/foreach}}
+      {{else}}
+        <p style="margin-top: 2rem;">Brak aktywnej subskrypcji.</p>
+      {{/if}}
+
+      <hr style="margin: 2rem 0;">
+      <button class="gh-button gh-button-secondary" data-members-signout>
+        <span>Wyloguj się</span>
+        {{> "icons/loader"}}
+      </button>
+
+      <p style="margin-top: 1rem;">Masz problem? <a href="/kontakt/">Skontaktuj się z nami</a>.</p>
+
+      <!-- Usuń konto -->
       <div style="text-align: center;">
-        <a href="/napiwek" class="gh-button" style="border: 1px solid #000; background: transparent; color: #000;">
-          PRZEKAŻ NAPIWEK
-        </a>
+        <button id="toggle-delete" class="gh-delete-button">USUŃ KONTO</button>
+        <div id="delete-confirm-wrapper">
+          <p style="margin-top: 1.5rem; color: #c00;">Czy na pewno chcesz usunąć swoje konto? Tego działania nie można cofnąć.</p>
+          <button id="delete-final" class="gh-button" style="margin-top: 1rem;">Potwierdzam usunięcie konta</button>
+        </div>
       </div>
 
+    </div>
     {{else}}
-      <p class="gh-account-helper">
-        Nie jesteś zalogowany. <a href="/login/">Zaloguj się</a> lub <a href="/signup/">Zarejestruj się</a>.
-      </p>
+      <p class="gh-account-helper">Nie jesteś zalogowany. <a href="/login/">Zaloguj się</a> lub <a href="/signup/">Zarejestruj się</a>.</p>
     {{/if}}
-
   </section>
 
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       const form = document.getElementById('profile-update-form');
       const feedback = document.getElementById('update-feedback');
-      const toggleButton = document.getElementById('toggle-edit');
-      const editForm = document.getElementById('edit-form-wrapper');
+      const editToggle = document.getElementById('toggle-edit');
+      const editWrapper = document.getElementById('edit-form-wrapper');
+      const deleteToggle = document.getElementById('toggle-delete');
+      const deleteWrapper = document.getElementById('delete-confirm-wrapper');
 
-      // Akordeon
-      if (toggleButton && editForm) {
-        toggleButton.addEventListener('click', () => {
-          if (editForm.style.display === 'none') {
-            editForm.style.display = 'block';
-          } else {
-            editForm.style.display = 'none';
+      if (editToggle && editWrapper) {
+        editToggle.addEventListener('click', () => {
+          editWrapper.classList.toggle('active');
+        });
+      }
+
+      if (deleteToggle && deleteWrapper) {
+        deleteToggle.addEventListener('click', () => {
+          deleteWrapper.classList.toggle('active');
+          const isActive = deleteWrapper.classList.contains('active');
+          deleteToggle.textContent = isActive ? 'Nie chcę usuwać konta' : 'USUŃ KONTO';
+          deleteToggle.classList.toggle('alt', isActive);
+        });
+      }
+
+      const deleteFinal = document.getElementById('delete-final');
+      if (deleteFinal) {
+        deleteFinal.addEventListener('click', async () => {
+          try {
+            await ghost.members.api.member.delete();
+            window.location.href = '/';
+          } catch (err) {
+            alert('❌ Nie udało się usunąć konta.');
           }
         });
       }
 
-      // Aktualizacja danych
       if (form) {
         form.addEventListener('submit', async function (e) {
           e.preventDefault();
@@ -147,7 +170,6 @@
         });
       }
 
-      // Tłumaczenia z Ghost
       document.querySelectorAll('.gh-account-cancel a').forEach(link => {
         if (link.textContent.trim() === 'Cancel subscription') {
           link.textContent = 'Anuluj subskrypcję';
