@@ -1,0 +1,79 @@
+<section class="gh-faq-section gh-outer">
+  <div class="gh-inner">
+    <h2 class="gh-section-title is-title">Najczęściej zadawane pytania</h2>
+    <div class="gh-faq-list">
+
+      <div class="gh-faq-item">
+        <button class="gh-faq-question">Czym jest subskrypcja?</button>
+        <div class="gh-faq-answer">
+          <p>Subskrypcja umożliwia pełny dostęp do treści oraz wsparcie naszej pracy dziennikarskiej.</p>
+        </div>
+      </div>
+
+      <div class="gh-faq-item">
+        <button class="gh-faq-question">Czy mogę zrezygnować w dowolnym momencie?</button>
+        <div class="gh-faq-answer">
+          <p>Tak. Subskrypcję możesz anulować w swoim panelu konta. Dostęp będzie aktywny do końca opłaconego okresu.</p>
+        </div>
+      </div>
+
+      <div class="gh-faq-item">
+        <button class="gh-faq-question">Jakie metody płatności są akceptowane?</button>
+        <div class="gh-faq-answer">
+          <p>Obsługujemy płatności kartą kredytową i debetową przez Stripe.</p>
+        </div>
+      </div>
+
+      <div class="gh-faq-item">
+        <button class="gh-faq-question">Czy otrzymam fakturę?</button>
+        <div class="gh-faq-answer">
+          <p>Tak, po każdej płatności Stripe automatycznie wystawia potwierdzenie zakupu, które możesz wykorzystać jako fakturę uproszczoną.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.gh-faq-section {
+  margin-top: 4rem;
+}
+.gh-faq-question {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+  font-size: 1.1rem;
+  text-align: left;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+.gh-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  font-size: 1rem;
+  color: #555;
+}
+.gh-faq-item.active .gh-faq-answer {
+  max-height: 300px;
+  margin: 0.5rem 0 1.5rem;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const faqItems = document.querySelectorAll('.gh-faq-item');
+
+  faqItems.forEach(item => {
+    const button = item.querySelector('.gh-faq-question');
+    button.addEventListener('click', () => {
+      item.classList.toggle('active');
+    });
+  });
+});
+</script>
