@@ -24,7 +24,7 @@
 
     .gh-plan-card {
       flex: 1 1 300px;
-      border: 1px solid #eaeaea;
+      border: 2px solid #eaeaea;
       border-radius: 10px;
       padding: 2rem;
       background: transparent;
@@ -32,8 +32,9 @@
       transition: all 0.3s ease;
     }
 
-    .gh-plan-card:hover {
-      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    .gh-plan-card.active {
+      border-color: var(--ghost-accent-color, #000);
+      background: #f8f8f8;
     }
 
     .gh-plan-card h3 {
@@ -78,8 +79,7 @@
       margin: 1rem 0 0.25rem;
     }
 
-    .gh-subscription-form input,
-    .gh-subscription-form select {
+    .gh-subscription-form input {
       width: 100%;
       padding: 0.75rem;
       font-size: 1rem;
@@ -99,9 +99,10 @@
       border-radius: 4px;
     }
 
-    .gh-subscription-form .form-message {
+    .form-message {
       margin-top: 1rem;
       font-size: 0.95rem;
+      color: #c00;
     }
 
     @media (max-width: 768px) {
@@ -128,7 +129,7 @@
           <li>Wsparcie niezależnego dziennikarstwa</li>
           <li>Miesięczna subskrypcja</li>
         </ul>
-        <button class="gh-plan-button" data-plan="monthly">Zasubskrybuj</button>
+        <button type="button" class="gh-plan-button" data-select="monthly">Wybierz plan</button>
       </div>
 
       <div class="gh-plan-card" data-plan="yearly">
@@ -139,7 +140,7 @@
           <li>2 miesiące gratis (płatność roczna)</li>
           <li>Dedykowany kontakt i konsultacje</li>
         </ul>
-        <button class="gh-plan-button" data-plan="yearly">Zasubskrybuj</button>
+        <button type="button" class="gh-plan-button" data-select="yearly">Wybierz plan</button>
       </div>
     </div>
 
@@ -164,13 +165,69 @@
       const form = document.getElementById("custom-subscription-form");
       const messageBox = document.getElementById("form-message");
       const planInput = document.getElementById("signup-plan");
-      const planButtons = document.querySelectorAll(".gh-plan-button");
+      const planCards = document.querySelectorAll(".gh-plan-card");
+      const planButtons = document.querySelectorAll("[data-select]");
 
-      // Ustawienie planu po kliknięciu przycisku
+      // Obsługa wyboru planu
       planButtons.forEach(button => {
-        button.addEventListener("click", function () {
-          const selectedPlan = this.getAttribute("data-plan");
-          planInput.value = selectedPlan;
-          window.scrollTo({ top: form.offsetTop, behavior: '
-::contentReference[oaicite:8]{index=8}
- 
+        button.addEventListener("click", () => {
+          const plan = button.getAttribute("data-select");
+          planInput.value = plan;
+
+          // zaznacz aktywną kartę
+          planCards.forEach(card => {
+            if (card.getAttribute("data-plan") === plan) {
+              card.classList.add("active");
+            } else {
+              card.classList.remove("active");
+            }
+          });
+
+          form.scrollIntoView({ behavior: "smooth" });
+        });
+      });
+
+      // Wysłanie formularza
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const name = document.getElementById("signup-name").value;
+        const email = document.getElementById("signup-email").value;
+        const plan = planInput.value;
+
+        if (!plan) {
+          messageBox.textContent = "⚠️ Wybierz plan subskrypcji powyżej.";
+          return;
+        }
+
+        try {
+          await ghost.members.api.signup({ name, email, plan });
+          messageBox.textContent = "✅ Sprawdź swoją skrzynkę e-mail, aby potwierdzić subskrypcję.";
+          form.reset();
+          planInput.value = "";
+          planCards.forEach(c => c.classList.remove("active"));
+        } catch (err) {
+          messageBox.textContent = "❌ Wystąpił błąd. Spróbuj ponownie.";
+        }
+      });
+
+      // Pobierz dane planów z Ghost
+      try {
+        const response = await fetch("/members/api/site/");
+        const data = await response.json();
+        const product = data.products.find(p => p.type === "paid");
+
+        if (product) {
+          const monthly = product.monthly_price;
+          const yearly = product.yearly_price;
+          const currency = product.currency.toUpperCase();
+
+          document.getElementById("plan-monthly-price").textContent = `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
+          document.getElementById("plan-yearly-price").textContent = `${(yearly / 100).toFixed(2)} ${currency} / rok`;
+        }
+      } catch (err) {
+        console.error("Nie udało się pobrać danych planów z Ghost.");
+      }
+    });
+  </script>
+</main>
