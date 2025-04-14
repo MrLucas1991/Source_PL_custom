@@ -3428,7 +3428,7 @@ body[class*=" gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-hea
 
 /* Stylizacja dla sekcji przycisku anulowania subskrypcji */
 .gh-account-cancel {
-    text-align: center;
+    text-align: center
     margin-top: 16px;
 }
 
@@ -3444,5 +3444,10 @@ body[class*=" gh-font-heading"]:not(.gh-font-heading-fira-sans):not(.gh-font-hea
     color: var(--ghost-accent-color);
 }
 
+.adsense-block {
+  margin: 2em 0;
+  padding: 1em 0;
+  text-align: center;
+}
 
 
