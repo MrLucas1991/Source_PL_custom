@@ -1,37 +1,158 @@
 {{!< default}}
 
 <main class="gh-main">
-    <article class="gh-article gh-canvas">
-        <header class="gh-article-header">
-            <h1 class="gh-article-title is-title">Zarejestruj się</h1>
-            <p class="gh-article-excerpt is-body">Wprowadź swoje dane, aby utworzyć konto.</p>
-        </header>
+  <style>
+    .gh-subscription-wrapper {
+      max-width: 1200px;
+      margin: 4rem auto 2rem;
+      padding: 0 2rem;
+      text-align: center;
+    }
 
-        <section class="gh-content gh-canvas is-body">
-            <form class="gh-form gh-signup-form" data-members-form="signup" data-members-success-url="{{@site.url}}">
-                <input type="hidden" data-members-label value="Rejestracja przez formularz główny" />
+    .gh-subscription-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
 
-                <div class="gh-form-group">
-                    <input class="gh-form-input" name="email" type="email" placeholder="Twój email" required data-members-email>
-                </div>
+    .gh-subscription-subtitle {
+      font-size: 1.25rem;
+      font-weight: 400;
+      margin-bottom: 3rem;
+      color: #333;
+    }
 
-                <button class="gh-button gh-signup-button" type="submit" aria-label="Dołącz">
-                    <span><span>Dołącz</span> {{> "icons/arrow"}}</span>
-                    {{> "icons/loader"}}
-                    {{> "icons/checkmark"}}
-                </button>
+    .gh-subscription-plans {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      justify-content: center;
+      margin-bottom: 4rem;
+    }
 
-                <p class="gh-members-feedback loading" data-members-loading hidden>⏳ Przetwarzanie...</p>
-                <p class="gh-members-feedback error" data-members-error hidden>❗ Coś poszło nie tak. Spróbuj ponownie.</p>
-                <p class="gh-members-feedback success" data-members-success hidden>✅ Sukces! Sprawdź skrzynkę e-mail.</p>
-            </form>
+    .gh-plan-card {
+      flex: 1 1 380px;
+      background: transparent;
+      border: 2px solid var(--ghost-accent-color, #aa6666);
+      border-radius: 12px;
+      padding: 2.5rem;
+      transition: all 0.3s ease;
+      text-align: left;
+    }
 
-            <p class="gh-helper-text">
-                Masz już konto? <a href="{{@site.url}}/login/">Zaloguj się</a>.
-            </p>
-            <p class="gh-helper-text" style="margin-top: 12px;">
-                Po rejestracji możesz uzupełnić swoje imię na stronie <a href="{{@site.url}}/account/">Moje konto</a>.
-            </p>
-        </section>
-    </article>
+    .gh-plan-card:hover {
+      box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+      transform: translateY(-3px);
+    }
+
+    .gh-plan-card h3 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .gh-plan-price {
+      font-size: 1.3rem;
+      margin: 0.5rem 0 1rem;
+      text-align: center;
+      color: var(--ghost-accent-color, #000);
+    }
+
+    .gh-plan-benefits {
+      list-style: disc;
+      padding-left: 1.5rem;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+
+    .gh-plan-button {
+      display: block;
+      width: 100%;
+      padding: 0.9rem 1.5rem;
+      font-size: 1.1rem;
+      background: var(--ghost-accent-color, #aa6666);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.2s ease;
+    }
+
+    .gh-plan-button:hover {
+      background: #994a4a;
+    }
+
+    @media (max-width: 768px) {
+      .gh-subscription-title {
+        font-size: 2.3rem;
+      }
+
+      .gh-plan-card {
+        padding: 1.8rem;
+      }
+
+      .gh-plan-benefits {
+        font-size: 1rem;
+      }
+    }
+  </style>
+
+  <section class="gh-subscription-wrapper">
+    <h1 class="gh-subscription-title">Wybierz swój plan</h1>
+    <p class="gh-subscription-subtitle">Zacznij wspierać niezależne dziennikarstwo i zyskaj dostęp do wszystkich treści.</p>
+
+    <div class="gh-subscription-plans">
+      <div class="gh-plan-card">
+        <h3>Plan miesięczny</h3>
+        <div class="gh-plan-price" id="plan-monthly-price">…</div>
+        <ul class="gh-plan-benefits">
+          <li>Dostęp do wszystkich artykułów</li>
+          <li>Wsparcie niezależnego dziennikarstwa</li>
+          <li>Miesięczna subskrypcja</li>
+        </ul>
+        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-plan-button">Wybierz plan</a>
+      </div>
+
+      <div class="gh-plan-card">
+        <h3>Plan roczny</h3>
+        <div class="gh-plan-price" id="plan-yearly-price">…</div>
+        <ul class="gh-plan-benefits">
+          <li>Wszystko z planu miesięcznego</li>
+          <li>2 miesiące gratis (płatność roczna)</li>
+          <li>Dedykowany kontakt i konsultacje</li>
+        </ul>
+        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-plan-button">Wybierz plan</a>
+      </div>
+    </div>
+
+    {{> "faq-subscription"}}
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async function () {
+      try {
+        const response = await fetch("/members/api/site/");
+        const data = await response.json();
+        const product = data.products.find(p => p.id === "67bfbd5c0cd27d00017fdceb");
+
+        if (product) {
+          const currency = product.currency.toUpperCase();
+          const monthly = product.monthly_price;
+          const yearly = product.yearly_price;
+
+          if (monthly) {
+            document.getElementById("plan-monthly-price").textContent = `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
+          }
+
+          if (yearly) {
+            document.getElementById("plan-yearly-price").textContent = `${(yearly / 100).toFixed(2)} ${currency} / rok`;
+          }
+        }
+      } catch (err) {
+        console.error("Nie udało się pobrać danych planów:", err);
+      }
+    });
+  </script>
 </main>
