@@ -32,9 +32,8 @@
       transition: all 0.3s ease;
     }
 
-    .gh-plan-card.active {
-      border-color: var(--ghost-accent-color, #000);
-      background: #f8f8f8;
+    .gh-plan-card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.06);
     }
 
     .gh-plan-card h3 {
@@ -52,7 +51,8 @@
       font-size: 0.95rem;
       margin-bottom: 1.5rem;
       text-align: left;
-      padding-left: 1rem;
+      list-style-type: disc;
+      padding-left: 1.2rem;
     }
 
     .gh-plan-button {
@@ -67,48 +67,7 @@
       display: inline-block;
     }
 
-    .gh-subscription-form {
-      max-width: 700px;
-      margin: 0 auto 4rem;
-      background: transparent;
-      border: 1px solid #eaeaea;
-      padding: 2rem;
-      border-radius: 8px;
-    }
-
-    .gh-subscription-form label {
-      display: block;
-      margin: 1rem 0 0.25rem;
-    }
-
-    .gh-subscription-form input {
-      width: 100%;
-      padding: 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .gh-subscription-form button {
-      margin-top: 1.5rem;
-      width: 100%;
-      background: var(--ghost-accent-color, #000);
-      color: #fff;
-      padding: 0.75rem;
-      border: none;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 4px;
-    }
-
-    .form-message {
-      margin-top: 1rem;
-      font-size: 0.95rem;
-      color: #c00;
-    }
-
     @media (max-width: 768px) {
-      .gh-subscription-form,
       .gh-subscription-wrapper {
         padding: 1rem;
       }
@@ -123,7 +82,7 @@
     <h1 class="gh-subscription-title">Wybierz swój plan</h1>
 
     <div class="gh-subscription-plans">
-      <div class="gh-plan-card" data-plan="monthly">
+      <div class="gh-plan-card">
         <h3>Plan miesięczny</h3>
         <div class="gh-plan-price" id="plan-monthly-price">…</div>
         <ul class="gh-plan-benefits">
@@ -131,10 +90,10 @@
           <li>Wsparcie niezależnego dziennikarstwa</li>
           <li>Miesięczna subskrypcja</li>
         </ul>
-        <button type="button" class="gh-plan-button" data-select="monthly">Wybierz plan</button>
+        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-plan-button">Wybierz plan</a>
       </div>
 
-      <div class="gh-plan-card" data-plan="yearly">
+      <div class="gh-plan-card">
         <h3>Plan roczny</h3>
         <div class="gh-plan-price" id="plan-yearly-price">…</div>
         <ul class="gh-plan-benefits">
@@ -142,89 +101,35 @@
           <li>2 miesiące gratis (płatność roczna)</li>
           <li>Dedykowany kontakt i konsultacje</li>
         </ul>
-        <button type="button" class="gh-plan-button" data-select="yearly">Wybierz plan</button>
+        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-plan-button">Wybierz plan</a>
       </div>
     </div>
-
-    <form id="custom-subscription-form" class="gh-subscription-form">
-      <label for="signup-name">Imię</label>
-      <input type="text" id="signup-name" name="name" placeholder="Twoje imię" required>
-
-      <label for="signup-email">E-mail</label>
-      <input type="email" id="signup-email" name="email" placeholder="adres@email.com" required>
-
-      <input type="hidden" id="signup-plan" name="plan" value="">
-
-      <button type="submit">Zasubskrybuj</button>
-      <div id="form-message" class="form-message"></div>
-    </form>
 
     {{> "faq-subscription"}}
   </section>
 
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
-      const form = document.getElementById("custom-subscription-form");
-      const messageBox = document.getElementById("form-message");
-      const planInput = document.getElementById("signup-plan");
-      const planCards = document.querySelectorAll(".gh-plan-card");
-      const planButtons = document.querySelectorAll("[data-select]");
-
-      // Obsługa wyboru planu
-      planButtons.forEach(button => {
-        button.addEventListener("click", () => {
-          const plan = button.getAttribute("data-select");
-          planInput.value = plan;
-
-          planCards.forEach(card => {
-            if (card.getAttribute("data-plan") === plan) {
-              card.classList.add("active");
-            } else {
-              card.classList.remove("active");
-            }
-          });
-
-          form.scrollIntoView({ behavior: "smooth" });
-        });
-      });
-
-      // Otwarcie formularza Ghost Portal z danymi
-      form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const name = document.getElementById("signup-name").value;
-        const email = document.getElementById("signup-email").value;
-        const plan = planInput.value;
-
-        if (!plan) {
-          messageBox.textContent = "⚠️ Wybierz plan subskrypcji powyżej.";
-          return;
-        }
-
-        ghost.portal.open({
-          page: "signup",
-          name: name,
-          email: email,
-          plan: plan
-        });
-      });
-
-      // Pobierz dane planów z Ghost
       try {
         const response = await fetch("/members/api/site/");
         const data = await response.json();
-        const product = data.products.find(p => p.type === "paid");
+        const product = data.products.find(p => p.id === "67bfbd5c0cd27d00017fdceb");
 
         if (product) {
+          const currency = product.currency.toUpperCase();
           const monthly = product.monthly_price;
           const yearly = product.yearly_price;
-          const currency = product.currency.toUpperCase();
 
-          document.getElementById("plan-monthly-price").textContent = `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
-          document.getElementById("plan-yearly-price").textContent = `${(yearly / 100).toFixed(2)} ${currency} / rok`;
+          if (monthly) {
+            document.getElementById("plan-monthly-price").textContent = `${(monthly / 100).toFixed(2)} ${currency} / miesiąc`;
+          }
+
+          if (yearly) {
+            document.getElementById("plan-yearly-price").textContent = `${(yearly / 100).toFixed(2)} ${currency} / rok`;
+          }
         }
       } catch (err) {
-        console.error("Nie udało się pobrać danych planów z Ghost.");
+        console.error("Nie udało się pobrać danych planów:", err);
       }
     });
   </script>
