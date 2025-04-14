@@ -4,110 +4,112 @@
   <article class="gh-article gh-canvas">
     <header class="gh-article-header">
       <h1 class="gh-article-title is-title">Wybierz swój plan</h1>
-      <p class="gh-article-excerpt is-body">Zacznij wspierać niezależne dziennikarstwo i zyskaj dostęp do wszystkich treści.</p>
+      <p class="gh-article-excerpt is-body">
+        Zacznij wspierać niezależne dziennikarstwo i zyskaj dostęp do wszystkich treści.
+      </p>
     </header>
 
     <section class="gh-content gh-canvas is-body">
-      <style>
-        .gh-subscription-plans {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 2rem;
-          justify-content: center;
-          margin-bottom: 3rem;
-        }
-
-        .gh-plan-card {
-          flex: 1 1 300px;
-          border: 2px solid #eaeaea;
-          border-radius: 10px;
-          padding: 2rem;
-          background: transparent;
-          text-align: center;
-          transition: all 0.3s ease;
-        }
-
-        .gh-plan-card:hover {
-          box-shadow: 0 4px 10px rgba(0,0,0,0.06);
-        }
-
-        .gh-plan-card h3 {
-          font-size: 1.6rem;
-          margin-bottom: 0.5rem;
-        }
-
-        .gh-plan-price {
-          font-size: 1.4rem;
-          margin-bottom: 1.2rem;
-          color: var(--ghost-accent-color, #000);
-        }
-
-        .gh-plan-benefits {
-          font-size: 0.95rem;
-          margin-bottom: 1.5rem;
-          text-align: left;
-          list-style-type: disc;
-          padding-left: 1.2rem;
-        }
-
-        .gh-plan-button {
-          padding: 0.75rem 1.5rem;
-          font-size: 1rem;
-          background: var(--ghost-accent-color, #000);
-          color: #fff;
-          border: none;
-          border-radius: 4px;
-          cursor: pointer;
-          text-decoration: none;
-          display: inline-block;
-        }
-
-        @media (max-width: 768px) {
-          .gh-subscription-plans {
-            flex-direction: column;
-          }
-
-          .gh-plan-card {
-            padding: 1.5rem;
-          }
-
-          .gh-plan-card h3 {
-            font-size: 1.4rem;
-          }
-
-          .gh-plan-price {
-            font-size: 1.2rem;
-          }
-        }
-      </style>
-
       <div class="gh-subscription-plans">
         <div class="gh-plan-card">
-          <h3>Plan miesięczny</h3>
-          <div class="gh-plan-price" id="plan-monthly-price">…</div>
+          <h3 class="gh-plan-title">Plan miesięczny</h3>
+          <p class="gh-plan-price" id="plan-monthly-price">…</p>
           <ul class="gh-plan-benefits">
             <li>Dostęp do wszystkich artykułów</li>
             <li>Wsparcie niezależnego dziennikarstwa</li>
             <li>Miesięczna subskrypcja</li>
           </ul>
-          <a href="/#/portal/signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-plan-button">Wybierz plan</a>
+          <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-button">Wybierz plan</a>
         </div>
 
         <div class="gh-plan-card">
-          <h3>Plan roczny</h3>
-          <div class="gh-plan-price" id="plan-yearly-price">…</div>
+          <h3 class="gh-plan-title">Plan roczny</h3>
+          <p class="gh-plan-price" id="plan-yearly-price">…</p>
           <ul class="gh-plan-benefits">
             <li>Wszystko z planu miesięcznego</li>
             <li>2 miesiące gratis (płatność roczna)</li>
             <li>Dedykowany kontakt i konsultacje</li>
           </ul>
-          <a href="/#/portal/signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-plan-button">Wybierz plan</a>
+          <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-button">Wybierz plan</a>
         </div>
       </div>
 
       {{> "faq-subscription"}}
     </section>
   </article>
+
+  <style>
+    .gh-subscription-plans {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem auto 4rem;
+    }
+
+    .gh-plan-card {
+      background: #fff;
+      border: 1px solid #eaeaea;
+      border-radius: 1rem;
+      padding: 2rem;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .gh-plan-card:hover {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-color: var(--ghost-accent-color, #000);
+    }
+
+    .gh-plan-title {
+      font-size: 1.6rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .gh-plan-price {
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: var(--ghost-accent-color, #000);
+      margin-bottom: 1.5rem;
+    }
+
+    .gh-plan-benefits {
+      list-style: disc;
+      text-align: left;
+      padding-left: 1.25rem;
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
+      color: #444;
+    }
+
+    .gh-button {
+      background: var(--ghost-accent-color, #000);
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-block;
+      transition: background 0.2s ease;
+    }
+
+    .gh-button:hover {
+      opacity: 0.9;
+    }
+
+    @media (max-width: 768px) {
+      .gh-subscription-plans {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
 
   <script>
     document.addEventListener("DOMContentLoaded", async function () {
