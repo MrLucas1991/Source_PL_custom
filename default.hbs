@@ -71,12 +71,14 @@
 {{ghost_foot}}
 
 
-   <script>
+  <script>
   document.addEventListener("DOMContentLoaded", function () {
     const contentContainer = document.getElementById("dynamic-content");
-    if (!contentContainer) return;
+    const rawContentElement = document.getElementById("raw-content");
 
-    const rawHTML = `{{{content}}}`;
+    if (!contentContainer || !rawContentElement) return;
+
+    const rawHTML = rawContentElement.innerHTML;
     const adCode = `
       <div class="adsense-block">
         <ins class="adsbygoogle"
