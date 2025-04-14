@@ -52,11 +52,25 @@
 
     </article>
 
-    {{#if comments}}
-        <div class="gh-comments gh-canvas">
-            {{comments}}
+  {{#if @member}}
+    <div class="gh-comments gh-canvas">
+        {{comments}}
+    </div>
+{{else}}
+    <div class="gh-comments gh-canvas">
+        <div class="custom-comments-cta">
+            <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
+            <p class="custom-comments-description">
+                Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
+            </p>
+            <a href="/signup/" class="custom-button">Zarejestruj się</a>
+            <p class="custom-signin-helper">
+                Masz już konto? <a href="/login/">Zaloguj się</a>
+            </p>
         </div>
-    {{/if}}
+    </div>
+{{/if}}
+
 
 </main>
 
