@@ -46,15 +46,17 @@
 
         </header>
 
-       {{^if @member.paid}}
+        
+{{^if @member.paid}}
 <section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
 </section>
+<div id="raw-content" style="display:none;">{{{content}}}</div>
 {{else}}
 <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
     {{content}}
 </section>
-        <div id="raw-content" style="display:none;">{{{content}}}</div>
 {{/if}}
+
 
 
     </article>
