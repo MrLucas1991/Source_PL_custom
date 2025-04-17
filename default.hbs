@@ -114,12 +114,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
-{{/if}}
-
 
 
     
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const contentContainer = document.getElementById("dynamic-content");
@@ -155,6 +152,71 @@ document.addEventListener("DOMContentLoaded", function () {
   contentContainer.innerHTML = tempDiv.innerHTML;
 });
 </script>
+{{/if}}
+
+
+
+    
+
+
+    
+{{#if @member.paid}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const content = document.querySelector(".gh-content-with-toc");
+  const tocDesktop = document.querySelector(".gh-toc");
+
+  if (!content || !tocDesktop) return;
+
+  const headings = content.querySelectorAll("h2, h3");
+  if (!headings.length) return;
+
+  const ul = document.createElement("ul");
+  headings.forEach((heading, i) => {
+    const id = `toc-${i}`;
+    heading.id = id;
+    const li = document.createElement("li");
+    li.className = heading.tagName.toLowerCase();
+    const a = document.createElement("a");
+    a.href = `#${id}`;
+    a.textContent = heading.textContent;
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  tocDesktop.appendChild(ul.cloneNode(true));
+
+  const tocMobilePanel = document.createElement("div");
+  tocMobilePanel.className = "toc-mobile-panel";
+  tocMobilePanel.appendChild(ul);
+
+  const tocToggleMobile = document.createElement("div");
+  tocToggleMobile.className = "toc-toggle-mobile";
+  tocToggleMobile.textContent = "Pokaż spis treści";
+  tocToggleMobile.addEventListener("click", () => {
+    tocMobilePanel.style.display = tocMobilePanel.style.display === "block" ? "none" : "block";
+  });
+
+  document.body.appendChild(tocToggleMobile);
+  document.body.appendChild(tocMobilePanel);
+
+  const tocLinks = tocDesktop.querySelectorAll("a");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove("active"));
+        const activeLink = tocDesktop.querySelector(`a[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
+
+  headings.forEach(h => observer.observe(h));
+});
+</script>
+{{/if}}
+
 
 </body>
 </html>
