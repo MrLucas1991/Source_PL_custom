@@ -45,10 +45,13 @@
         {{> "feature-image"}}
 
     </header>
-    {{#if @member.paid}}
-<aside class="gh-toc"></aside>
-{{/if}}
 
+    {{#if @member.paid}}
+    
+
+        <aside class="gh-sidebar">
+            <div class="gh-toc"></div>
+        </aside>
 
         <section class="gh-content gh-content-with-toc gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
             {{content}}
