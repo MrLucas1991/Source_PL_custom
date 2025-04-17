@@ -40,6 +40,7 @@
 <script src="{{asset "built/source.js"}}"></script>
 {{ghost_foot}}
 
+{{^if @member.paid}}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const contentContainer = document.getElementById("dynamic-content");
@@ -62,25 +63,30 @@ document.addEventListener("DOMContentLoaded", function () {
   tempDiv.innerHTML = rawHTML;
 
   const paragraphs = tempDiv.querySelectorAll("p");
+  let adCount = 0;
+
   paragraphs.forEach((p, i) => {
-    if ((i + 1) % 3 === 0) {
-      const ad = document.createElement("div");
-      ad.innerHTML = adCode;
-      p.parentNode.insertBefore(ad, p.nextSibling);
+    if ((i + 1) % 3 === 0 && adCount < 5) {
+      const adWrapper = document.createElement("div");
+      adWrapper.innerHTML = adCode;
+      p.parentNode.insertBefore(adWrapper, p.nextSibling);
+      adCount++;
     }
   });
 
   contentContainer.innerHTML = tempDiv.innerHTML;
 
-  const ads = document.querySelectorAll('.adsbygoogle');
-  if (ads.length > 0) {
+  // Ładowanie skryptu Adsense tylko raz
+  if (!window.adsbygoogleScriptLoaded) {
     const script = document.createElement('script');
-    script.async = true;
     script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181982052718057";
+    script.async = true;
     script.crossOrigin = "anonymous";
     document.head.appendChild(script);
+    window.adsbygoogleScriptLoaded = true;
 
     script.onload = () => {
+      const ads = document.querySelectorAll('.adsbygoogle');
       ads.forEach(ad => {
         try {
           (adsbygoogle = window.adsbygoogle || []).push({});
@@ -92,6 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 </script>
+{{/if}}
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
