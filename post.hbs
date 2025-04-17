@@ -5,50 +5,48 @@
 
 <main class="gh-main">
 
-    <article class="gh-article {{post_class}}">
+<article class="gh-article {{post_class}}{{#if @member.paid}} has-toc{{/if}}">
 
-        <header class="gh-article-header gh-canvas">
+    <header class="gh-article-header gh-canvas">
 
-            {{#if primary_tag}}
-                <a class="gh-article-tag" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
-            {{/if}}
-            <h1 class="gh-article-title is-title">{{title}}</h1>
-            {{#if custom_excerpt}}
-                <p class="gh-article-excerpt is-body">{{custom_excerpt}}</p>
-            {{/if}}
+        {{#if primary_tag}}
+            <a class="gh-article-tag" href="{{primary_tag.url}}">{{primary_tag.name}}</a>
+        {{/if}}
+        <h1 class="gh-article-title is-title">{{title}}</h1>
+        {{#if custom_excerpt}}
+            <p class="gh-article-excerpt is-body">{{custom_excerpt}}</p>
+        {{/if}}
 
-            {{#if @custom.show_post_metadata}}
-            <div class="gh-article-meta">
-                <div class="gh-article-author-image instapaper_ignore">
-                    {{#foreach authors}}
-                        {{#if profile_image}}
-                            <a href="{{url}}">
-                                <img class="author-profile-image" src="{{img_url profile_image size="xs"}}" alt="{{name}}">
-                            </a>
-                        {{else}}
-                            <a href="{{url}}">{{> "icons/avatar"}}</a>
-                        {{/if}}
-                    {{/foreach}}
-                </div>
-                <div class="gh-article-meta-wrapper">
-                    <h4 class="gh-article-author-name">{{authors}}</h4>
-                    <div class="gh-article-meta-content">
-                        <time class="gh-article-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
-                        {{#if reading_time}}
-                            <span class="gh-article-meta-length"><span class="bull">—</span> {{reading_time}}</span>
-                        {{/if}}
-                    </div>
+        {{#if @custom.show_post_metadata}}
+        <div class="gh-article-meta">
+            <div class="gh-article-author-image instapaper_ignore">
+                {{#foreach authors}}
+                    {{#if profile_image}}
+                        <a href="{{url}}">
+                            <img class="author-profile-image" src="{{img_url profile_image size="xs"}}" alt="{{name}}">
+                        </a>
+                    {{else}}
+                        <a href="{{url}}">{{> "icons/avatar"}}</a>
+                    {{/if}}
+                {{/foreach}}
+            </div>
+            <div class="gh-article-meta-wrapper">
+                <h4 class="gh-article-author-name">{{authors}}</h4>
+                <div class="gh-article-meta-content">
+                    <time class="gh-article-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date format="DD MMM YYYY"}}</time>
+                    {{#if reading_time}}
+                        <span class="gh-article-meta-length"><span class="bull">—</span> {{reading_time}}</span>
+                    {{/if}}
                 </div>
             </div>
-            {{/if}}
+        </div>
+        {{/if}}
 
-            {{> "feature-image"}}
+        {{> "feature-image"}}
 
-        </header>
+    </header>
 
-        {{#if @member.paid}}
-    <article class="gh-article has-toc {{post_class}}">
-
+    {{#if @member.paid}}
         <div class="toc-access-info gh-canvas">
             Nawigacyjny spis treści ułatwiający czytanie oraz nawigowanie po artykule dostępny dla zalogowanych subskrybentów.
         </div>
@@ -61,41 +59,35 @@
             <div class="gh-toc"></div>
         </aside>
 
+        <section class="gh-content gh-content-with-toc gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+            {{content}}
+        </section>
     {{else}}
-    <article class="gh-article {{post_class}}">
-    {{/if}}
-
-
-        {{^if @member.paid}}
         <section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
         </section>
         <div id="raw-content" style="display:none;">{{{content}}}</div>
-        {{else}}
-        <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-            {{content}}
-        </section>
-        {{/if}}
-
-    </article>
-
-    {{#if @member}}
-        <div class="gh-comments gh-canvas">
-            {{comments}}
-        </div>
-    {{else}}
-        <div class="gh-comments gh-canvas">
-            <div class="custom-comments-cta">
-                <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
-                <p class="custom-comments-description">
-                    Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
-                </p>
-                <a href="/signup/" class="custom-button">Zarejestruj się</a>
-                <p class="custom-signin-helper">
-                    Masz już konto? <a href="/login/">Zaloguj się</a>
-                </p>
-            </div>
-        </div>
     {{/if}}
+
+</article>
+
+{{#if @member}}
+    <div class="gh-comments gh-canvas">
+        {{comments}}
+    </div>
+{{else}}
+    <div class="gh-comments gh-canvas">
+        <div class="custom-comments-cta">
+            <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
+            <p class="custom-comments-description">
+                Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
+            </p>
+            <a href="/signup/" class="custom-button">Zarejestruj się</a>
+            <p class="custom-signin-helper">
+                Masz już konto? <a href="/login/">Zaloguj się</a>
+            </p>
+        </div>
+    </div>
+{{/if}}
 
 </main>
 
