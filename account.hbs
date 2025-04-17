@@ -158,29 +158,25 @@
           const email = document.getElementById("email").value.trim();
 
           try {
-            fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({ name, avatar, email })
-})
-.then(response => {
-  if (response.ok) {
-    feedback.textContent = "✅ Dane zostały przesłane do systemu.";
-  } else {
-    feedback.textContent = "⚠️ Błąd po stronie serwera.";
-  }
-})
-.catch(error => {
-  feedback.textContent = "❌ Błąd połączenia z webhookiem.";
-  console.error("Fetch error:", error);
-});
+            const res = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ name, avatar, email })
+            });
 
-            feedback.textContent = "✅ Zaktualizowano dane.";
+            if (res.ok) {
+              feedback.textContent = "✅ Dane zostały przesłane do systemu.";
+            } else {
+              const errorText = await res.text();
+              console.error("Błąd serwera:", res.status, errorText);
+              feedback.textContent = `⚠️ Błąd serwera (${res.status})`;
+            }
+
           } catch (err) {
-            feedback.textContent = "❌ Błąd aktualizacji.";
-            console.error(err);
+            feedback.textContent = "❌ Błąd połączenia z webhookiem.";
+            console.error("Fetch error:", err);
           }
         });
       }
