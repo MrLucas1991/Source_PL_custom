@@ -45,6 +45,15 @@
             {{> "feature-image"}}
 
         </header>
+        
+{{#if @member.paid}}
+  <div class="toc-access-info">
+    Nawigacyjny spis treści ułatwiający czytanie oraz nawigowanie po artykule dostępny dla zalogowanych subskrybentów.
+  </div>
+  <aside class="gh-sidebar">
+    <div class="gh-toc"></div>
+  </aside>
+{{/if}}
 
         
 {{^if @member.paid}}
