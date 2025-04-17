@@ -2,8 +2,10 @@
 
 <main class="gh-main gh-outer">
   <style>
-    .gh-account-header {
-      margin-left: 25%;
+    @media (min-width: 768px) {
+      .gh-account-header {
+        margin-left: 25%;
+      }
     }
 
     .gh-account-box {
@@ -35,7 +37,7 @@
     }
 
     .gh-edit-form.active {
-      max-height: 700px;
+      max-height: 600px;
     }
 
     .gh-button-outline {
@@ -52,6 +54,17 @@
     .gh-avatar-img {
       height: 80px;
       border-radius: 8px;
+    }
+
+    .gh-delete-button {
+      margin-top: 2rem;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border: 2px solid red;
+      background: red;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
   </style>
 
@@ -71,9 +84,7 @@
           <td><img class="gh-avatar-img" src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar"></td>
         </tr>
         <tr><th>Status subskrypcji</th>
-          <td>
-            {{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}
-          </td>
+          <td>{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
         </tr>
       </table>
 
@@ -85,13 +96,10 @@
         <form id="profile-update-form">
           <label for="name">Imię</label>
           <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
-
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
           <label for="avatar">URL avatara</label>
           <input type="url" id="avatar" name="avatar" class="gh-account-input" value="{{@member.avatar}}" placeholder="https://...">
-
-          <label for="email">Nowy e-mail</label>
-          <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="email@example.com">
-
           <button type="submit" class="gh-button">Zapisz zmiany</button>
           <p id="update-feedback" class="gh-feedback"></p>
         </form>
@@ -108,7 +116,9 @@
             <tr><th>Karta</th><td>**** **** **** {{default_payment_card_last4}}</td></tr>
             <tr><th>{{#if cancel_at_period_end}}Wygasa{{else}}Następna płatność{{/if}}</th><td>{{date current_period_end format="DD MMM YYYY"}}</td></tr>
           </table>
-          <div style="margin-top: 1rem;">{{cancel_link}}</div>
+          <div style="margin-top: 1rem;">
+            <a href="javascript:" data-members-cancel>🔒 Anuluj subskrypcję</a>
+          </div>
         {{/foreach}}
       {{else}}
         <p>Brak aktywnej subskrypcji.</p>
@@ -140,23 +150,23 @@
       if (form) {
         form.addEventListener("submit", async (e) => {
           e.preventDefault();
-
           const name = document.getElementById("name").value.trim();
           const avatar = document.getElementById("avatar").value.trim();
           const email = document.getElementById("email").value.trim();
 
-          const payload = { name, avatar, email };
-
           try {
+            // wysyłka do n8n
             await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
               method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload),
+              headers: {
+                "Content-Type": "application/json"
+              },
+              body: JSON.stringify({ name, avatar, email })
             });
 
-            feedback.textContent = "✅ Dane zostały przesłane!";
+            feedback.textContent = "✅ Zaktualizowano dane.";
           } catch (err) {
-            feedback.textContent = "❌ Wystąpił błąd podczas zapisu.";
+            feedback.textContent = "❌ Błąd aktualizacji.";
             console.error(err);
           }
         });
