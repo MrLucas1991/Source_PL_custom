@@ -115,9 +115,14 @@
           <li>Dostęp do płatnych artykułów</li>
           <li>Artykuły archiwalne</li>
           <li>Treści przedpremierowe</li>
+          <li>Brak reklam</li>
           <li>Wspierasz prawdziwie niezależne, bezpartyjne dziennikarstwo (praca redakcyjna, analizy, wywiady, relacje)</li>
         </ul>
-        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-plan-button">Wybierz plan</a>
+        {{#if @member}}
+    <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/monthly" class="gh-plan-button">Wybierz plan</a>
+{{else}}
+    <a href="/signup" class="gh-plan-button">Wybierz plan</a>
+{{/if}}
       </div>
 
       <div class="gh-plan-card">
@@ -126,10 +131,16 @@
         <ul class="gh-plan-benefits">
           <li>50% zniżki</li>
            <li>Wszystko z planu miesięcznego</li>
+          <li>Brak reklam</li>
            <li>Wybrane treści premium Votum</li>
           <li>Wspierasz prawdziwie niezależne, bezpartyjne dziennikarstwo (praca redakcyjna, analizy, wywiady, relacje)</li>
         </ul>
-        <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-plan-button">Wybierz plan</a>
+        {{#if @member}}
+    <a href="javascript:" data-portal="signup/67bfbd5c0cd27d00017fdceb/yearly" class="gh-plan-button">Wybierz plan</a>
+{{else}}
+    <a href="/signup" class="gh-plan-button">Wybierz plan</a>
+{{/if}}
+
       </div>
     </div>
 
