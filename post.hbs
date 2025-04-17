@@ -46,47 +46,49 @@
 
         </header>
 
-        {{#if @member.paid}}
-        <div class="gh-toc-access-wrapper">
-            <div class="toc-access-info">
-                Nawigacyjny spis treści ułatwiający czytanie oraz nawigowanie po artykule dostępny dla zalogowanych subskrybentów.
-            </div>
-            <aside class="gh-sidebar gh-toc-sidebar">
-                <div class="gh-toc"></div>
-            </aside>
-        </div>
-        {{/if}}
+{{#if @member.paid}}
+  <div class="toc-access-info">
+    Nawigacyjny spis treści ułatwiający czytanie oraz nawigowanie po artykule dostępny dla zalogowanych subskrybentów.
+  </div>
+  <div class="toc-toggle-mobile">
+    <button class="toc-toggle-button" onclick="document.body.classList.toggle('toc-open')">Pokaż spis treści</button>
+  </div>
+  <aside class="gh-sidebar">
+    <div class="gh-toc"></div>
+  </aside>
+{{/if}}
 
-        {{^if @member.paid}}
-        <section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-        </section>
-        <div id="raw-content" style="display:none;">{{{content}}}</div>
-        {{else}}
-        <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-            {{content}}
-        </section>
-        {{/if}}
+{{^if @member.paid}}
+<section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+</section>
+<div id="raw-content" style="display:none;">{{{content}}}</div>
+
+{{else}}
+<section class="gh-content gh-canvas is-body gh-content-with-toc{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+    {{content}}
+</section>
+{{/if}}
 
     </article>
 
-    {{#if @member}}
-        <div class="gh-comments gh-canvas">
-            {{comments}}
+  {{#if @member}}
+    <div class="gh-comments gh-canvas">
+        {{comments}}
+    </div>
+{{else}}
+    <div class="gh-comments gh-canvas">
+        <div class="custom-comments-cta">
+            <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
+            <p class="custom-comments-description">
+                Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
+            </p>
+            <a href="/subskrypcja/" class="custom-button">Zarejestruj się</a>
+            <p class="custom-signin-helper">
+                Masz już konto? <a href="/login/">Zaloguj się</a>
+            </p>
         </div>
-    {{else}}
-        <div class="gh-comments gh-canvas">
-            <div class="custom-comments-cta">
-                <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
-                <p class="custom-comments-description">
-                    Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
-                </p>
-                <a href="/subskrypcja/" class="custom-button">Zarejestruj się</a>
-                <p class="custom-signin-helper">
-                    Masz już konto? <a href="/login/">Zaloguj się</a>
-                </p>
-            </div>
-        </div>
-    {{/if}}
+    </div>
+{{/if}}
 
 </main>
 
