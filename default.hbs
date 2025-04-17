@@ -160,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
   tocToggleMobile.className = "toc-toggle-mobile";
   tocToggleMobile.textContent = "Pokaż spis treści";
   tocToggleMobile.addEventListener("click", () => {
-    tocMobilePanel.style.display = tocMobilePanel.style.display === "block" ? "none" : "block";
+    tocMobilePanel.classList.toggle("open");
   });
 
   document.body.appendChild(tocToggleMobile);
@@ -182,6 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 {{/if}}
+
 
 
 </body>
