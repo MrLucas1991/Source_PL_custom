@@ -62,9 +62,10 @@
 <div id="raw-content" style="display:none;">{{{content}}}</div>
 
 {{else}}
-<section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+<section class="gh-content gh-canvas is-body gh-content-with-toc{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
     {{content}}
 </section>
+
 {{/if}}
 
 
