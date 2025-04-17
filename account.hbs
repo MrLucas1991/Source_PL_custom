@@ -158,11 +158,25 @@
           const email = document.getElementById("email").value.trim();
 
           try {
-            await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ name, avatar, email })
-            });
+            fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({ name, avatar, email })
+})
+.then(response => {
+  if (response.ok) {
+    feedback.textContent = "✅ Dane zostały przesłane do systemu.";
+  } else {
+    feedback.textContent = "⚠️ Błąd po stronie serwera.";
+  }
+})
+.catch(error => {
+  feedback.textContent = "❌ Błąd połączenia z webhookiem.";
+  console.error("Fetch error:", error);
+});
+
             feedback.textContent = "✅ Zaktualizowano dane.";
           } catch (err) {
             feedback.textContent = "❌ Błąd aktualizacji.";
