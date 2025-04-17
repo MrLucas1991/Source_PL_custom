@@ -117,13 +117,12 @@ document.addEventListener("DOMContentLoaded", function () {
 {{/if}}
 
 
-    {{#if @member.paid}}
-
+   {{#if @member.paid}}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
   const body = document.body;
 
-  // === DESKTOP toggle ===
+  // === Desktop toggle button ===
   const desktopToggle = document.createElement("div");
   desktopToggle.className = "toc-toggle-desktop";
   desktopToggle.textContent = "Spis treści";
@@ -132,7 +131,7 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.body.appendChild(desktopToggle);
 
-  // === MOBILE toggle ===
+  // === Mobile toggle button ===
   const mobileToggle = document.createElement("div");
   mobileToggle.className = "toc-toggle-mobile";
   mobileToggle.textContent = "Spis treści";
@@ -141,8 +140,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
   document.body.appendChild(mobileToggle);
 
-  // === Generowanie ToC tylko dla subskrybentów ===
-  const content = document.querySelector(".gh-content") || document.querySelector(".gh-content-with-toc");
+  // === Find content + ToC container ===
+  const content = document.querySelector(".gh-content, .gh-content-with-toc");
   const tocContainer = document.querySelector(".gh-toc");
 
   if (!content || !tocContainer) return;
@@ -168,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   tocContainer.appendChild(ul);
 
-  // === Aktywny link (podświetlenie) ===
+  // === Active section highlight ===
   const tocLinks = tocContainer.querySelectorAll("a");
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
@@ -184,10 +183,8 @@ document.addEventListener("DOMContentLoaded", function () {
   headings.forEach(h => observer.observe(h));
 });
 </script>
-
-
-    
 {{/if}}
+
 
 
 
