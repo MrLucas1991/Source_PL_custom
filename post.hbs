@@ -64,17 +64,28 @@
 
 </article>
 
-{{#if @member}}
+{{#if @member.paid}}
     <div id="komentarze" class="gh-comments gh-canvas">
         {{comments}}
+    </div>
+{{else if @member}}
+    <div class="gh-comments gh-canvas">
+        <div class="custom-comments-cta">
+            <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
+            <p class="custom-comments-description">
+                Komentowanie dostępne tylko dla płatnych subskrybentów.</p>
+            <a href="/subskrypcja" class="custom-button">Ulepsz teraz</a>
+            <p class="custom-signin-helper">
+                Masz już konto? <a href="/login/">Zaloguj się</a>
+            </p>
+        </div>
     </div>
 {{else}}
     <div class="gh-comments gh-canvas">
         <div class="custom-comments-cta">
             <h3 class="custom-comments-heading">Rozpocznij dyskusję</h3>
             <p class="custom-comments-description">
-                Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.
-            </p>
+                Komentowanie dostępne tylko dla subskrybentów. Dołącz do społeczności.</p>
             <a href="/signup/" class="custom-button">Zarejestruj się</a>
             <p class="custom-signin-helper">
                 Masz już konto? <a href="/login/">Zaloguj się</a>
@@ -82,6 +93,7 @@
         </div>
     </div>
 {{/if}}
+
 
 </main>
 
