@@ -191,5 +191,80 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const content = document.querySelector(".gh-content");
+  const tocDesktop = document.querySelector(".gh-toc");
+  const tocMobilePanel = document.createElement("div");
+  tocMobilePanel.className = "toc-mobile-panel";
+  const tocToggleMobile = document.createElement("div");
+  tocToggleMobile.className = "toc-toggle-mobile";
+  tocToggleMobile.textContent = "Pokaż spis treści";
+
+  // Znajdź nagłówki H2 i H3
+  const headings = content.querySelectorAll("h2, h3");
+  if (headings.length === 0) return;
+
+  // Przypisz ID nagłówkom jeśli nie mają
+  headings.forEach((heading, index) => {
+    if (!heading.id) {
+      heading.id = `toc-${index}`;
+    }
+  });
+
+  // Zbuduj listę TOC
+  const ul = document.createElement("ul");
+  headings.forEach(heading => {
+    const li = document.createElement("li");
+    li.className = heading.tagName.toLowerCase();
+    const a = document.createElement("a");
+    a.href = `#${heading.id}`;
+    a.textContent = heading.textContent.trim();
+    a.addEventListener("click", () => {
+      tocMobilePanel.style.display = "none";
+    });
+    li.appendChild(a);
+    ul.appendChild(li);
+  });
+
+  // Dodaj do sidebar (desktop)
+  if (tocDesktop) {
+    tocDesktop.appendChild(ul.cloneNode(true));
+  }
+
+  // Dodaj do panelu mobilnego
+  tocMobilePanel.appendChild(ul);
+
+  // Dodaj toggle button i panel do body
+  document.body.appendChild(tocToggleMobile);
+  document.body.appendChild(tocMobilePanel);
+
+  // Obsługa kliknięcia mobilnego przycisku
+  tocToggleMobile.addEventListener("click", () => {
+    const isVisible = tocMobilePanel.style.display === "block";
+    tocMobilePanel.style.display = isVisible ? "none" : "block";
+  });
+
+  // Aktywny link w TOC (desktop) przy przewijaniu
+  const tocLinks = tocDesktop?.querySelectorAll("a") || [];
+  const observerOptions = { rootMargin: "-40% 0px -50% 0px", threshold: 0 };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove("active"));
+        const activeLink = tocDesktop.querySelector(`a[href="#${id}"]`);
+        if (activeLink) {
+          activeLink.classList.add("active");
+        }
+      }
+    });
+  }, observerOptions);
+
+  headings.forEach(h => observer.observe(h));
+});
+</script>
+
 </body>
 </html>
