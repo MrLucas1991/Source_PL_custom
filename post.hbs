@@ -46,19 +46,6 @@
 
     </header>
 
-    {{#if @member.paid}}
-        <div class="toc-access-info gh-canvas">
-            Nawigacyjny spis treści ułatwiający czytanie oraz nawigowanie po artykule dostępny dla zalogowanych subskrybentów.
-        </div>
-
-        <div class="toc-toggle-mobile">
-            <button class="toc-toggle-button" onclick="document.body.classList.toggle('toc-open')">Pokaż spis treści</button>
-        </div>
-
-        <aside class="gh-sidebar">
-            <div class="gh-toc"></div>
-        </aside>
-
         <section class="gh-content gh-content-with-toc gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
             {{content}}
         </section>
