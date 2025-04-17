@@ -1,270 +1,190 @@
 <!DOCTYPE html>
 <html lang="{{@site.locale}}">
 <head>
-
-    {{!-- Basic meta - advanced meta is output with {{ghost_head}} below --}}
     <title>{{meta_title}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    {{!-- Preload main styles and scripts for better performance --}}
     <link rel="preload" as="style" href="{{asset "built/screen.css"}}">
     <link rel="preload" as="script" href="{{asset "built/source.js"}}">
-    
-    {{!-- Fonts are preloaded and defined in the default template to avoid layout shift --}}
     {{> "typography/fonts"}}
-
-    {{!-- Theme assets - use the {{asset}} helper to reference styles & scripts, this will take care of caching and cache-busting automatically --}}
     <link rel="stylesheet" type="text/css" href="{{asset "built/screen.css"}}">
-
-    {{!-- Custom background color --}}
     <style>
         :root {
             --background-color: {{@custom.site_background_color}}
         }
     </style>
-
     <script>
-        /* The script for calculating the color contrast has been taken from
-        https://gomakethings.com/dynamically-changing-the-text-color-based-on-background-color-contrast-with-vanilla-js/ */
-        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color');
-        accentColor = accentColor.trim().slice(1);
-
-        if (accentColor.length === 3) {
-            accentColor = accentColor[0] + accentColor[0] + accentColor[1] + accentColor[1] + accentColor[2] + accentColor[2];
-        }
-
-        var r = parseInt(accentColor.substr(0, 2), 16);
-        var g = parseInt(accentColor.substr(2, 2), 16);
-        var b = parseInt(accentColor.substr(4, 2), 16);
-        var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000;
-        var textColor = (yiq >= 128) ? 'dark' : 'light';
-
+        var accentColor = getComputedStyle(document.documentElement).getPropertyValue('--background-color').trim().slice(1);
+        if (accentColor.length === 3) accentColor = accentColor.split('').map(c => c + c).join('');
+        var r = parseInt(accentColor.substr(0, 2), 16),
+            g = parseInt(accentColor.substr(2, 2), 16),
+            b = parseInt(accentColor.substr(4, 2), 16),
+            yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000,
+            textColor = (yiq >= 128) ? 'dark' : 'light';
         document.documentElement.className = `has-${textColor}-text`;
     </script>
-
-    {{!-- This tag outputs all your advanced SEO meta, structured data, and other important settings, it should always be the last tag before the closing head tag --}}
     {{ghost_head}}
-<script defer src="{{@site.url}}/members.js"></script>
-
+    <script defer src="{{@site.url}}/members.js"></script>
 </head>
 <body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
-
 <div class="gh-viewport">
-    
     {{> "components/navigation" navigationLayout=@custom.navigation_layout}}
-
     {{{body}}}
-    
     {{> "components/footer"}}
-    
 </div>
 
 {{#is "post, page"}}
     {{> "lightbox"}}
 {{/is}}
 
-{{!-- Scripts - handle responsive videos, infinite scroll, and navigation dropdowns --}}
 <script src="{{asset "built/source.js"}}"></script>
-
-{{!-- Ghost outputs required functional scripts with this tag, it should always be the last thing before the closing body tag --}}
 {{ghost_foot}}
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const contentContainer = document.getElementById("dynamic-content");
+  const rawContentElement = document.getElementById("raw-content");
 
-  <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const contentContainer = document.getElementById("dynamic-content");
-    const rawContentElement = document.getElementById("raw-content");
+  if (!contentContainer || !rawContentElement) return;
 
-    if (!contentContainer || !rawContentElement) return;
+  const rawHTML = rawContentElement.innerHTML;
+  const adCode = `
+    <div class="adsense-block">
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-8181982052718057"
+           data-ad-slot="2525872787"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+    </div>`;
 
-    const rawHTML = rawContentElement.innerHTML;
-    const adCode = `
-      <div class="adsense-block">
-        <ins class="adsbygoogle"
-             style="display:block"
-             data-ad-client="ca-pub-8181982052718057"
-             data-ad-slot="2525872787"
-             data-ad-format="auto"
-             data-full-width-responsive="true"></ins>
-      </div>`;
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = rawHTML;
 
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = rawHTML;
-
-    const paragraphs = tempDiv.querySelectorAll("p");
-    paragraphs.forEach((p, i) => {
-      if ((i + 1) % 3 === 0) {
-        const ad = document.createElement("div");
-        ad.innerHTML = adCode;
-        p.parentNode.insertBefore(ad, p.nextSibling);
-      }
-    });
-
-    contentContainer.innerHTML = tempDiv.innerHTML;
-
-    const ads = document.querySelectorAll('.adsbygoogle');
-    if (ads.length > 0) {
-      const script = document.createElement('script');
-      script.async = true;
-      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181982052718057";
-      script.crossOrigin = "anonymous";
-      document.head.appendChild(script);
-
-      script.onload = () => {
-        ads.forEach(ad => {
-          try {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-          } catch (e) {
-            console.error('AdSense error:', e);
-          }
-        });
-      };
+  const paragraphs = tempDiv.querySelectorAll("p");
+  paragraphs.forEach((p, i) => {
+    if ((i + 1) % 3 === 0) {
+      const ad = document.createElement("div");
+      ad.innerHTML = adCode;
+      p.parentNode.insertBefore(ad, p.nextSibling);
     }
   });
-</script>
 
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-    const contentContainer = document.getElementById("dynamic-content");
-    const rawContentElement = document.getElementById("raw-content");
+  contentContainer.innerHTML = tempDiv.innerHTML;
 
-    if (!contentContainer || !rawContentElement) return;
+  const ads = document.querySelectorAll('.adsbygoogle');
+  if (ads.length > 0) {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181982052718057";
+    script.crossOrigin = "anonymous";
+    document.head.appendChild(script);
 
-    const rawHTML = rawContentElement.innerHTML;
-    const subscribeBox = `
-      <div class="subscribe-cta-box">
-  <h2>Pokonaj algorytmy i dołącz do Subskrybentów!<br><span>Jednocześnie wspieraj moją pracę.</span></h2>
-  <ul>
-    <li>Dostęp do wszystkich artykułów</li>
-    <li>Czytaj wygodnie! Nawigacyjny spis treści</li>
-    <li>Artykuły na Twoją skrzynkę e-mail</li>
-  </ul>
-  <a class="subscribe-cta-button" href="/subskrypcja">Zostań subskrybentem</a>
-  <div class="subscribe-cta-login">Masz już konto? <a href="/login">Zaloguj się</a></div>
-</div>`;
-
-    const tempDiv = document.createElement("div");
-    tempDiv.innerHTML = rawHTML;
-
-    const paragraphs = tempDiv.querySelectorAll("p");
-    paragraphs.forEach((p, i) => {
-      if ((i + 1) % 6 === 0) {
-        const box = document.createElement("div");
-        box.innerHTML = subscribeBox;
-        p.parentNode.insertBefore(box, p.nextSibling);
-      }
-    });
-
-    contentContainer.innerHTML = tempDiv.innerHTML;
-  });
+    script.onload = () => {
+      ads.forEach(ad => {
+        try {
+          (adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.error('AdSense error:', e);
+        }
+      });
+    };
+  }
+});
 </script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const content = document.querySelector(".gh-content-with-toc");
-  const tocContainer = document.querySelector(".gh-toc");
+  const contentContainer = document.getElementById("dynamic-content");
+  const rawContentElement = document.getElementById("raw-content");
 
-  if (!content || !tocContainer) return;
+  if (!contentContainer || !rawContentElement) return;
+
+  const rawHTML = rawContentElement.innerHTML;
+  const subscribeBox = `
+    <div class="subscribe-cta-box">
+<h2>Pokonaj algorytmy i dołącz do Subskrybentów!<br><span>Jednocześnie wspieraj moją pracę.</span></h2>
+<ul>
+  <li>Dostęp do wszystkich artykułów</li>
+  <li>Czytaj wygodnie! Nawigacyjny spis treści</li>
+  <li>Artykuły na Twoją skrzynkę e-mail</li>
+</ul>
+<a class="subscribe-cta-button" href="/subskrypcja">Zostań subskrybentem</a>
+<div class="subscribe-cta-login">Masz już konto? <a href="/login">Zaloguj się</a></div>
+</div>`;
+
+  const tempDiv = document.createElement("div");
+  tempDiv.innerHTML = rawHTML;
+
+  const paragraphs = tempDiv.querySelectorAll("p");
+  paragraphs.forEach((p, i) => {
+    if ((i + 1) % 6 === 0) {
+      const box = document.createElement("div");
+      box.innerHTML = subscribeBox;
+      p.parentNode.insertBefore(box, p.nextSibling);
+    }
+  });
+
+  contentContainer.innerHTML = tempDiv.innerHTML;
+});
+</script>
+
+{{#if @member.paid}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const content = document.querySelector(".gh-content-with-toc");
+  const tocDesktop = document.querySelector(".gh-toc");
+
+  if (!content || !tocDesktop) return;
 
   const headings = content.querySelectorAll("h2, h3");
   if (!headings.length) return;
 
-  const tocList = document.createElement("ul");
-
-  headings.forEach((heading, index) => {
-    const id = `heading-${index}`;
-    heading.id = id;
-
-    const item = document.createElement("li");
-    item.className = heading.tagName.toLowerCase(); // "h2" lub "h3"
-
-    const link = document.createElement("a");
-    link.href = `#${id}`;
-    link.textContent = heading.textContent;
-
-    item.appendChild(link);
-    tocList.appendChild(item);
-  });
-
-  tocContainer.appendChild(tocList);
-});
-</script>
-
-    <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const content = document.querySelector(".gh-content");
-  const tocDesktop = document.querySelector(".gh-toc");
-  const tocMobilePanel = document.createElement("div");
-  tocMobilePanel.className = "toc-mobile-panel";
-  const tocToggleMobile = document.createElement("div");
-  tocToggleMobile.className = "toc-toggle-mobile";
-  tocToggleMobile.textContent = "Pokaż spis treści";
-
-  // Znajdź nagłówki H2 i H3
-  const headings = content.querySelectorAll("h2, h3");
-  if (headings.length === 0) return;
-
-  // Przypisz ID nagłówkom jeśli nie mają
-  headings.forEach((heading, index) => {
-    if (!heading.id) {
-      heading.id = `toc-${index}`;
-    }
-  });
-
-  // Zbuduj listę TOC
   const ul = document.createElement("ul");
-  headings.forEach(heading => {
+  headings.forEach((heading, i) => {
+    const id = `toc-${i}`;
+    heading.id = id;
     const li = document.createElement("li");
     li.className = heading.tagName.toLowerCase();
     const a = document.createElement("a");
-    a.href = `#${heading.id}`;
-    a.textContent = heading.textContent.trim();
-    a.addEventListener("click", () => {
-      tocMobilePanel.style.display = "none";
-    });
+    a.href = `#${id}`;
+    a.textContent = heading.textContent;
     li.appendChild(a);
     ul.appendChild(li);
   });
 
-  // Dodaj do sidebar (desktop)
-  if (tocDesktop) {
-    tocDesktop.appendChild(ul.cloneNode(true));
-  }
+  tocDesktop.appendChild(ul.cloneNode(true));
 
-  // Dodaj do panelu mobilnego
+  const tocMobilePanel = document.createElement("div");
+  tocMobilePanel.className = "toc-mobile-panel";
   tocMobilePanel.appendChild(ul);
 
-  // Dodaj toggle button i panel do body
+  const tocToggleMobile = document.createElement("div");
+  tocToggleMobile.className = "toc-toggle-mobile";
+  tocToggleMobile.textContent = "Pokaż spis treści";
+  tocToggleMobile.addEventListener("click", () => {
+    tocMobilePanel.style.display = tocMobilePanel.style.display === "block" ? "none" : "block";
+  });
+
   document.body.appendChild(tocToggleMobile);
   document.body.appendChild(tocMobilePanel);
 
-  // Obsługa kliknięcia mobilnego przycisku
-  tocToggleMobile.addEventListener("click", () => {
-    const isVisible = tocMobilePanel.style.display === "block";
-    tocMobilePanel.style.display = isVisible ? "none" : "block";
-  });
-
-  // Aktywny link w TOC (desktop) przy przewijaniu
-  const tocLinks = tocDesktop?.querySelectorAll("a") || [];
-  const observerOptions = { rootMargin: "-40% 0px -50% 0px", threshold: 0 };
-
-  const observer = new IntersectionObserver((entries) => {
+  const tocLinks = tocDesktop.querySelectorAll("a");
+  const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       const id = entry.target.id;
       if (entry.isIntersecting) {
         tocLinks.forEach(link => link.classList.remove("active"));
         const activeLink = tocDesktop.querySelector(`a[href="#${id}"]`);
-        if (activeLink) {
-          activeLink.classList.add("active");
-        }
+        if (activeLink) activeLink.classList.add("active");
       }
     });
-  }, observerOptions);
+  }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
 
   headings.forEach(h => observer.observe(h));
 });
 </script>
+{{/if}}
 
 </body>
 </html>
