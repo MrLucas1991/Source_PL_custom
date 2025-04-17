@@ -160,6 +160,36 @@
   });
 </script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const content = document.querySelector(".gh-content-with-toc");
+  const tocContainer = document.querySelector(".gh-toc");
+
+  if (!content || !tocContainer) return;
+
+  const headings = content.querySelectorAll("h2, h3");
+  if (!headings.length) return;
+
+  const tocList = document.createElement("ul");
+
+  headings.forEach((heading, index) => {
+    const id = `heading-${index}`;
+    heading.id = id;
+
+    const item = document.createElement("li");
+    item.className = heading.tagName.toLowerCase(); // "h2" lub "h3"
+
+    const link = document.createElement("a");
+    link.href = `#${id}`;
+    link.textContent = heading.textContent;
+
+    item.appendChild(link);
+    tocList.appendChild(item);
+  });
+
+  tocContainer.appendChild(tocList);
+});
+</script>
 
 </body>
 </html>
