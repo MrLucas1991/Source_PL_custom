@@ -7,6 +7,7 @@
      crossorigin="anonymous"></script>
 {{/if}}
 
+    
     <title>{{meta_title}}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +32,8 @@
     </script>
     {{ghost_head}}
     <script defer src="{{@site.url}}/members.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/ghost/portal@latest/umd/portal.min.js"></script>
+
 </head>
 <body class="{{body_class}} has-{{#match @custom.title_font "Elegant serif"}}serif{{else match @custom.title_font "Consistent mono"}}mono{{else}}sans{{/match}}-title has-{{#match @custom.body_font "Elegant serif"}}serif{{else}}sans{{/match}}-body">
 <div class="gh-viewport">
