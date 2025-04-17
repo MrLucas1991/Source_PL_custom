@@ -150,7 +150,21 @@ document.addEventListener("DOMContentLoaded", function () {
   if (!headings.length) return;
 
   const ul = document.createElement("ul");
+
+  // === Add link to top of article
+  const titleLi = document.createElement("li");
+  const titleA = document.createElement("a");
+  titleA.href = "#top";
+  titleA.textContent = "Początek artykułu";
+  titleLi.appendChild(titleA);
+  ul.appendChild(titleLi);
+
+  // === Add headings to ToC, skipping certain ones
   headings.forEach((heading, i) => {
+    const text = heading.textContent.trim();
+
+    if (text.toLowerCase().includes("dołącz do dyskusji")) return;
+
     const id = `toc-${i}`;
     heading.id = id;
 
@@ -159,11 +173,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const a = document.createElement("a");
     a.href = `#${id}`;
-    a.textContent = heading.textContent;
+    a.textContent = text;
 
     li.appendChild(a);
     ul.appendChild(li);
   });
+
+  // === Add link to comments section
+  const commentsLi = document.createElement("li");
+  const commentsA = document.createElement("a");
+  commentsA.href = "#komentarze";
+  commentsA.textContent = "Sekcja komentarzy";
+  commentsLi.appendChild(commentsA);
+  ul.appendChild(commentsLi);
 
   tocContainer.appendChild(ul);
 
