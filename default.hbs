@@ -118,57 +118,75 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     {{#if @member.paid}}
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-  const headings = document.querySelectorAll(".gh-content h2, .gh-content h3");
+  const body = document.body;
+
+  // === DESKTOP toggle ===
+  const desktopToggle = document.createElement("div");
+  desktopToggle.className = "toc-toggle-desktop";
+  desktopToggle.textContent = "Spis treści";
+  desktopToggle.addEventListener("click", () => {
+    body.classList.toggle("toc-open");
+  });
+  document.body.appendChild(desktopToggle);
+
+  // === MOBILE toggle ===
+  const mobileToggle = document.createElement("div");
+  mobileToggle.className = "toc-toggle-mobile";
+  mobileToggle.textContent = "Spis treści";
+  mobileToggle.addEventListener("click", () => {
+    body.classList.toggle("toc-open");
+  });
+  document.body.appendChild(mobileToggle);
+
+  // === Generowanie ToC tylko dla subskrybentów ===
+  const content = document.querySelector(".gh-content") || document.querySelector(".gh-content-with-toc");
+  const tocContainer = document.querySelector(".gh-toc");
+
+  if (!content || !tocContainer) return;
+
+  const headings = content.querySelectorAll("h2, h3");
   if (!headings.length) return;
 
   const ul = document.createElement("ul");
   headings.forEach((heading, i) => {
     const id = `toc-${i}`;
     heading.id = id;
+
     const li = document.createElement("li");
     li.className = heading.tagName.toLowerCase();
+
     const a = document.createElement("a");
     a.href = `#${id}`;
     a.textContent = heading.textContent;
+
     li.appendChild(a);
     ul.appendChild(li);
   });
 
-  // === Desktop ===
-  const toggleDesktop = document.createElement("div");
-  toggleDesktop.className = "toc-toggle-desktop";
-  toggleDesktop.textContent = "Spis treści";
+  tocContainer.appendChild(ul);
 
-  const panelDesktop = document.createElement("div");
-  panelDesktop.className = "toc-desktop-panel";
-  panelDesktop.appendChild(ul.cloneNode(true));
+  // === Aktywny link (podświetlenie) ===
+  const tocLinks = tocContainer.querySelectorAll("a");
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const id = entry.target.id;
+      if (entry.isIntersecting) {
+        tocLinks.forEach(link => link.classList.remove("active"));
+        const activeLink = tocContainer.querySelector(`a[href="#${id}"]`);
+        if (activeLink) activeLink.classList.add("active");
+      }
+    });
+  }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
 
-  toggleDesktop.addEventListener("click", () => {
-    panelDesktop.classList.toggle("open");
-  });
-
-  document.body.appendChild(toggleDesktop);
-  document.body.appendChild(panelDesktop);
-
-  // === Mobile ===
-  const tocToggleMobile = document.createElement("div");
-  tocToggleMobile.className = "toc-toggle-mobile";
-  tocToggleMobile.textContent = "Pokaż spis treści";
-
-  const tocMobilePanel = document.createElement("div");
-  tocMobilePanel.className = "toc-mobile-panel";
-  tocMobilePanel.appendChild(ul.cloneNode(true));
-
-  tocToggleMobile.addEventListener("click", () => {
-    tocMobilePanel.classList.toggle("open");
-  });
-
-  document.body.appendChild(tocToggleMobile);
-  document.body.appendChild(tocMobilePanel);
+  headings.forEach(h => observer.observe(h));
 });
 </script>
+
+
+    
 {{/if}}
 
 
