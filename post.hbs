@@ -59,21 +59,13 @@
         {{/if}}
 
         {{^if @member.paid}}
-            <!-- Reklama widoczna tylko dla niezalogowanych lub darmowych użytkowników -->
-            <section class="gh-ad-container gh-canvas">
-                <div class="gh-ad-box">
-                    <!-- Tu wklej kod np. Google AdSense -->
-                    <p style="text-align:center; padding:20px; background:#f3f3f3; border-radius:8px;">Reklama sponsorowana</p>
-                </div>
-            </section>
-
-            <section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-            </section>
-            <div id="raw-content" style="display:none;">{{{content}}}</div>
+        <section id="dynamic-content" class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+        </section>
+        <div id="raw-content" style="display:none;">{{{content}}}</div>
         {{else}}
-            <section class="gh-content gh-canvas is-body gh-content-with-toc{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
-                {{content}}
-            </section>
+        <section class="gh-content gh-canvas is-body{{#if @custom.enable_drop_caps_on_posts}} drop-cap{{/if}}">
+            {{content}}
+        </section>
         {{/if}}
 
     </article>
