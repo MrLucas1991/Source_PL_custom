@@ -96,10 +96,13 @@
         <form id="profile-update-form">
           <label for="name">Imię</label>
           <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
+
           <label for="email">Email</label>
           <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
+
           <label for="avatar">URL avatara</label>
           <input type="url" id="avatar" name="avatar" class="gh-account-input" value="{{@member.avatar}}" placeholder="https://...">
+
           <button type="submit" class="gh-button">Zapisz zmiany</button>
           <p id="update-feedback" class="gh-feedback"></p>
         </form>
@@ -155,15 +158,11 @@
           const email = document.getElementById("email").value.trim();
 
           try {
-            // wysyłka do n8n
             await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
+              headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ name, avatar, email })
             });
-
             feedback.textContent = "✅ Zaktualizowano dane.";
           } catch (err) {
             feedback.textContent = "❌ Błąd aktualizacji.";
