@@ -43,66 +43,59 @@
 
 {{^if @member.paid}}
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const container = document.getElementById("dynamic-content");
-  const raw = document.getElementById("raw-content");
+  document.addEventListener("DOMContentLoaded", function () {
+    const contentContainer = document.getElementById("dynamic-content");
+    const rawContentElement = document.getElementById("raw-content");
 
-  if (!container || !raw) return;
+    if (!contentContainer || !rawContentElement) return;
 
-  const html = raw.innerHTML;
-  const adHTML = `
-    <div class="adsense-block">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-8181982052718057"
-           data-ad-slot="2525872787"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </div>`;
+    const rawHTML = rawContentElement.innerHTML;
+    const adCode = `
+      <div class="adsense-block">
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-8181982052718057"
+             data-ad-slot="2525872787"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+      </div>`;
 
-  const temp = document.createElement("div");
-  temp.innerHTML = html;
-  const paragraphs = temp.querySelectorAll("p");
+    const tempDiv = document.createElement("div");
+    tempDiv.innerHTML = rawHTML;
 
-  let adCount = 0;
-  paragraphs.forEach((p, i) => {
-    if ((i + 1) % 3 === 0 && adCount < 5) {
-      const ad = document.createElement("div");
-      ad.innerHTML = adHTML;
-      p.parentNode.insertBefore(ad, p.nextSibling);
-      adCount++;
+    const paragraphs = tempDiv.querySelectorAll("p");
+    paragraphs.forEach((p, i) => {
+      if ((i + 1) % 3 === 0) {
+        const ad = document.createElement("div");
+        ad.innerHTML = adCode;
+        p.parentNode.insertBefore(ad, p.nextSibling);
+      }
+    });
+
+    contentContainer.innerHTML = tempDiv.innerHTML;
+
+    const ads = document.querySelectorAll('.adsbygoogle');
+    if (ads.length > 0) {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181982052718057";
+      script.crossOrigin = "anonymous";
+      document.head.appendChild(script);
+
+      script.onload = () => {
+        ads.forEach(ad => {
+          try {
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          } catch (e) {
+            console.error('AdSense error:', e);
+          }
+        });
+      };
     }
   });
-
-  container.innerHTML = temp.innerHTML;
-
-  // Ładuj skrypt tylko raz
-  if (!window.adsLoaded) {
-    const script = document.createElement("script");
-    script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8181982052718057";
-    script.async = true;
-    script.crossOrigin = "anonymous";
-    document.head.appendChild(script);
-
-    script.onload = () => {
-      const ads = document.querySelectorAll("ins.adsbygoogle");
-      ads.forEach((adEl) => {
-        try {
-          if (!adEl.classList.contains("adsbygoogle-loaded")) {
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            adEl.classList.add("adsbygoogle-loaded");
-          }
-        } catch (e) {
-          console.warn("AdSense error:", e);
-        }
-      });
-    };
-
-    window.adsLoaded = true;
-  }
-});
 </script>
 {{/if}}
+
 
 
     
