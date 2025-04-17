@@ -147,7 +147,7 @@
       if (deleteFinal) {
         deleteFinal.addEventListener('click', async () => {
           try {
-            await ghost.members.api.member.delete();
+            await window.portal.member.delete();
             window.location.href = '/';
           } catch (err) {
             alert('❌ Nie udało się usunąć konta.');
@@ -162,7 +162,7 @@
           const avatar = document.getElementById('avatar').value;
 
           try {
-            await ghost.members.api.member.update({ name, avatar });
+            await window.portal.member.update({ name, avatar });
             feedback.innerText = "✅ Zaktualizowano dane!";
           } catch (err) {
             feedback.innerText = "❌ Wystąpił błąd przy zapisie.";
