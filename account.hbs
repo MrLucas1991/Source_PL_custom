@@ -120,9 +120,7 @@
       <tr><th>Imię</th><td>{{@member.name}}</td></tr>
       <tr><th>Email</th><td>{{@member.email}}</td></tr>
       <tr><th>Avatar</th>
-        <td>
-          <img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar">
-        </td>
+        <td><img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar"></td>
       </tr>
       <tr><th>Status subskrypcji</th>
         <td>{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
@@ -225,7 +223,10 @@
             method: "POST",
             body: formData
           });
-          feedback.textContent = response.ok ? "✅ Dane zaktualizowane." : "⚠️ Błąd serwera.";
+          const result = await response.json();
+          feedback.textContent = response.ok
+            ? "✅ Dane zaktualizowane."
+            : result.error || "⚠️ Błąd serwera.";
         } catch (error) {
           feedback.textContent = "❌ Błąd połączenia.";
         }
