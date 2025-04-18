@@ -117,8 +117,8 @@
   <div class="gh-account-box">
     <h2>Dane konta</h2>
     <table class="gh-account-table">
-      <tr><th>Imię</th><td>{{@member.name}}</td></tr>
-      <tr><th>Email</th><td>{{@member.email}}</td></tr>
+      <tr><th>Imię</th><td data-field="name">{{@member.name}}</td></tr>
+      <tr><th>Email</th><td data-field="email">{{@member.email}}</td></tr>
       <tr><th>Avatar</th>
         <td><img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar"></td>
       </tr>
@@ -225,9 +225,15 @@
             body: formData
           });
           const result = await response.json();
-          feedback.textContent = response.ok
-            ? "✅ Dane zaktualizowane."
-            : result.error || "⚠️ Błąd serwera.";
+
+          if (response.ok && result.success !== false) {
+            document.querySelector("td[data-field='name']").innerText = form.name.value;
+            document.querySelector("td[data-field='email']").innerText = form.email.value;
+            feedback.textContent = result.message || "✅ Dane zaktualizowane.";
+            formWrapper.classList.remove("active");
+          } else {
+            feedback.textContent = result.message || "⚠️ Nie udało się zaktualizować danych.";
+          }
         } catch (error) {
           feedback.textContent = "❌ Błąd połączenia.";
         }
