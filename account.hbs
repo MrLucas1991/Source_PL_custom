@@ -135,6 +135,7 @@
       <form id="profile-update-form">
         <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
         <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
+        <input type="hidden" name="original_email" value="{{@member.email}}">
         <input type="hidden" name="member_id" value="{{@member.uuid}}">
         <button type="submit" class="gh-button">Zapisz zmiany</button>
         <p id="update-feedback" class="gh-feedback"></p>
