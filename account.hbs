@@ -27,7 +27,7 @@
       padding: 1.25rem;
       font-size: 1.2rem;
       border: 1px solid #ccc;
-      border-radius: 12px;
+      border-radius: 999px;
       background: #fff;
     }
 
@@ -133,6 +133,7 @@
         <p class="gh-warning">Czy na pewno chcesz anulować subskrypcję?</p>
         <form id="cancel-sub-form">
           <input type="hidden" name="cancel" value="true">
+          <input type="hidden" name="email" value="{{@member.email}}">
           <button type="submit" class="gh-danger-button">Tak, anuluj</button>
         </form>
       </div>
@@ -146,6 +147,7 @@
         <p class="gh-warning">Czy jesteś pewien, że chcesz usunąć konto? Tego działania nie można cofnąć.</p>
         <form id="delete-form">
           <input type="hidden" name="delete" value="true">
+          <input type="hidden" name="email" value="{{@member.email}}">
           <button type="submit" class="gh-danger-button">Tak, usuń konto</button>
         </form>
       </div>
