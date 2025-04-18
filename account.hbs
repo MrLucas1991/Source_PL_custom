@@ -120,7 +120,9 @@
       <tr><th>Imię</th><td>{{@member.name}}</td></tr>
       <tr><th>Email</th><td>{{@member.email}}</td></tr>
       <tr><th>Avatar</th>
-        <td><img class="gh-avatar-img" src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar"></td>
+        <td>
+          <img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar">
+        </td>
       </tr>
       <tr><th>Status subskrypcji</th>
         <td>{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
@@ -135,7 +137,6 @@
       <form id="profile-update-form">
         <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
         <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
-        <input type="url" id="avatar" name="avatar" class="gh-account-input" value="{{@member.avatar}}" placeholder="URL avatara (https://...)">
         <input type="hidden" name="member_id" value="{{@member.uuid}}">
         <button type="submit" class="gh-button">Zapisz zmiany</button>
         <p id="update-feedback" class="gh-feedback"></p>
@@ -258,6 +259,7 @@
             body: formData
           });
           await ghost.members.api.member.delete();
+          await ghost.members.signout();
           window.location.href = "/";
         } catch (error) {
           alert("❌ Błąd usunięcia konta.");
