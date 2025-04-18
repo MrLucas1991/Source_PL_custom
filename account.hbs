@@ -1,94 +1,112 @@
 {{!< default}}
 
 <main class="gh-main gh-outer">
-  <style>
-    .gh-account-header {
-      margin-left: 0;
-      text-align: center;
-    }
+<style>
+  .gh-account-header {
+    margin-left: 0;
+    text-align: center;
+  }
 
-    .gh-account-box {
-      max-width: 720px;
-      margin: 3rem auto;
-      padding: 2rem;
-      border: 1px solid #eaeaea;
-      border-radius: 12px;
-      background: transparent;
-    }
+  .gh-account-box {
+    max-width: 720px;
+    margin: 3rem auto;
+    padding: 2rem;
+    border: 1px solid #eaeaea;
+    border-radius: 12px;
+    background: transparent;
+  }
 
-    .gh-account-table {
-      width: 100%;
-      margin-bottom: 2rem;
-    }
+  .gh-account-table {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
 
-    .gh-account-input {
-      width: 100%;
-      margin-bottom: 1.2rem;
-      padding: 1.25rem;
-      font-size: 1.2rem;
-      border: 1px solid #ccc;
-      border-radius: 999px;
-      background: #fff;
-    }
+  .gh-account-input {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background: #fff;
+  }
 
-    .gh-button,
-    .gh-button-secondary {
-      display: inline-block;
-      font-size: 1.2rem;
-      padding: 1rem 2rem;
-      border-radius: 999px;
-      border: none;
-      cursor: pointer;
-    }
+  .gh-button,
+  .gh-button-secondary,
+  .gh-button-outline,
+  .gh-danger-button {
+    display: inline-block;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.2;
+    margin: 0 auto 1.2rem;
+  }
 
-    .gh-button-outline {
-      border: 2px solid #000;
-      background: transparent;
-      color: #000;
-    }
+  .gh-button-outline {
+    border: 2px solid #000;
+    background: transparent;
+    color: #000;
+  }
 
-    .gh-feedback {
-      margin-top: 1rem;
-      font-size: 1rem;
-    }
+  .gh-button-secondary {
+    background: #a55;
+    color: #fff;
+  }
 
-    .gh-avatar-img {
-      height: 80px;
-      border-radius: 8px;
-    }
+  .gh-feedback {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
+  }
 
-    .gh-edit-form,
-    .gh-cancel-wrapper,
-    .gh-delete-wrapper {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.5s ease;
-    }
+  .gh-avatar-img {
+    height: 80px;
+    border-radius: 8px;
+  }
 
-    .gh-edit-form.active,
-    .gh-cancel-wrapper.active,
-    .gh-delete-wrapper.active {
-      max-height: 500px;
-      margin-top: 1.5rem;
-    }
+  .gh-edit-form,
+  .gh-cancel-wrapper,
+  .gh-delete-wrapper {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+  }
 
-    .gh-warning {
-      color: #c00;
-      font-weight: bold;
-      text-align: center;
-      margin-bottom: 1rem;
-    }
+  .gh-edit-form.active,
+  .gh-cancel-wrapper.active,
+  .gh-delete-wrapper.active {
+    max-height: 600px;
+    margin-top: 1.5rem;
+  }
 
-    .gh-danger-button {
-      background: #c00;
-      color: #fff;
-      border-radius: 999px;
-      font-size: 1.1rem;
-      padding: 1rem 2rem;
-      border: none;
-      cursor: pointer;
-    }
-  </style>
+  .gh-warning {
+    color: #c00;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .gh-danger-button {
+    background: #c00;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    border-radius: 999px;
+    border: none;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .gh-button-container {
+    text-align: center;
+  }
+</style>
+
 
   <header class="gh-article-header gh-account-header">
     <h1 class="gh-article-title is-title">Moje konto</h1>
