@@ -107,161 +107,163 @@
   }
 </style>
 
+<header class="gh-article-header gh-account-header">
+  <h1 class="gh-article-title is-title">Moje konto</h1>
+  <p class="gh-article-excerpt is-body">Zarządzaj swoimi danymi i subskrypcją</p>
+</header>
 
-  <header class="gh-article-header gh-account-header">
-    <h1 class="gh-article-title is-title">Moje konto</h1>
-    <p class="gh-article-excerpt is-body">Zarządzaj swoimi danymi i subskrypcją</p>
-  </header>
+<section class="gh-content gh-canvas is-body">
+  {{#if @member}}
+  <div class="gh-account-box">
+    <h2>Dane konta</h2>
+    <table class="gh-account-table">
+      <tr><th>Imię</th><td>{{@member.name}}</td></tr>
+      <tr><th>Email</th><td>{{@member.email}}</td></tr>
+      <tr><th>Avatar</th>
+        <td><img class="gh-avatar-img" src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar"></td>
+      </tr>
+      <tr><th>Status subskrypcji</th>
+        <td>{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
+      </tr>
+    </table>
 
-  <section class="gh-content gh-canvas is-body">
-    {{#if @member}}
-    <div class="gh-account-box">
-      <h2>Dane konta</h2>
-      <table class="gh-account-table">
-        <tr><th>Imię</th><td>{{@member.name}}</td></tr>
-        <tr><th>Email</th><td>{{@member.email}}</td></tr>
-        <tr><th>Avatar</th>
-          <td><img class="gh-avatar-img" src="{{#if @member.avatar}}{{@member.avatar}}{{else}}https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100{{/if}}" alt="Avatar"></td>
-        </tr>
-        <tr><th>Status subskrypcji</th>
-          <td>{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
-        </tr>
-      </table>
-
-      <div style="text-align:center; margin-bottom: 2rem;">
-        <button id="toggle-edit" class="gh-button gh-button-outline">Edytuj dane</button>
-      </div>
-
-      <div class="gh-edit-form" id="edit-form-wrapper">
-        <form id="profile-update-form">
-          <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
-          <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
-          <input type="url" id="avatar" name="avatar" class="gh-account-input" value="{{@member.avatar}}" placeholder="URL avatara (https://...)">
-          <button type="submit" class="gh-button">Zapisz zmiany</button>
-          <p id="update-feedback" class="gh-feedback"></p>
-        </form>
-      </div>
-
-      {{#if @member.paid}}
-      <hr>
-      <div style="text-align:center; margin-top: 2rem;">
-        <button id="toggle-cancel-sub" class="gh-button gh-button-outline">Anuluj subskrypcję</button>
-      </div>
-      <div class="gh-cancel-wrapper" id="cancel-sub-wrapper">
-        <p class="gh-warning">Czy na pewno chcesz anulować subskrypcję?</p>
-        <form id="cancel-sub-form">
-          <input type="hidden" name="cancel" value="true">
-          <input type="hidden" name="email" value="{{@member.email}}">
-          <button type="submit" class="gh-danger-button">Tak, anuluj</button>
-        </form>
-      </div>
-      {{/if}}
-
-      <hr>
-      <div style="text-align:center; margin-top: 2rem;">
-        <button id="toggle-delete" class="gh-button gh-button-outline">Usuń konto</button>
-      </div>
-      <div class="gh-delete-wrapper" id="delete-wrapper">
-        <p class="gh-warning">Czy jesteś pewien, że chcesz usunąć konto? Tego działania nie można cofnąć.</p>
-        <form id="delete-form">
-          <input type="hidden" name="delete" value="true">
-          <input type="hidden" name="email" value="{{@member.email}}">
-          <button type="submit" class="gh-danger-button">Tak, usuń konto</button>
-        </form>
-      </div>
-
-      <hr>
-      <div style="text-align: center; margin-top: 2rem;">
-        <button class="gh-button gh-button-secondary" data-members-signout>Wyloguj się</button>
-      </div>
+    <div style="text-align:center; margin-bottom: 2rem;">
+      <button id="toggle-edit" class="gh-button gh-button-outline">Edytuj dane</button>
     </div>
-    {{else}}
-    <p style="text-align: center;">Nie jesteś zalogowany. <a href="/login/">Zaloguj się</a> lub <a href="/signup/">Zarejestruj się</a>.</p>
+
+    <div class="gh-edit-form" id="edit-form-wrapper">
+      <form id="profile-update-form">
+        <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
+        <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
+        <input type="url" id="avatar" name="avatar" class="gh-account-input" value="{{@member.avatar}}" placeholder="URL avatara (https://...)">
+        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <button type="submit" class="gh-button">Zapisz zmiany</button>
+        <p id="update-feedback" class="gh-feedback"></p>
+      </form>
+    </div>
+
+    {{#if @member.paid}}
+    <hr>
+    <div style="text-align:center; margin-top: 2rem;">
+      <button id="toggle-cancel-sub" class="gh-button gh-button-outline">Anuluj subskrypcję</button>
+    </div>
+    <div class="gh-cancel-wrapper" id="cancel-sub-wrapper">
+      <p class="gh-warning">Czy na pewno chcesz anulować subskrypcję?</p>
+      <form id="cancel-sub-form">
+        <input type="hidden" name="cancel" value="true">
+        <input type="hidden" name="email" value="{{@member.email}}">
+        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <button type="submit" class="gh-danger-button">Tak, anuluj</button>
+      </form>
+    </div>
     {{/if}}
-  </section>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const editToggle = document.getElementById("toggle-edit");
-      const formWrapper = document.getElementById("edit-form-wrapper");
-      const form = document.getElementById("profile-update-form");
-      const feedback = document.getElementById("update-feedback");
+    <hr>
+    <div style="text-align:center; margin-top: 2rem;">
+      <button id="toggle-delete" class="gh-button gh-button-outline">Usuń konto</button>
+    </div>
+    <div class="gh-delete-wrapper" id="delete-wrapper">
+      <p class="gh-warning">Czy jesteś pewien, że chcesz usunąć konto? Tego działania nie można cofnąć.</p>
+      <form id="delete-form">
+        <input type="hidden" name="delete" value="true">
+        <input type="hidden" name="email" value="{{@member.email}}">
+        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <button type="submit" class="gh-danger-button">Tak, usuń konto</button>
+      </form>
+    </div>
 
-      const cancelToggle = document.getElementById("toggle-cancel-sub");
-      const cancelWrapper = document.getElementById("cancel-sub-wrapper");
-      const cancelForm = document.getElementById("cancel-sub-form");
+    <hr>
+    <div style="text-align: center; margin-top: 2rem;">
+      <button class="gh-button gh-button-secondary" data-members-signout>Wyloguj się</button>
+    </div>
+  </div>
+  {{else}}
+  <p style="text-align: center;">Nie jesteś zalogowany. <a href="/login/">Zaloguj się</a> lub <a href="/signup/">Zarejestruj się</a>.</p>
+  {{/if}}
+</section>
 
-      const deleteToggle = document.getElementById("toggle-delete");
-      const deleteWrapper = document.getElementById("delete-wrapper");
-      const deleteForm = document.getElementById("delete-form");
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const editToggle = document.getElementById("toggle-edit");
+    const formWrapper = document.getElementById("edit-form-wrapper");
+    const form = document.getElementById("profile-update-form");
+    const feedback = document.getElementById("update-feedback");
 
-      if (editToggle && formWrapper) {
-        editToggle.addEventListener("click", () => {
-          formWrapper.classList.toggle("active");
-        });
-      }
+    const cancelToggle = document.getElementById("toggle-cancel-sub");
+    const cancelWrapper = document.getElementById("cancel-sub-wrapper");
+    const cancelForm = document.getElementById("cancel-sub-form");
 
-      if (cancelToggle && cancelWrapper) {
-        cancelToggle.addEventListener("click", () => {
-          cancelWrapper.classList.toggle("active");
-        });
-      }
+    const deleteToggle = document.getElementById("toggle-delete");
+    const deleteWrapper = document.getElementById("delete-wrapper");
+    const deleteForm = document.getElementById("delete-form");
 
-      if (deleteToggle && deleteWrapper) {
-        deleteToggle.addEventListener("click", () => {
-          deleteWrapper.classList.toggle("active");
-        });
-      }
+    if (editToggle && formWrapper) {
+      editToggle.addEventListener("click", () => {
+        formWrapper.classList.toggle("active");
+      });
+    }
 
-      if (form) {
-        form.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(form);
-          try {
-            const response = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
-              method: "POST",
-              body: formData
-            });
-            feedback.textContent = response.ok ? "✅ Dane zaktualizowane." : "⚠️ Błąd serwera.";
-          } catch (error) {
-            feedback.textContent = "❌ Błąd połączenia.";
-          }
-        });
-      }
+    if (cancelToggle && cancelWrapper) {
+      cancelToggle.addEventListener("click", () => {
+        cancelWrapper.classList.toggle("active");
+      });
+    }
 
-      if (cancelForm) {
-        cancelForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(cancelForm);
-          try {
-            await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
-              method: "POST",
-              body: formData
-            });
-            alert("Subskrypcja zostanie anulowana.");
-            location.reload();
-          } catch (error) {
-            alert("Błąd anulowania subskrypcji.");
-          }
-        });
-      }
+    if (deleteToggle && deleteWrapper) {
+      deleteToggle.addEventListener("click", () => {
+        deleteWrapper.classList.toggle("active");
+      });
+    }
 
-      if (deleteForm) {
-        deleteForm.addEventListener("submit", async (e) => {
-          e.preventDefault();
-          const formData = new FormData(deleteForm);
-          try {
-            await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
-              method: "POST",
-              body: formData
-            });
-            await ghost.members.api.member.delete();
-            window.location.href = "/";
-          } catch (error) {
-            alert("❌ Błąd usunięcia konta.");
-          }
-        });
-      }
-    });
-  </script>
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        try {
+          const response = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
+            method: "POST",
+            body: formData
+          });
+          feedback.textContent = response.ok ? "✅ Dane zaktualizowane." : "⚠️ Błąd serwera.";
+        } catch (error) {
+          feedback.textContent = "❌ Błąd połączenia.";
+        }
+      });
+    }
+
+    if (cancelForm) {
+      cancelForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(cancelForm);
+        try {
+          await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
+            method: "POST",
+            body: formData
+          });
+          alert("Subskrypcja zostanie anulowana.");
+          location.reload();
+        } catch (error) {
+          alert("Błąd anulowania subskrypcji.");
+        }
+      });
+    }
+
+    if (deleteForm) {
+      deleteForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(deleteForm);
+        try {
+          await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
+            method: "POST",
+            body: formData
+          });
+          await ghost.members.api.member.delete();
+          window.location.href = "/";
+        } catch (error) {
+          alert("❌ Błąd usunięcia konta.");
+        }
+      });
+    }
+  });
+</script>
 </main>
