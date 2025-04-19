@@ -1,5 +1,3 @@
-oceń poprawność całego kodu:
-
 {{!< default}}
 
 <main class="gh-main gh-outer">
@@ -196,8 +194,14 @@ oceń poprawność całego kodu:
         body: formData
       });
 
-      let result;
-      try { result = await response.json(); } catch { result = { success: true }; }
+      let result = { success: true };
+      if (response.headers.get("content-type")?.includes("application/json")) {
+        try {
+          result = await response.json();
+        } catch (err) {
+          // JSON parse failed – continue optimistically
+        }
+      }
 
       if (response.ok && result.success !== false) {
         await ghost.members.api.member.delete();
@@ -207,11 +211,12 @@ oceń poprawność całego kodu:
         alert(result.message || "⚠️ Usunięcie konta nie powiodło się.");
       }
 
-    } catch {
+    } catch (err) {
       alert("❌ Błąd połączenia z serwerem podczas usuwania konta.");
     }
   });
 }
+
 
   });
 </script>
