@@ -2,7 +2,6 @@
 
 <main class="gh-main gh-outer">
 <style>
-  /* Wszystkie style pozostają bez zmian */
   .gh-account-header { margin-left: 0; text-align: center; }
   .gh-account-box { max-width: 720px; margin: 3rem auto; padding: 2rem; border: 1px solid #eaeaea; border-radius: 12px; background: transparent; }
   .gh-account-table { width: 100%; margin-bottom: 2rem; }
@@ -147,7 +146,9 @@
             method: "POST",
             body: formData
           });
-          const result = await response.json();
+          let result;
+          try { result = await response.json(); } catch { result = { success: true }; }
+
           if (response.ok && result.success !== false) {
             document.querySelector("td[data-field='name']").innerText = form.name.value;
             document.querySelector("td[data-field='email']").innerText = form.email.value;
@@ -171,7 +172,9 @@
             method: "POST",
             body: formData
           });
-          const result = await response.json();
+          let result;
+          try { result = await response.json(); } catch { result = { success: true }; }
+
           if (response.ok && result.success !== false) {
             document.querySelector("td[data-field='status']").textContent = "Brak aktywnej subskrypcji";
             cancelWrapper.classList.remove("active");
@@ -196,13 +199,20 @@
         e.preventDefault();
         const formData = new FormData(deleteForm);
         try {
-          await fetch("https://n8n.votum.network/webhook/d3655125-6c9a-4353-87b5-f78001bc0414", {
+          const response = await fetch("https://n8n.votum.network/webhook/d3655125-6c9a-4353-87b5-f78001bc0414", {
             method: "POST",
             body: formData
           });
-          await ghost.members.api.member.delete();
-          await ghost.members.signout();
-          window.location.href = "/";
+          let result;
+          try { result = await response.json(); } catch { result = { success: true }; }
+
+          if (response.ok && result.success !== false) {
+            await ghost.members.api.member.delete();
+            await ghost.members.signout();
+            window.location.href = "/";
+          } else {
+            alert(result.message || "⚠️ Nie udało się usunąć konta.");
+          }
         } catch {
           alert("❌ Błąd usunięcia konta.");
         }
