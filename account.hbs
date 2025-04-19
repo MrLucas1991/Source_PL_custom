@@ -58,7 +58,7 @@
         <input type="text" id="name" name="name" class="gh-account-input" value="{{@member.name}}" placeholder="Imię">
         <input type="email" id="email" name="email" class="gh-account-input" value="{{@member.email}}" placeholder="Twój e-mail">
         <input type="hidden" name="original_email" value="{{@member.email}}">
-        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <input type="hidden" name="member_uuid" value="{{@member.uuid}}">
         <button type="submit" class="gh-button">Zapisz zmiany</button>
         <p id="update-feedback" class="gh-feedback"></p>
       </form>
@@ -74,7 +74,7 @@
       <form id="cancel-sub-form">
         <input type="hidden" name="cancel" value="true">
         <input type="hidden" name="email" value="{{@member.email}}">
-        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <input type="hidden" name="member.uuid" value="{{@member.uuid}}">
         <button type="submit" class="gh-danger-button">Tak, anuluj</button>
       </form>
     </div>
@@ -89,7 +89,7 @@
       <form id="delete-form">
         <input type="hidden" name="delete" value="true">
         <input type="hidden" name="email" value="{{@member.email}}">
-        <input type="hidden" name="member_id" value="{{@member.uuid}}">
+        <input type="hidden" name="member.uuid" value="{{@member.uuid}}">
         <button type="submit" class="gh-danger-button">Tak, usuń konto</button>
       </form>
     </div>
@@ -145,7 +145,7 @@
         document.querySelector("td[data-field='email']").innerText = form.email.value;
         feedback.textContent = "⏳ Aktualizacja...";
         try {
-          const response = await fetch("https://n8n.votum.network/webhook/d3655125-6c9a-4353-87b5-f78001bc0414", {
+          const response = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
             method: "POST",
             body: formData
           });
@@ -164,7 +164,7 @@
         e.preventDefault();
         const formData = new FormData(cancelForm);
         try {
-          const response = await fetch("https://n8n.votum.network/webhook/d3655125-6c9a-4353-87b5-f78001bc0414", {
+          const response = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
             method: "POST",
             body: formData
           });
@@ -189,7 +189,7 @@
         e.preventDefault();
         const formData = new FormData(deleteForm);
         try {
-          const response = await fetch("https://n8n.votum.network/webhook/d3655125-6c9a-4353-87b5-f78001bc0414", {
+          const response = await fetch("https://n8n.votum.network/webhook-test/d3655125-6c9a-4353-87b5-f78001bc0414", {
             method: "POST",
             body: formData
           });
