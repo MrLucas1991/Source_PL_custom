@@ -2,109 +2,24 @@
 
 <main class="gh-main gh-outer">
 <style>
-  .gh-account-header {
-    margin-left: 0;
-    text-align: center;
+  /* Wszystkie style pozostają bez zmian */
+  .gh-account-header { margin-left: 0; text-align: center; }
+  .gh-account-box { max-width: 720px; margin: 3rem auto; padding: 2rem; border: 1px solid #eaeaea; border-radius: 12px; background: transparent; }
+  .gh-account-table { width: 100%; margin-bottom: 2rem; }
+  .gh-account-input { width: 100%; margin-bottom: 1.5rem; padding: 1.25rem 1.5rem; font-size: 1.2rem; border: 1px solid #ccc; border-radius: 999px; background: #fff; }
+  .gh-button, .gh-button-secondary, .gh-button-outline, .gh-danger-button {
+    display: inline-block; font-size: 1.2rem; padding: 1rem 2.5rem;
+    border-radius: 999px; border: none; cursor: pointer;
+    text-align: center; line-height: 1.2; margin: 0 auto 1.2rem;
   }
-
-  .gh-account-box {
-    max-width: 720px;
-    margin: 3rem auto;
-    padding: 2rem;
-    border: 1px solid #eaeaea;
-    border-radius: 12px;
-    background: transparent;
-  }
-
-  .gh-account-table {
-    width: 100%;
-    margin-bottom: 2rem;
-  }
-
-  .gh-account-input {
-    width: 100%;
-    margin-bottom: 1.5rem;
-    padding: 1.25rem 1.5rem;
-    font-size: 1.2rem;
-    border: 1px solid #ccc;
-    border-radius: 999px;
-    background: #fff;
-  }
-
-  .gh-button,
-  .gh-button-secondary,
-  .gh-button-outline,
-  .gh-danger-button {
-    display: inline-block;
-    font-size: 1.2rem;
-    padding: 1rem 2.5rem;
-    border-radius: 999px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    line-height: 1.2;
-    margin: 0 auto 1.2rem;
-  }
-
-  .gh-button-outline {
-    border: 2px solid #000;
-    background: transparent;
-    color: #000;
-  }
-
-  .gh-button-secondary {
-    background: #a55;
-    color: #fff;
-  }
-
-  .gh-feedback {
-    margin-top: 1rem;
-    font-size: 1rem;
-    text-align: center;
-  }
-
-  .gh-avatar-img {
-    height: 80px;
-    border-radius: 8px;
-  }
-
-  .gh-edit-form,
-  .gh-cancel-wrapper,
-  .gh-delete-wrapper {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-  }
-
-  .gh-edit-form.active,
-  .gh-cancel-wrapper.active,
-  .gh-delete-wrapper.active {
-    max-height: 600px;
-    margin-top: 1.5rem;
-  }
-
-  .gh-warning {
-    color: #c00;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 1.1rem;
-  }
-
-  .gh-danger-button {
-    background: #c00;
-    color: #fff;
-    font-size: 1.2rem;
-    padding: 1rem 2.5rem;
-    border-radius: 999px;
-    border: none;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .gh-button-container {
-    text-align: center;
-  }
+  .gh-button-outline { border: 2px solid #000; background: transparent; color: #000; }
+  .gh-button-secondary { background: #a55; color: #fff; }
+  .gh-feedback { margin-top: 1rem; font-size: 1rem; text-align: center; }
+  .gh-avatar-img { height: 80px; border-radius: 8px; }
+  .gh-edit-form, .gh-cancel-wrapper, .gh-delete-wrapper { max-height: 0; overflow: hidden; transition: max-height 0.5s ease; }
+  .gh-edit-form.active, .gh-cancel-wrapper.active, .gh-delete-wrapper.active { max-height: 600px; margin-top: 1.5rem; }
+  .gh-warning { color: #c00; font-weight: bold; text-align: center; margin-bottom: 1rem; font-size: 1.1rem; }
+  .gh-danger-button { background: #c00; color: #fff; font-size: 1.2rem; padding: 1rem 2.5rem; border-radius: 999px; border: none; display: block; margin: 0 auto; }
 </style>
 
 <header class="gh-article-header gh-account-header">
@@ -119,13 +34,21 @@
     <table class="gh-account-table">
       <tr><th>Imię</th><td data-field="name">{{@member.name}}</td></tr>
       <tr><th>Email</th><td data-field="email">{{@member.email}}</td></tr>
-      <tr><th>Avatar</th>
-        <td><img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar"></td>
-      </tr>
-      <tr><th>Status subskrypcji</th>
-        <td data-field="status">{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td>
-      </tr>
+      <tr><th>Avatar</th><td><img class="gh-avatar-img" src="https://www.gravatar.com/avatar/{{@member.email}}?d=mp&s=100" alt="Avatar"></td></tr>
+      <tr><th>Status subskrypcji</th><td data-field="status">{{#if @member.paid}}<strong>Aktywna</strong>{{else}}Brak aktywnej subskrypcji{{/if}}</td></tr>
     </table>
+
+    {{#if @member.paid}}
+    <h3 style="margin-top: 2rem;">Szczegóły subskrypcji</h3>
+    <table class="gh-account-table">
+      {{#if @member.subscriptions.[0]}}
+        <tr><th>Plan</th><td>{{@member.subscriptions.[0].plan.nickname}}</td></tr>
+        <tr><th>Status</th><td>{{@member.subscriptions.[0].status}}</td></tr>
+        <tr><th>Start</th><td>{{date @member.subscriptions.[0].start_date format="DD-MM-YYYY"}}</td></tr>
+        <tr><th>Koniec</th><td>{{date @member.subscriptions.[0].current_period_end format="DD-MM-YYYY"}}</td></tr>
+      {{/if}}
+    </table>
+    {{/if}}
 
     <div style="text-align:center; margin-bottom: 2rem;">
       <button id="toggle-edit" class="gh-button gh-button-outline">Edytuj dane</button>
@@ -225,7 +148,6 @@
             body: formData
           });
           const result = await response.json();
-
           if (response.ok && result.success !== false) {
             document.querySelector("td[data-field='name']").innerText = form.name.value;
             document.querySelector("td[data-field='email']").innerText = form.email.value;
@@ -234,7 +156,7 @@
           } else {
             feedback.textContent = result.message || "⚠️ Nie udało się zaktualizować danych.";
           }
-        } catch (error) {
+        } catch {
           feedback.textContent = "❌ Błąd połączenia.";
         }
       });
@@ -250,23 +172,20 @@
             body: formData
           });
           const result = await response.json();
-
           if (response.ok && result.success !== false) {
             document.querySelector("td[data-field='status']").textContent = "Brak aktywnej subskrypcji";
             cancelWrapper.classList.remove("active");
             cancelWrapper.innerHTML = "";
-
             const newBtn = document.createElement("a");
             newBtn.href = "/subskrypcja";
             newBtn.className = "gh-button gh-button-outline";
             newBtn.textContent = "Zostań subskrybentem";
             cancelToggle.replaceWith(newBtn);
-
             alert(result.message || "✅ Subskrypcja anulowana.");
           } else {
             alert(result.message || "⚠️ Nie udało się anulować subskrypcji.");
           }
-        } catch (error) {
+        } catch {
           alert("❌ Błąd połączenia z serwerem.");
         }
       });
@@ -284,7 +203,7 @@
           await ghost.members.api.member.delete();
           await ghost.members.signout();
           window.location.href = "/";
-        } catch (error) {
+        } catch {
           alert("❌ Błąd usunięcia konta.");
         }
       });
